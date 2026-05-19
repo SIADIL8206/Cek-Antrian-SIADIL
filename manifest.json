@@ -1,0 +1,17 @@
+{
+  "short_name": "SI-ADIL Info",
+  "name": "SI-ADIL: Informasi Antrian Publik",
+  "icons": [
+    {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/0/05/Lambang_Kabupaten_Halmahera_Timur.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": ".",
+  "background_color": "#1e3a8a",
+  "theme_color": "#1e3a8a",
+  "display": "standalone",
+  "orientation": "portrait"
+}

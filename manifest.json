@@ -7,12 +7,12 @@
   "icons": [
     {
       "src": "/icon.png",
-      "sizes": "192x192",
+      "sizes": "248x300",
       "type": "image/png"
     },
     {
       "src": "/icon.png",
-      "sizes": "512x512",
+      "sizes": "248x300",
       "type": "image/png"
     }
   ]

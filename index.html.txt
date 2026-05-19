@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/0/05/Lambang_Kabupaten_Halmahera_Timur.png?v=2">
+  <link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/commons/0/05/Lambang_Kabupaten_Halmahera_Timur.png?v=2">
+  <title>SI-ADIL: Info Antrian Publik</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; overflow-x: hidden; }
+    .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+    
+    /* Animasi Running Text */
+    @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+    .animate-marquee { display: inline-block; animation: marquee 30s linear infinite; }
+    
+    /* Animasi Titik Live Update */
+    @keyframes pulse-green {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+    }
+    .live-dot { width: 8px; height: 8px; background-color: #22c55e; border-radius: 50%; display: inline-block; animation: pulse-green 2s infinite; }
+
+    /* Menghilangkan Banner Apps Script */
+    iframe { display: none !important; }
+    body { top: 0 !important; margin-top: 0 !important; }
+  </style>
+</head>
+<body class="min-h-screen text-slate-800">
+
+  <!-- HEADER BRANDING (Saran 1: Lebih Ringkas untuk HP) -->
+  <header class="bg-gradient-to-r from-blue-700 to-blue-900 text-white shadow-lg p-3 md:p-4 mb-4">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-1 md:gap-4">
+      <div class="flex items-center gap-3">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Lambang_Kabupaten_Halmahera_Timur.png" alt="Logo" class="h-10 md:h-12 w-auto drop-shadow-md">
+        <div>
+          <h1 class="text-base md:text-xl font-extrabold tracking-tight leading-tight md:text-left">DINAS KEPENDUDUKAN DAN PENCATATAN SIPIL</h1>
+          <p class="text-blue-200 text-[12px] md:text-[15px] font-medium md:text-left">Kabupaten Halmahera Timur</p>
+        </div>
+      </div>
+      <div class="text-center md:text-right mt-1 md:mt-0">
+        <!-- Saran 3: Indikator Live Update -->
+        <div class="flex items-center justify-center md:justify-end gap-2 mb-0.5">
+          <span class="live-dot"></span>
+          <span class="text-[9px] font-bold tracking-widest text-green-400 uppercase">Live Update</span>
+        </div>
+        <div id="jam" class="text-xl md:text-1xl font-bold tracking-tighter leading-none">00:00:00</div>
+        <p class="text-blue-200 text-[9px] uppercase tracking-widest font-semibold" id="tanggal">MEMUAT...</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 pb-20">
+    
+    <!-- SECTION 1: PELAYANAN SAAT INI -->
+    <section class="mb-5">
+      <div class="flex items-center gap-2 mb-2">
+        <div class="h-4 w-1.5 bg-blue-600 rounded-full"></div>
+        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500">Pelayanan Saat Ini</h2>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <!-- Kartu Utama -->
+        <div class="glass-card rounded-2xl p-4 border-l-8 border-green-500 shadow-xl flex flex-col items-center justify-center text-center relative overflow-hidden bg-white min-h-[160px]">
+          <div class="absolute -top-8 -right-8 bg-green-100 h-28 w-28 rounded-full opacity-30"></div>
+          <p class="text-[9px] font-bold text-green-600 uppercase mb-1 tracking-widest">Sekarang Menuju Loket</p>
+          <h3 id="current-number" class="text-7xl font-black text-slate-900 leading-none">--</h3>
+          <!-- Saran 5: Nama lebih fleksibel -->
+          <p id="current-name" class="text-lg font-bold text-slate-500 uppercase italic mt-1 break-words max-w-full px-2">Memuat data...</p>
+        </div>
+
+        <!-- Info Layanan -->
+        <div class="glass-card rounded-2xl p-4 flex flex-col justify-center shadow-lg bg-blue-50 border-blue-100">
+           <h4 class="text-blue-800 text-[11px] font-bold mb-1.5 flex items-center gap-2">
+             <span>📢</span> INFO LAYANAN
+           </h4>
+           <p class="text-slate-600 leading-snug mb-3 text-justify text-[11px]">
+             Silakan menunggu dengan nyaman; petugas kami akan melayani sesuai urutan nomor antrian.
+           </p>
+           <div class="flex gap-3">
+              <!-- Saran 2: Aksen pada Sisa Antrean -->
+              <div class="bg-orange-100 border border-orange-200 p-2.5 rounded-xl shadow-sm flex-1 text-center">
+                <p class="text-[8px] font-bold text-orange-600 uppercase">Sisa Antrean</p>
+                <p id="count-waiting" class="text-xl font-black text-orange-700">0</p>
+              </div>
+              <div class="bg-white p-2.5 rounded-xl shadow-sm flex-1 text-center">
+                <p class="text-[8px] font-bold text-slate-400 uppercase">Selesai</p>
+                <p id="count-done" class="text-xl font-black text-green-600">0</p>
+              </div>
+           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: DAFTAR TUNGGU -->
+    <section class="mb-5">
+      <div class="flex items-center gap-2 mb-3">
+        <div class="h-4 w-1.5 bg-orange-500 rounded-full"></div>
+        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500">Urutan Tunggu</h2>
+      </div>
+      <div id="waiting-list" class="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8 gap-2">
+        <!-- Data diisi via JS -->
+      </div>
+    </section>
+
+    <!-- SECTION 3: RIWAYAT SELESAI -->
+    <section class="mb-20">
+      <div class="flex items-center gap-2 mb-4">
+        <div class="h-5 w-2 bg-slate-400 rounded-full"></div>
+        <h2 class="text-sm font-bold uppercase tracking-wider text-slate-600 font-extrabold">Riwayat Hari Ini</h2>
+      </div>
+      <div class="glass-card rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead class="bg-slate-50 border-b border-slate-100 text-slate-500 text-[9px] uppercase tracking-widest font-black">
+              <tr>
+                <th class="px-4 py-2">No</th>
+                <th class="px-4 py-2">Nama Pemohon</th>
+                <th class="px-4 py-2 text-center">Status</th>
+              </tr>
+            </thead>
+            <tbody id="done-list" class="divide-y divide-slate-50 text-xs">
+              <!-- Data akan diisi via Javascript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="fixed bottom-0 w-full bg-slate-900 text-white p-2 overflow-hidden border-t border-slate-700 z-50">
+    <div class="whitespace-nowrap animate-marquee">
+      <span class="mx-4 text-[12px] uppercase font-bold">Layanan Disdukcapil Halmahera Timur Gratis tanpa pungli!</span>
+      <span class="mx-4 text-[12px] uppercase">Siapkan dokumen asli Anda demi kelancaran administrasi</span>
+      <span class="mx-4 text-[12px] uppercase font-bold">Selamat Melayani dengan Hati - SI-ADIL Digital Database</span>
+    </div>
+  </footer>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const optionsTanggal = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Jayapura' };
+      const jam = now.toLocaleTimeString('id-ID', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Jayapura' }).replace(/\./g, ':');
+      const tanggal = now.toLocaleDateString('id-ID', optionsTanggal);
+      const elJam = document.getElementById('jam');
+      const elTgl = document.getElementById('tanggal');
+      if(elJam) elJam.innerText = jam;
+      if(elTgl) elTgl.innerText = tanggal.toUpperCase();
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function updateUI(allData) {
+      if (!allData) return;
+      const waitingList = document.getElementById('waiting-list');
+      const doneList = document.getElementById('done-list');
+      const currNum = document.getElementById('current-number');
+      const currName = document.getElementById('current-name');
+      const countW = document.getElementById('count-waiting');
+      const countD = document.getElementById('count-done');
+
+      let waitHtml = '';
+      let doneHtml = '';
+      let waitCount = 0;
+      let doneCount = 0;
+      let nextQueue = {no: '---', nama: 'Belum Ada Antrian'};
+
+      // 1. Cari antrean pertama yang valid
+      const firstWaiting = allData.find(item => item.status === "MENUNGGU DILAYANI" && item.no && item.no !== "---");
+      if (firstWaiting) { 
+        nextQueue = {no: firstWaiting.no, nama: firstWaiting.nama}; 
+      }
+
+      allData.forEach(item => {
+        // Abaikan jika baris data kosong atau hanya berisi simbol strip dari rumus
+        if (!item.no || item.no === "---" || item.no === "") return;
+
+        if (item.status === "MENUNGGU DILAYANI") {
+          // PERBAIKAN: Hanya hitung sisa antrean jika nomor BUKAN yang sedang di loket
+          if (item.no !== nextQueue.no) {
+            waitCount++;
+            waitHtml += `
+              <div class="bg-blue-50 p-3 rounded-xl border border-blue-100 flex flex-col items-center shadow-sm">
+                <p class="text-xl font-black text-blue-800">${item.no}</p>
+                <p class="text-[7px] font-extrabold text-blue-400 mt-0.5 uppercase truncate w-full text-center">${item.nama}</p>
+              </div>`;
+          }
+        } else if (item.status === "SELESAI DILAYANI") {
+          doneCount++;
+          doneHtml += `
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-2 font-extrabold text-slate-700">${item.no}</td>
+              <td class="px-4 py-2 text-xs font-medium text-slate-600">${item.nama}</td>
+              <td class="px-4 py-2 text-center">
+                <span class="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-[8px] font-black uppercase">SELESAI DILAYANI</span>
+              </td>
+            </tr>`;
+        }
+      });
+
+      waitingList.innerHTML = waitHtml || '<p class="col-span-full text-center text-slate-400 text-[10px] py-4">Tidak ada antrean berikutnya.</p>';
+      doneList.innerHTML = doneHtml || '<tr><td colspan="3" class="text-center py-4 text-slate-400 italic text-[10px]">Belum ada riwayat.</td></tr>';
+      
+      // Hasil akhir: waitCount akan 0 jika tidak ada antrean di belakang loket atau data kosong
+      countW.innerText = waitCount;
+      countD.innerText = doneCount;
+      currNum.innerText = nextQueue.no;
+      currName.innerText = nextQueue.nama;
+    }
+
+    const WEB_APP_URL = "SUDAH_MIGRASI_DENGAN_ACTION_getAntrean"; 
+
+  function refreshData() {
+    // Memanggil data antrean secara aman menggunakan parameter action JSON dari jauh
+    fetch(`${WEB_APP_URL}?action=getAntrean`)
+      .then(response => {
+        if (!response.ok) throw new Error('Jaringan bermasalah');
+        return response.json();
+      })
+      .then(data => {
+        // Panggil fungsi penyusun UI bawaan asli Pak Andre
+        updateUI(data);
+      })
+      .catch(err => {
+        console.error("❌ Gagal memperbarui monitor antrean: ", err);
+        // Jika putus koneksi, nama di monitor memberikan info error tanpa merusak layout TV
+        const currName = document.getElementById('current-name');
+        if (currName && currName.innerText === "Memuat data...") {
+          currName.innerText = "Gagal memuat data dari server...";
+        }
+      });
+  }
+
+  // Jalankan pembaruan berkala setiap 5 detik secara realtime di TV Ruang Tunggu
+  setInterval(refreshData, 5000);
+  
+  // Ambil data pertama kali tepat saat monitor dinyalakan
+  window.onload = refreshData;
+  </script>
+</body>
+</html>

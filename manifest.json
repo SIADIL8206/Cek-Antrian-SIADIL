@@ -6,14 +6,16 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/icon.png",
-      "sizes": "248x300",
-      "type": "image/png"
+      "src": "https://upload.wikimedia.org/wikipedia/commons/0/05/Lambang_Kabupaten_Halmahera_Timur.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/icon.png",
-      "sizes": "248x300",
-      "type": "image/png"
+      "src": "https://upload.wikimedia.org/wikipedia/commons/0/05/Lambang_Kabupaten_Halmahera_Timur.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }

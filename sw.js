@@ -1,9 +1,13 @@
-// Service worker sederhana agar aplikasi memenuhi syarat PWA Android & iOS
-self.addEventListener('install', function(e) {
+// Service Worker Minimalis & Aman untuk PWA SI-ADIL Info
+self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
-self.addEventListener('fetch', function(e) {
-  // Biarkan data mengalir langsung secara realtime dari internet
-  e.respondWith(fetch(e.request));
+self.addEventListener('activate', (event) => {
+  event.waitUntil(self.clients.claim());
+});
+
+// Event fetch dikosongkan agar browser menangani jaringan secara murni tanpa interupsi
+self.addEventListener('fetch', (event) => {
+  return;
 });

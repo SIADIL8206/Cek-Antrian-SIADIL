@@ -1,21 +1,26 @@
 {
+  "id": "/index.html",
   "name": "SI-ADIL Info Antrian",
   "short_name": "SI-ADIL Info",
   "start_url": "/index.html",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#1e3a8a",
   "theme_color": "#1e3a8a",
-  "orientation": "portrait",
+  "orientation": "any",
+  "categories": ["government", "utilities"],
   "icons": [
     {
       "src": "https://upload.wikimedia.org/wikipedia/commons/0/05/Lambang_Kabupaten_Halmahera_Timur.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "https://upload.wikimedia.org/wikipedia/commons/0/05/Lambang_Kabupaten_Halmahera_Timur.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }

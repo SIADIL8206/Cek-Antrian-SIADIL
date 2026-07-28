@@ -1,19 +1,21 @@
 {
-  "name": "SI-ADIL: CEK ANTRIAN",
+  "name": "SI-ADIL: Informasi Antrian Publik",
   "short_name": "SI-ADIL Info",
   "start_url": "/index.html",
   "display": "standalone",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "https://i.ibb.co.com/PskQxqQ4/icon.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "src": "/icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "https://i.ibb.co.com/PskQxqQ4/icon.png",
+      "src": "/icon.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }

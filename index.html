@@ -10,22 +10,22 @@
   <link rel="shortcut icon" type="image/png" href="/icon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/icon.png">
   
-  <title>SI-ADIL: CEK ANTRIAN</title>
+  <title>SI-ADIL: CEK ANTRIAN | Edisi HUT RI ke-81</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   
   <!-- Pemanggilan Manifes PWA -->
   <link rel="manifest" href="/manifest.json">
   
-  <meta name="theme-color" content="#1e3a8a">
+  <meta name="theme-color" content="#991b1b">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="SI-ADIL Info">
   
   <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; overflow-x: hidden; }
-    .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: linear-gradient(135deg, #fdf4f4 0%, #f8fafc 50%, #f1f5f9 100%); overflow-x: hidden; }
+    .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(254, 226, 226, 0.6); }
     
     /* Animasi Running Text */
     @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
@@ -39,6 +39,37 @@
     }
     .live-dot { width: 8px; height: 8px; background-color: #22c55e; border-radius: 50%; display: inline-block; animation: pulse-green 2s infinite; }
 
+    /* Pita Sudut Merah Putih */
+    .ribbon-wrapper {
+      width: 120px;
+      height: 120px;
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      right: 0;
+      pointer-events: none;
+      z-index: 20;
+    }
+    .ribbon-merdeka {
+      font-size: 8.5px;
+      font-weight: 900;
+      color: #991b1b;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 20px;
+      transform: rotate(45deg);
+      position: relative;
+      padding: 2px 0;
+      left: -5px;
+      top: 22px;
+      width: 160px;
+      background: linear-gradient(to bottom, #ffffff 50%, #fee2e2 50%);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(255,255,255,0.9);
+      border-bottom: 1px solid #b91c1c;
+      letter-spacing: 0.8px;
+    }
+
     /* Menghilangkan Banner Apps Script */
     iframe { display: none !important; }
     body { top: 0 !important; margin-top: 0 !important; }
@@ -46,61 +77,96 @@
 </head>
 <body class="min-h-screen text-slate-800">
 
-  <!-- HEADER BRANDING -->
-  <header class="bg-gradient-to-r from-blue-700 to-blue-900 text-white shadow-lg p-3 md:p-4 mb-4">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-1 md:gap-4">
-      <div class="flex items-center gap-3">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Lambang_Kabupaten_Halmahera_Timur.png" alt="Logo" class="h-10 md:h-12 w-auto drop-shadow-md">
-        <div>
-          <h1 class="text-base md:text-xl font-extrabold tracking-tight leading-tight md:text-left">DINAS KEPENDUDUKAN DAN PENCATATAN SIPIL</h1>
-          <p class="text-blue-200 text-[12px] md:text-[15px] font-medium md:text-left">Kabupaten Halmahera Timur</p>
+  <!-- HEADER BRANDING EDISI KEMERDEKAAN -->
+  <header class="relative bg-gradient-to-r from-red-900 via-red-700 to-red-800 text-white shadow-xl p-3 md:p-4 mb-4 overflow-hidden border-b-2 border-amber-400">
+    
+    <!-- Pita Sudut Merah Putih -->
+    <div class="ribbon-wrapper">
+      <div class="ribbon-merdeka">DIRGAHAYU RI</div>
+    </div>
+
+    <!-- Ornamen Lingkaran Halus -->
+    <div class="absolute -top-12 -left-12 w-48 h-48 rounded-full bg-white opacity-5 pointer-events-none"></div>
+    <div class="absolute -bottom-16 right-20 w-64 h-64 rounded-full bg-amber-400 opacity-10 pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4 relative z-10">
+      
+      <!-- Sisi Kiri: Logo Daerah, Logo HUT RI 81 & Teks Dinas -->
+      <div class="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
+        <div class="flex items-center gap-3">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Lambang_Kabupaten_Halmahera_Timur.png" alt="Logo Pemkab" class="h-10 md:h-12 w-auto drop-shadow-md">
+          <div>
+            <h1 class="text-xs md:text-lg font-extrabold tracking-tight leading-tight uppercase">DINAS KEPENDUDUKAN DAN PENCATATAN SIPIL</h1>
+            <p class="text-amber-200 text-[11px] md:text-[13px] font-bold">Kabupaten Halmahera Timur</p>
+          </div>
+        </div>
+
+        <!-- Logo Resmi HUT RI 81 -->
+        <div class="bg-white p-1.5 md:p-2 rounded-xl shadow-md border border-amber-400 flex items-center justify-center h-10 md:h-12 mr-8 md:mr-0">
+          <img src="logo-2-1024.webp" alt="HUT RI 81" class="h-full w-auto object-contain">
         </div>
       </div>
-      <div class="text-center md:text-right mt-1 md:mt-0">
-        <div class="flex items-center justify-center md:justify-end gap-2 mb-0.5">
+
+      <!-- Sisi Kanan: Jam & Live Status -->
+      <div class="text-center md:text-right mt-1 md:mt-0 flex flex-row md:flex-col items-center md:items-end justify-between w-full md:w-auto border-t border-red-800/60 md:border-0 pt-2 md:pt-0">
+        <div class="flex items-center gap-2 mb-0.5">
           <span class="live-dot"></span>
-          <span class="text-[9px] font-bold tracking-widest text-green-400 uppercase">Live Update</span>
+          <span class="text-[9px] font-black tracking-widest text-emerald-400 uppercase">Live Update</span>
         </div>
-        <div id="jam" class="text-xl md:text-1xl font-bold tracking-tighter leading-none">00:00:00</div>
-        <p class="text-blue-200 text-[9px] uppercase tracking-widest font-semibold" id="tanggal">MEMUAT...</p>
+        <div class="text-right">
+          <div id="jam" class="text-lg md:text-xl font-black tracking-tighter leading-none text-white drop-shadow-sm">00:00:00</div>
+          <p class="text-amber-200 text-[9px] uppercase tracking-widest font-extrabold" id="tanggal">MEMUAT...</p>
+        </div>
       </div>
+
     </div>
   </header>
 
   <main class="max-w-7xl mx-auto px-4 pb-20">
     
+    <!-- BANNER KHUSUS KEMERDEKAAN -->
+    <div class="mb-4 bg-gradient-to-r from-red-50 to-amber-50 border-l-4 border-red-600 p-2.5 rounded-xl shadow-sm flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-base">🇮🇩</span>
+        <p class="text-[11px] font-bold text-red-900">
+          Dirgahayu Republik Indonesia ke-81 <span class="text-slate-500 font-medium hidden md:inline">— Nusantara Baru, Pelayanan Kependudukan Merdeka & Cepat</span>
+        </p>
+      </div>
+      <span class="text-[9px] bg-red-600 text-white font-black px-2 py-0.5 rounded-md uppercase tracking-wider">HUT RI 81</span>
+    </div>
+
     <!-- SECTION 1: PELAYANAN SAAT INI -->
     <section class="mb-5">
       <div class="flex items-center gap-2 mb-2">
-        <div class="h-4 w-1.5 bg-blue-600 rounded-full"></div>
+        <div class="h-4 w-1.5 bg-red-600 rounded-full"></div>
         <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500">Pelayanan Saat Ini</h2>
       </div>
       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
         <!-- Kartu Utama -->
-        <div class="glass-card rounded-2xl p-4 border-l-8 border-green-500 shadow-xl flex flex-col items-center justify-center text-center relative overflow-hidden bg-white min-h-[160px]">
-          <div class="absolute -top-8 -right-8 bg-green-100 h-28 w-28 rounded-full opacity-30"></div>
-          <p class="text-[9px] font-bold text-green-600 uppercase mb-1 tracking-widest">Sekarang Menuju Loket</p>
+        <div class="glass-card rounded-2xl p-4 border-l-8 border-red-600 shadow-xl flex flex-col items-center justify-center text-center relative overflow-hidden bg-white min-h-[160px]">
+          <div class="absolute -top-8 -right-8 bg-red-100 h-28 w-28 rounded-full opacity-40"></div>
+          <p class="text-[9px] font-bold text-red-600 uppercase mb-1 tracking-widest">Sekarang Menuju Loket</p>
           <h3 id="current-number" class="text-7xl font-black text-slate-900 leading-none">--</h3>
-          <p id="current-name" class="text-lg font-bold text-slate-500 uppercase italic mt-1 break-words max-w-full px-2">Memuat data...</p>
+          <p id="current-name" class="text-lg font-bold text-slate-600 uppercase italic mt-1 break-words max-w-full px-2">Memuat data...</p>
         </div>
 
         <!-- Info Layanan -->
-        <div class="glass-card rounded-2xl p-4 flex flex-col justify-center shadow-lg bg-blue-50 border-blue-100">
-           <h4 class="text-blue-800 text-[11px] font-bold mb-1.5 flex items-center gap-2">
+        <div class="glass-card rounded-2xl p-4 flex flex-col justify-center shadow-lg bg-red-50/60 border-red-100">
+           <h4 class="text-red-900 text-[11px] font-bold mb-1.5 flex items-center gap-2">
              <span>📢</span> INFO LAYANAN
            </h4>
            <p class="text-slate-600 leading-snug mb-3 text-justify text-[11px]">
-             Silakan menunggu dengan nyaman; petugas kami akan melayani sesuai urutan nomor antrian.
+             Silakan menunggu dengan nyaman; petugas kami akan melayani sesuai urutan nomor antrian secara adil dan transparan.
            </p>
            <div class="flex gap-3">
-             <div class="bg-orange-100 border border-orange-200 p-2.5 rounded-xl shadow-sm flex-1 text-center">
-               <p class="text-[8px] font-bold text-orange-600 uppercase">Sisa Antrean</p>
-               <p id="count-waiting" class="text-xl font-black text-orange-700">0</p>
+             <div class="bg-amber-100/80 border border-amber-200 p-2.5 rounded-xl shadow-sm flex-1 text-center">
+               <p class="text-[8px] font-bold text-amber-700 uppercase">Sisa Antrean</p>
+               <p id="count-waiting" class="text-xl font-black text-amber-900">0</p>
              </div>
-             <div class="bg-white p-2.5 rounded-xl shadow-sm flex-1 text-center">
+             <div class="bg-white border border-red-100 p-2.5 rounded-xl shadow-sm flex-1 text-center">
                <p class="text-[8px] font-bold text-slate-400 uppercase">Selesai</p>
-               <p id="count-done" class="text-xl font-black text-green-600">0</p>
+               <p id="count-done" class="text-xl font-black text-emerald-600">0</p>
              </div>
            </div>
         </div>
@@ -110,7 +176,7 @@
     <!-- SECTION 2: DAFTAR TUNGGU -->
     <section class="mb-5">
       <div class="flex items-center gap-2 mb-3">
-        <div class="h-4 w-1.5 bg-orange-500 rounded-full"></div>
+        <div class="h-4 w-1.5 bg-amber-500 rounded-full"></div>
         <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500">Urutan Tunggu</h2>
       </div>
       <div id="waiting-list" class="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8 gap-2">
@@ -121,20 +187,20 @@
     <!-- SECTION 3: RIWAYAT SELESAI -->
     <section class="mb-20">
       <div class="flex items-center gap-2 mb-4">
-        <div class="h-5 w-2 bg-slate-400 rounded-full"></div>
-        <h2 class="text-sm font-bold uppercase tracking-wider text-slate-600 font-extrabold">Riwayat Hari Ini</h2>
+        <div class="h-5 w-2 bg-red-600 rounded-full"></div>
+        <h2 class="text-sm font-bold uppercase tracking-wider text-slate-700 font-extrabold">Riwayat Hari Ini</h2>
       </div>
-      <div class="glass-card rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+      <div class="glass-card rounded-2xl shadow-lg border border-red-100 overflow-hidden">
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse">
-            <thead class="bg-slate-50 border-b border-slate-100 text-slate-500 text-[9px] uppercase tracking-widest font-black">
+            <thead class="bg-red-50 border-b border-red-100 text-red-900 text-[9px] uppercase tracking-widest font-black">
               <tr>
-                <th class="px-4 py-2">No</th>
-                <th class="px-4 py-2">Nama Pemohon</th>
-                <th class="px-4 py-2 text-center">Status</th>
+                <th class="px-4 py-2.5">No</th>
+                <th class="px-4 py-2.5">Nama Pemohon</th>
+                <th class="px-4 py-2.5 text-center">Status</th>
               </tr>
             </thead>
-            <tbody id="done-list" class="divide-y divide-slate-50 text-xs">
+            <tbody id="done-list" class="divide-y divide-red-50/60 text-xs">
               <!-- Data diisi via JS -->
             </tbody>
           </table>
@@ -143,11 +209,13 @@
     </section>
   </main>
 
-  <footer class="fixed bottom-0 w-full bg-slate-900 text-white p-2 overflow-hidden border-t border-slate-700 z-50">
+  <!-- FOOTER RUNNING TEXT KEMERDEKAAN -->
+  <footer class="fixed bottom-0 w-full bg-gradient-to-r from-red-950 via-slate-900 to-red-950 text-white p-2 overflow-hidden border-t border-red-800 z-50">
     <div class="whitespace-nowrap animate-marquee">
-      <span class="mx-4 text-[12px] uppercase font-bold">Layanan Disdukcapil Halmahera Timur Gratis tanpa pungli!</span>
-      <span class="mx-4 text-[12px] uppercase">Siapkan dokumen asli Anda demi kelancaran administrasi</span>
-      <span class="mx-4 text-[12px] uppercase font-bold">Selamat Melayani dengan Hati - SI-ADIL Digital Database</span>
+      <span class="mx-4 text-[12px] uppercase font-bold text-amber-300">🇮🇩 DIRGAHAYU REPUBLIK INDONESIA KE-81!</span>
+      <span class="mx-4 text-[12px] uppercase font-bold">Layanan Disdukcapil Halmahera Timur 100% Gratis Tanpa Pungli!</span>
+      <span class="mx-4 text-[12px] uppercase text-slate-300">Siapkan dokumen asli Anda demi kelancaran administrasi</span>
+      <span class="mx-4 text-[12px] uppercase font-bold text-emerald-400">Selamat Melayani dengan Hati — SI-ADIL Digital Database</span>
     </div>
   </footer>
 
@@ -192,19 +260,19 @@
           if (item.no !== nextQueue.no) {
             waitCount++;
             waitHtml += `
-              <div class="bg-blue-50 p-3 rounded-xl border border-blue-100 flex flex-col items-center shadow-sm">
-                <p class="text-xl font-black text-blue-800">${item.no}</p>
-                <p class="text-[7px] font-extrabold text-blue-400 mt-0.5 uppercase truncate w-full text-center">${item.nama}</p>
+              <div class="bg-red-50/70 p-3 rounded-xl border border-red-200 flex flex-col items-center shadow-sm">
+                <p class="text-xl font-black text-red-900">${item.no}</p>
+                <p class="text-[7px] font-extrabold text-red-500 mt-0.5 uppercase truncate w-full text-center">${item.nama}</p>
               </div>`;
           }
         } else if (item.status === "SELESAI DILAYANI") {
           doneCount++;
           doneHtml += `
-            <tr class="hover:bg-slate-50 transition-colors">
-              <td class="px-4 py-2 font-extrabold text-slate-700">${item.no}</td>
-              <td class="px-4 py-2 text-xs font-medium text-slate-600">${item.nama}</td>
+            <tr class="hover:bg-red-50/40 transition-colors">
+              <td class="px-4 py-2 font-extrabold text-slate-800">${item.no}</td>
+              <td class="px-4 py-2 text-xs font-medium text-slate-700">${item.nama}</td>
               <td class="px-4 py-2 text-center">
-                <span class="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-[8px] font-black uppercase">SELESAI DILAYANI</span>
+                <span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full text-[8px] font-black uppercase">SELESAI DILAYANI</span>
               </td>
             </tr>`;
         }

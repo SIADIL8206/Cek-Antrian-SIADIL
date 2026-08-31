@@ -73,6 +73,19 @@
     /* Menghilangkan Banner Apps Script */
     iframe { display: none !important; }
     body { top: 0 !important; margin-top: 0 !important; }
+  
+    /* ===== SI-ADIL ONLINE ===== */
+    .online-step{background:#fff;color:#64748b;border-color:#e2e8f0}
+    .online-step.active{background:#991b1b;color:#fff;border-color:#991b1b}
+    .online-step.done{background:#dcfce7;color:#166534;border-color:#86efac}
+    .online-input{width:100%;border:1px solid #cbd5e1;border-radius:12px;padding:11px 13px;font-size:13px;outline:none;background:#fff}
+    .online-input:focus{border-color:#dc2626;box-shadow:0 0 0 3px rgba(220,38,38,.08)}
+    .online-label{display:block;font-size:10px;font-weight:800;color:#475569;margin-bottom:5px}
+    .online-service{transition:.2s ease;cursor:pointer}
+    .online-service:hover{transform:translateY(-2px)}
+    .online-service.selected{border-color:#dc2626!important;background:#fff7f7;box-shadow:0 0 0 3px rgba(220,38,38,.08)}
+    .online-file input[type=file]{display:none}
+
   </style>
 </head>
 <body class="min-h-screen text-slate-800">
@@ -121,6 +134,22 @@
 
     </div>
   </header>
+
+  <!-- NAVIGASI GABUNGAN -->
+  <div class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-red-100 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-center gap-2 md:gap-3">
+      <button type="button" onclick="scrollToQueue()" class="px-3 md:px-5 py-2 rounded-xl bg-red-700 text-white text-[10px] md:text-xs font-black">
+        📺 CEK ANTREAN
+      </button>
+      <button type="button" onclick="scrollToOnline()" class="px-3 md:px-5 py-2 rounded-xl border border-red-200 text-red-700 text-[10px] md:text-xs font-black">
+        📝 PENGAJUAN ONLINE
+      </button>
+      <button type="button" onclick="openTrackingOnline()" class="px-3 md:px-5 py-2 rounded-xl border border-slate-200 text-slate-700 text-[10px] md:text-xs font-black">
+        🔎 CEK STATUS
+      </button>
+    </div>
+  </div>
+
 
   <main class="max-w-7xl mx-auto px-4 pb-20">
     
@@ -208,6 +237,164 @@
       </div>
     </section>
   </main>
+
+
+  <!-- =========================================================
+       SI-ADIL ONLINE — MODUL PENGAJUAN MASYARAKAT
+       Ditambahkan tanpa menghapus monitor antrean lama.
+       ========================================================= -->
+  <section id="pengajuan-online" class="max-w-7xl mx-auto px-4 pb-10">
+    <div class="glass-card rounded-2xl p-4 md:p-6 mb-4 border-l-8 border-red-600 shadow-lg">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div>
+          <p class="text-[10px] font-black uppercase tracking-[.18em] text-red-700">SI-ADIL ONLINE</p>
+          <h2 class="text-xl md:text-2xl font-black text-slate-900">Pengajuan Dokumen Kependudukan</h2>
+          <p class="text-xs md:text-sm text-slate-500 mt-1">
+            Ajukan layanan secara online, unggah persyaratan, lalu pantau proses menggunakan ID Pengajuan dan PIN.
+          </p>
+        </div>
+        <button type="button" onclick="openTrackingOnline()"
+          class="px-5 py-3 rounded-xl bg-slate-900 text-white text-xs font-black">
+          🔎 Cek Status Pengajuan
+        </button>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-3 gap-2 mb-4">
+      <div id="onlineStep1" class="online-step active rounded-xl border p-3 text-center">
+        <div class="text-lg font-black">1</div><div class="text-[9px] font-black uppercase">Pilih Layanan</div>
+      </div>
+      <div id="onlineStep2" class="online-step rounded-xl border p-3 text-center">
+        <div class="text-lg font-black">2</div><div class="text-[9px] font-black uppercase">Data Pemohon</div>
+      </div>
+      <div id="onlineStep3" class="online-step rounded-xl border p-3 text-center">
+        <div class="text-lg font-black">3</div><div class="text-[9px] font-black uppercase">Persyaratan</div>
+      </div>
+    </div>
+
+    <!-- PILIH LAYANAN -->
+    <div id="onlineServices" class="glass-card rounded-2xl p-4 md:p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h3 class="font-black text-lg">Pilih Jenis Layanan</h3>
+          <p class="text-[11px] text-slate-500">Daftar layanan dibaca dari MASTER LAYANAN.</p>
+        </div>
+        <button type="button" onclick="loadOnlineServices()" class="text-xs font-black text-red-700">↻ Refresh</button>
+      </div>
+      <div id="onlineServiceLoading" class="py-8 text-center text-slate-400 text-sm">Memuat layanan...</div>
+      <div id="onlineServiceList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+      <div class="flex justify-end mt-5">
+        <button id="onlineBtnToData" disabled onclick="onlineGoToData()"
+          class="px-5 py-3 rounded-xl bg-red-700 text-white text-xs font-black disabled:opacity-40">
+          Lanjut ke Data Pemohon →
+        </button>
+      </div>
+    </div>
+
+    <!-- DATA PEMOHON -->
+    <div id="onlineData" class="glass-card rounded-2xl p-4 md:p-6 hidden mt-4">
+      <h3 class="font-black text-lg">Data Pemohon</h3>
+      <p class="text-[11px] text-slate-500 mb-4">Pastikan data sesuai dokumen kependudukan.</p>
+
+      <form id="onlineApplicationForm" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="md:col-span-2">
+          <label class="online-label">Nama Lengkap *</label>
+          <input id="onlineNama" required class="online-input" placeholder="Nama lengkap sesuai identitas">
+        </div>
+        <div>
+          <label class="online-label">NIK *</label>
+          <input id="onlineNik" required inputmode="numeric" maxlength="16" class="online-input" placeholder="16 digit NIK">
+        </div>
+        <div>
+          <label class="online-label">Nomor KK *</label>
+          <input id="onlineNoKK" required inputmode="numeric" maxlength="16" class="online-input" placeholder="16 digit Nomor KK">
+        </div>
+        <div>
+          <label class="online-label">Nomor HP *</label>
+          <input id="onlineNoHP" required inputmode="tel" class="online-input" placeholder="08xxxxxxxxxx">
+        </div>
+        <div>
+          <label class="online-label">Email</label>
+          <input id="onlineEmail" type="email" class="online-input" placeholder="Opsional">
+        </div>
+        <div class="md:col-span-2">
+          <label class="online-label">Alamat</label>
+          <textarea id="onlineAlamat" rows="2" class="online-input" placeholder="Alamat lengkap"></textarea>
+        </div>
+        <div>
+          <label class="online-label">Desa/Kelurahan</label>
+          <input id="onlineDesa" class="online-input" placeholder="Desa/Kelurahan">
+        </div>
+        <div>
+          <label class="online-label">Kecamatan</label>
+          <input id="onlineKecamatan" class="online-input" placeholder="Kecamatan">
+        </div>
+        <div class="md:col-span-2">
+          <label class="online-label">Keterangan Pemohon</label>
+          <textarea id="onlineKeterangan" rows="2" class="online-input" placeholder="Keterangan tambahan jika diperlukan"></textarea>
+        </div>
+        <div class="md:col-span-2 flex justify-between gap-2 pt-2">
+          <button type="button" onclick="onlineBackToServices()" class="px-5 py-3 rounded-xl border text-xs font-black">← Kembali</button>
+          <button type="submit" id="onlineBtnSubmit" class="px-6 py-3 rounded-xl bg-red-700 text-white text-xs font-black">Buat Pengajuan →</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- UPLOAD PERSYARATAN -->
+    <div id="onlineDocuments" class="glass-card rounded-2xl p-4 md:p-6 hidden mt-4">
+      <div class="flex flex-col md:flex-row md:justify-between gap-3">
+        <div>
+          <p class="text-[9px] font-black uppercase tracking-widest text-red-700">ID PENGAJUAN</p>
+          <h3 id="onlineResultId" class="text-xl md:text-2xl font-black">-</h3>
+          <p class="text-[10px] text-slate-500">Simpan ID Pengajuan dan PIN untuk pelacakan.</p>
+        </div>
+        <div class="bg-amber-50 border border-amber-200 rounded-xl px-5 py-3 text-center">
+          <p class="text-[8px] font-black uppercase text-amber-700">PIN / KODE AKSES</p>
+          <p id="onlineResultPin" class="text-2xl font-black tracking-[.25em] text-amber-900">------</p>
+        </div>
+      </div>
+
+      <div class="rounded-xl bg-red-50 border border-red-100 p-3 my-4">
+        <p class="text-xs font-bold text-red-900">Layanan: <span id="onlineResultService">-</span></p>
+        <p class="text-[10px] text-red-700 mt-1">Status awal: <b>DIAJUKAN</b></p>
+      </div>
+
+      <h4 class="font-black text-sm">Upload Persyaratan</h4>
+      <p class="text-[10px] text-slate-500 mb-3">Ikuti format dan batas ukuran pada setiap persyaratan.</p>
+      <div id="onlineRequirementsList" class="space-y-3"></div>
+
+      <div class="flex justify-between mt-5">
+        <button type="button" onclick="openTrackingOnline(onlineCurrentId, onlineCurrentPin)"
+          class="px-4 py-3 rounded-xl border text-xs font-black">🔎 Lihat Status</button>
+        <button type="button" onclick="resetOnlineApplication()"
+          class="px-5 py-3 rounded-xl bg-slate-900 text-white text-xs font-black">Pengajuan Baru</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRACKING MODAL -->
+  <div id="onlineTrackingModal" class="fixed inset-0 bg-slate-900/70 hidden z-[80] p-4 overflow-y-auto">
+    <div class="min-h-full flex items-center justify-center">
+      <div class="bg-white rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden">
+        <div class="bg-slate-900 text-white p-4 flex justify-between items-center">
+          <div><p class="text-[8px] uppercase tracking-widest text-slate-300 font-black">PELACAKAN</p>
+            <h3 class="font-black">Cek Status Pengajuan</h3></div>
+          <button type="button" onclick="closeTrackingOnline()" class="text-2xl">×</button>
+        </div>
+        <div class="p-4 md:p-6">
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div><label class="online-label">ID Pengajuan</label>
+              <input id="onlineTrackId" class="online-input" placeholder="ADL-20260831-0001"></div>
+            <div><label class="online-label">PIN</label>
+              <input id="onlineTrackPin" maxlength="6" inputmode="numeric" class="online-input" placeholder="6 digit PIN"></div>
+          </div>
+          <button type="button" id="onlineBtnTrack" onclick="trackOnlineApplication()"
+            class="w-full mt-3 py-3 rounded-xl bg-red-700 text-white text-xs font-black">Cek Sekarang</button>
+          <div id="onlineTrackingResult" class="mt-4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- FOOTER RUNNING TEXT KEMERDEKAAN -->
   <footer class="fixed bottom-0 w-full bg-gradient-to-r from-red-950 via-slate-900 to-red-950 text-white p-2 overflow-hidden border-t border-red-800 z-50">
@@ -318,6 +505,284 @@
           .catch(err => console.error('PWA: Gagal Registrasi', err));
       });
     }
+
+    /* =========================================================
+       SI-ADIL ONLINE API
+       GANTI NILAI DI BAWAH dengan URL deployment Apps Script
+       untuk spreadsheet baru yang berisi:
+       PENGAJUAN, DOKUMEN, RIWAYAT STATUS,
+       MASTER LAYANAN, MASTER PERSYARATAN.
+       ========================================================= */
+    const SIADIL_ONLINE_API = "https://script.google.com/macros/s/AKfycbzDQE_iC4kgr6-SSD25qsP1pUy4dO57TcX4KVXlOSVCBBLGj9UZWfpDrZWH7eFyz1Ub/exec";
+
+    let onlineServices = [];
+    let onlineSelectedService = null;
+    let onlineCurrentId = "";
+    let onlineCurrentPin = "";
+
+    function onlineApiReady(){
+      if(!SIADIL_ONLINE_API || SIADIL_ONLINE_API.includes("GANTI_DENGAN")){
+        alert("URL API SI-ADIL Online belum diisi pada index.html.");
+        return false;
+      }
+      return true;
+    }
+
+    async function onlineGet(params){
+      if(!onlineApiReady()) throw new Error("API Online belum dikonfigurasi.");
+      const url = SIADIL_ONLINE_API + "?" + new URLSearchParams(params).toString();
+      const r = await fetch(url,{cache:"no-store"});
+      if(!r.ok) throw new Error("Server Online tidak merespons.");
+      return await r.json();
+    }
+
+    async function onlinePost(payload){
+      if(!onlineApiReady()) throw new Error("API Online belum dikonfigurasi.");
+      const r = await fetch(SIADIL_ONLINE_API,{
+        method:"POST",
+        headers:{"Content-Type":"text/plain;charset=utf-8"},
+        body:JSON.stringify(payload)
+      });
+      if(!r.ok) throw new Error("Server Online tidak merespons.");
+      return await r.json();
+    }
+
+    function onlineEscape(v){
+      return String(v ?? "").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+    }
+
+    async function loadOnlineServices(){
+      const loading=document.getElementById("onlineServiceLoading");
+      const list=document.getElementById("onlineServiceList");
+      loading.classList.remove("hidden");
+      list.innerHTML="";
+      try{
+        const result=await onlineGet({action:"getLayanan"});
+        if(!result.success) throw new Error(result.message||"Gagal memuat layanan.");
+        onlineServices=Array.isArray(result.data)?result.data:[];
+        if(!onlineServices.length){
+          list.innerHTML='<div class="sm:col-span-2 lg:col-span-3 text-center py-8 text-slate-400 text-sm">Belum ada layanan online yang aktif.</div>';
+          return;
+        }
+        list.innerHTML=onlineServices.map((item,i)=>`
+          <button type="button" class="online-service text-left border border-slate-200 rounded-2xl p-4 bg-white"
+            onclick="selectOnlineService(${i},this)">
+            <div class="flex justify-between gap-2">
+              <div class="w-9 h-9 rounded-xl bg-red-50 text-red-700 flex items-center justify-center">📄</div>
+              <span class="text-[8px] bg-slate-100 px-2 py-1 rounded-lg font-black">${onlineEscape(item.kode)}</span>
+            </div>
+            <p class="mt-3 text-sm font-black">${onlineEscape(item.nama)}</p>
+            <p class="text-[9px] text-slate-400 font-bold uppercase mt-1">${onlineEscape(item.kategori||"Pelayanan")}</p>
+          </button>`).join("");
+      }catch(e){
+        list.innerHTML=`<div class="sm:col-span-2 lg:col-span-3 rounded-xl bg-red-50 border border-red-200 p-4 text-xs text-red-800"><b>Gagal memuat layanan.</b><br>${onlineEscape(e.message)}</div>`;
+      }finally{loading.classList.add("hidden")}
+    }
+
+    function selectOnlineService(i,button){
+      onlineSelectedService=onlineServices[i];
+      document.querySelectorAll(".online-service").forEach(x=>x.classList.remove("selected"));
+      button.classList.add("selected");
+      document.getElementById("onlineBtnToData").disabled=false;
+    }
+
+    function updateOnlineSteps(active){
+      [1,2,3].forEach(n=>{
+        const el=document.getElementById("onlineStep"+n);
+        el.className="online-step rounded-xl border p-3 text-center";
+        if(n<active)el.classList.add("done");
+        else if(n===active)el.classList.add("active");
+      });
+    }
+
+    function onlineGoToData(){
+      if(!onlineSelectedService)return;
+      document.getElementById("onlineServices").classList.add("hidden");
+      document.getElementById("onlineData").classList.remove("hidden");
+      updateOnlineSteps(2);
+      document.getElementById("pengajuan-online").scrollIntoView({behavior:"smooth"});
+    }
+
+    function onlineBackToServices(){
+      document.getElementById("onlineData").classList.add("hidden");
+      document.getElementById("onlineServices").classList.remove("hidden");
+      updateOnlineSteps(1);
+    }
+
+    function onlineButtonLoading(btn,on,text){
+      if(on){btn.disabled=true;btn.dataset.oldtext=btn.innerHTML;btn.innerHTML="⏳ "+text}
+      else{btn.disabled=false;btn.innerHTML=text}
+    }
+
+    document.getElementById("onlineApplicationForm").addEventListener("submit",async e=>{
+      e.preventDefault();
+      if(!onlineSelectedService)return alert("Silakan pilih layanan.");
+      const nik=document.getElementById("onlineNik").value.trim();
+      const noKK=document.getElementById("onlineNoKK").value.trim();
+      if(!/^\d{16}$/.test(nik))return alert("NIK harus 16 digit.");
+      if(!/^\d{16}$/.test(noKK))return alert("Nomor KK harus 16 digit.");
+
+      const btn=document.getElementById("onlineBtnSubmit");
+      onlineButtonLoading(btn,true,"Menyimpan...");
+      try{
+        const result=await onlinePost({
+          action:"buatPengajuan",
+          nama:document.getElementById("onlineNama").value.trim(),
+          nik:nik,
+          noKK:noKK,
+          noHP:document.getElementById("onlineNoHP").value.trim(),
+          email:document.getElementById("onlineEmail").value.trim(),
+          alamat:document.getElementById("onlineAlamat").value.trim(),
+          desa:document.getElementById("onlineDesa").value.trim(),
+          kecamatan:document.getElementById("onlineKecamatan").value.trim(),
+          kodeLayanan:onlineSelectedService.kode,
+          keterangan:document.getElementById("onlineKeterangan").value.trim()
+        });
+        if(!result.success)throw new Error(result.message||"Pengajuan gagal.");
+        onlineCurrentId=result.idPengajuan;
+        onlineCurrentPin=result.pin;
+        document.getElementById("onlineResultId").textContent=onlineCurrentId;
+        document.getElementById("onlineResultPin").textContent=onlineCurrentPin;
+        document.getElementById("onlineResultService").textContent=result.layanan||onlineSelectedService.nama;
+        document.getElementById("onlineData").classList.add("hidden");
+        document.getElementById("onlineDocuments").classList.remove("hidden");
+        updateOnlineSteps(3);
+        await loadOnlineRequirements(onlineSelectedService.kode);
+        document.getElementById("pengajuan-online").scrollIntoView({behavior:"smooth"});
+      }catch(err){alert(err.message)}
+      finally{onlineButtonLoading(btn,false,"Buat Pengajuan →")}
+    });
+
+    async function loadOnlineRequirements(kode){
+      const box=document.getElementById("onlineRequirementsList");
+      box.innerHTML='<div class="text-center py-6 text-slate-400 text-sm">Memuat persyaratan...</div>';
+      try{
+        const result=await onlineGet({action:"getPersyaratan",kodeLayanan:kode});
+        if(!result.success)throw new Error(result.message||"Gagal memuat persyaratan.");
+        const arr=Array.isArray(result.data)?result.data:[];
+        if(!arr.length){box.innerHTML='<div class="rounded-xl bg-amber-50 border border-amber-200 p-3 text-xs text-amber-800">Belum ada persyaratan untuk layanan ini.</div>';return}
+        box.innerHTML=arr.map((item,i)=>{
+          const max=Number(item.maxSize||5);
+          return `<div class="online-file border border-slate-200 rounded-2xl p-4 bg-white">
+            <div class="flex flex-col sm:flex-row sm:justify-between gap-3">
+              <div>
+                <p class="text-sm font-black">${onlineEscape(item.namaPersyaratan)}</p>
+                <p class="text-[10px] text-slate-500 mt-1">${onlineEscape(item.keterangan||"")}</p>
+                <p class="text-[9px] font-black uppercase mt-2">
+                  <span class="${item.wajib?'text-red-600':'text-slate-400'}">${item.wajib?'WAJIB':'OPSIONAL'}</span>
+                  • ${onlineEscape(item.format||"PDF/JPG/PNG")} • Maks. ${max} MB
+                </p>
+              </div>
+              <label class="cursor-pointer shrink-0">
+                <input id="onlineFile_${i}" type="file" accept=".pdf,.jpg,.jpeg,.png"
+                  onchange="uploadOnlineFile(this,'${String(item.idPersyaratan).replace(/'/g,"\\'")}',${max})">
+                <span class="inline-flex px-4 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-black">📎 Pilih File</span>
+              </label>
+            </div>
+            <div id="onlineFile_${i}_status" class="mt-3"></div>
+          </div>`;
+        }).join("");
+      }catch(err){box.innerHTML=`<div class="rounded-xl bg-red-50 border border-red-200 p-3 text-xs text-red-800">${onlineEscape(err.message)}</div>`}
+    }
+
+    async function uploadOnlineFile(input,kodePersyaratan,maxSize){
+      const file=input.files&&input.files[0]; if(!file)return;
+      const status=document.getElementById(input.id+"_status");
+      if(file.size>maxSize*1024*1024){status.innerHTML=`<p class="text-xs text-red-700 font-bold">❌ File terlalu besar. Maksimal ${maxSize} MB.</p>`;input.value="";return}
+      const allowed=["application/pdf","image/jpeg","image/png"];
+      if(!allowed.includes(file.type)){status.innerHTML='<p class="text-xs text-red-700 font-bold">❌ Format harus PDF/JPG/PNG.</p>';input.value="";return}
+      status.innerHTML=`<p class="text-xs text-slate-500">⏳ Mengupload ${onlineEscape(file.name)}...</p>`;
+      try{
+        const base64=await onlineFileBase64(file);
+        const result=await onlinePost({
+          action:"uploadDokumen",
+          idPengajuan:onlineCurrentId,pin:onlineCurrentPin,
+          kodePersyaratan:kodePersyaratan,namaDokumen:"",
+          namaFile:file.name,mimeType:file.type,base64:base64
+        });
+        if(!result.success)throw new Error(result.message||"Upload gagal.");
+        status.innerHTML=`<div class="rounded-xl bg-emerald-50 border border-emerald-200 p-3"><p class="text-xs font-black text-emerald-800">✓ Berhasil diupload</p><p class="text-[10px] text-emerald-700">${onlineEscape(file.name)}</p></div>`;
+      }catch(err){status.innerHTML=`<p class="text-xs text-red-700 font-bold">❌ ${onlineEscape(err.message)}</p>`}
+    }
+
+    function onlineFileBase64(file){
+      return new Promise((resolve,reject)=>{
+        const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file);
+      });
+    }
+
+    function openTrackingOnline(id="",pin=""){
+      document.getElementById("onlineTrackingModal").classList.remove("hidden");
+      if(id)document.getElementById("onlineTrackId").value=id;
+      if(pin)document.getElementById("onlineTrackPin").value=pin;
+      document.getElementById("onlineTrackingResult").innerHTML="";
+    }
+
+    function closeTrackingOnline(){document.getElementById("onlineTrackingModal").classList.add("hidden")}
+
+    async function trackOnlineApplication(){
+      const id=document.getElementById("onlineTrackId").value.trim();
+      const pin=document.getElementById("onlineTrackPin").value.trim();
+      if(!id||!pin)return alert("ID Pengajuan dan PIN wajib diisi.");
+      const box=document.getElementById("onlineTrackingResult");
+      const btn=document.getElementById("onlineBtnTrack");
+      onlineButtonLoading(btn,true,"Memeriksa...");
+      try{
+        const result=await onlineGet({action:"cekPengajuan",idPengajuan:id,pin:pin});
+        if(!result.success)throw new Error(result.message||"Pengajuan tidak ditemukan.");
+        const p=result.pengajuan||{};
+        const status=String(p.status||"-").toUpperCase();
+        let cls="bg-slate-100 text-slate-700";
+        if(status==="SELESAI")cls="bg-emerald-100 text-emerald-800";
+        else if(status==="DITOLAK")cls="bg-red-100 text-red-800";
+        else if(status==="DOKUMEN KURANG")cls="bg-amber-100 text-amber-800";
+        else if(status==="DIPROSES"||status==="DIVERIFIKASI")cls="bg-blue-100 text-blue-800";
+
+        box.innerHTML=`<div class="border rounded-2xl overflow-hidden">
+          <div class="p-4 bg-slate-50">
+            <div class="flex justify-between gap-3 items-start">
+              <div><p class="text-sm font-black">${onlineEscape(p.nama||"-")}</p><p class="text-xs text-slate-500">${onlineEscape(p.layanan||"-")}</p></div>
+              <span class="px-3 py-1 rounded-full text-[9px] font-black ${cls}">${onlineEscape(p.status||"-")}</span>
+            </div>
+            ${p.catatan?`<div class="mt-3 rounded-xl bg-amber-50 border border-amber-200 p-3 text-xs text-amber-900"><b>Catatan Petugas:</b><br>${onlineEscape(p.catatan)}</div>`:""}
+          </div>
+          <div class="p-4"><p class="text-xs font-black mb-3">Riwayat Status</p>
+            <div class="space-y-3">${(result.riwayat||[]).length?(result.riwayat||[]).map(r=>`
+              <div class="border-l-4 border-red-200 pl-3"><p class="text-xs font-black">${onlineEscape(r.status)}</p>
+              <p class="text-[9px] text-slate-400">${onlineEscape(r.waktu||"")}</p>
+              ${r.catatan?`<p class="text-[10px] text-slate-600 mt-1">${onlineEscape(r.catatan)}</p>`:""}</div>`).join(""):'<p class="text-xs text-slate-400">Belum ada riwayat.</p>'}</div>
+          </div>
+          ${p.fileHasil?`<div class="p-4 bg-emerald-50 border-t border-emerald-100"><p class="text-xs font-black text-emerald-800 mb-2">Dokumen Hasil Tersedia</p>
+            <a href="${onlineSafeUrl(p.fileHasil)}" target="_blank" rel="noopener" class="inline-block px-4 py-2 rounded-xl bg-emerald-700 text-white text-xs font-black">⬇ Buka / Unduh Dokumen Hasil</a></div>`:""}
+        </div>`;
+      }catch(err){box.innerHTML=`<div class="rounded-xl bg-red-50 border border-red-200 p-3 text-xs text-red-800"><b>Pengajuan tidak ditemukan.</b><br>${onlineEscape(err.message)}</div>`}
+      finally{onlineButtonLoading(btn,false,"Cek Sekarang")}
+    }
+
+    function onlineSafeUrl(url){
+      const s=String(url||"").trim();
+      if(s.startsWith("https://drive.google.com/")||s.startsWith("https://docs.google.com/"))return s;
+      return "#";
+    }
+
+    function resetOnlineApplication(){
+      onlineSelectedService=null;onlineCurrentId="";onlineCurrentPin="";
+      document.getElementById("onlineApplicationForm").reset();
+      document.getElementById("onlineDocuments").classList.add("hidden");
+      document.getElementById("onlineData").classList.add("hidden");
+      document.getElementById("onlineServices").classList.remove("hidden");
+      document.getElementById("onlineBtnToData").disabled=true;
+      document.querySelectorAll(".online-service").forEach(x=>x.classList.remove("selected"));
+      updateOnlineSteps(1);
+      document.getElementById("pengajuan-online").scrollIntoView({behavior:"smooth"});
+    }
+
+    /* Menu gabungan */
+    function scrollToQueue(){document.getElementById("current-number").scrollIntoView({behavior:"smooth",block:"start"})}
+    function scrollToOnline(){document.getElementById("pengajuan-online").scrollIntoView({behavior:"smooth",block:"start"})}
+
+    window.addEventListener("load",()=>{ loadOnlineServices(); });
+
   </script>
 </body>
 </html>

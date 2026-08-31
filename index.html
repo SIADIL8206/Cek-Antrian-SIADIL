@@ -86,7 +86,17 @@
     .online-service.selected{border-color:#dc2626!important;background:#fff7f7;box-shadow:0 0 0 3px rgba(220,38,38,.08)}
     .online-file input[type=file]{display:none}
 
-  </style>
+  
+    /* === SI-ADIL ONLINE: ALUR UPLOAD DULU === */
+    .siadil-upload-item { border:1px solid #e2e8f0; border-radius:14px; padding:12px; background:#fff; }
+    .siadil-upload-item.siap { border-color:#86efac; background:#f0fdf4; }
+    .siadil-upload-status { font-size:10px; font-weight:800; }
+    .siadil-upload-status.ok { color:#15803d; }
+    .siadil-upload-status.no { color:#b91c1c; }
+    .siadil-draft-box { background:#fffbeb; border:1px solid #fde68a; border-radius:14px; padding:12px; }
+    .siadil-submit-disabled { opacity:.5; cursor:not-allowed !important; }
+
+</style>
 </head>
 <body class="min-h-screen text-slate-800">
 
@@ -783,6 +793,208 @@
 
     window.addEventListener("load",()=>{ loadOnlineServices(); });
 
-  </script>
+  
+
+/* ==========================================================
+   SI-ADIL ONLINE — WORKFLOW BARU
+   Pilih layanan → data pemohon → upload semua syarat →
+   baru AJUKAN. Draft data disimpan lokal agar refresh tidak
+   menghapus isian. File tidak disimpan di localStorage;
+   file harus dipilih/upload kembali bila browser kehilangan
+   File object.
+   ========================================================== */
+const SIADIL_DRAFT_KEY = 'siadil_online_draft_v2';
+let siadilDraft = null;
+let siadilPersyaratan = [];
+let siadilUploadedDocs = {};
+
+function siadilSimpanDraft() {
+  try {
+    const form = document.querySelector('#formPengajuanOnline, form[data-siadil-pengajuan], #pengajuanForm');
+    if (!form) return;
+    const obj = { savedAt: Date.now(), values: {} };
+    form.querySelectorAll('input, select, textarea').forEach(el => {
+      if (!el.name && !el.id) return;
+      if (el.type === 'file') return;
+      const key = el.name || el.id;
+      obj.values[key] = el.type === 'checkbox' || el.type === 'radio' ? el.checked : el.value;
+    });
+    obj.layanan = (document.querySelector('#layananOnline, #selectLayanan, select[name="layanan"]') || {}).value || '';
+    localStorage.setItem(SIADIL_DRAFT_KEY, JSON.stringify(obj));
+  } catch(e) { console.warn('Draft tidak dapat disimpan', e); }
+}
+
+function siadilMuatDraft() {
+  try {
+    const raw = localStorage.getItem(SIADIL_DRAFT_KEY);
+    if (!raw) return;
+    const obj = JSON.parse(raw);
+    if (!obj || !obj.values) return;
+    const form = document.querySelector('#formPengajuanOnline, form[data-siadil-pengajuan], #pengajuanForm');
+    if (!form) return;
+    Object.keys(obj.values).forEach(key => {
+      const el = form.querySelector(`[name="${CSS.escape(key)}"], #${CSS.escape(key)}`);
+      if (!el) return;
+      if (el.type === 'checkbox' || el.type === 'radio') el.checked = !!obj.values[key];
+      else el.value = obj.values[key];
+    });
+    setTimeout(() => {
+      const evt = new Event('change', {bubbles:true});
+      const sel = form.querySelector('select[name="layanan"], #layananOnline, #selectLayanan');
+      if (sel) sel.dispatchEvent(evt);
+      siadilTampilkanDraftNotice();
+      siadilUpdateSubmitState();
+    }, 100);
+  } catch(e) { console.warn('Draft gagal dimuat', e); }
+}
+
+function siadilTampilkanDraftNotice() {
+  const old = document.getElementById('siadilDraftNotice');
+  if (old) old.remove();
+  const form = document.querySelector('#formPengajuanOnline, form[data-siadil-pengajuan], #pengajuanForm');
+  if (!form || !localStorage.getItem(SIADIL_DRAFT_KEY)) return;
+  const box = document.createElement('div');
+  box.id = 'siadilDraftNotice';
+  box.className = 'siadil-draft-box mb-3';
+  box.innerHTML = `
+    <div class="fw-bold text-amber-900 mb-1">💾 Draf pengajuan ditemukan</div>
+    <div class="small text-slate-600 mb-2">Data isian sebelumnya telah dipulihkan. Periksa kembali sebelum melanjutkan.</div>
+    <button type="button" class="btn btn-sm btn-outline-danger fw-bold" onclick="siadilHapusDraft()">
+      Mulai dari Awal
+    </button>`;
+  form.prepend(box);
+}
+
+function siadilHapusDraft() {
+  localStorage.removeItem(SIADIL_DRAFT_KEY);
+  location.reload();
+}
+
+function siadilSetPersyaratan(list) {
+  siadilPersyaratan = Array.isArray(list) ? list : [];
+  siadilUploadedDocs = {};
+  siadilRenderUploadList();
+  siadilUpdateSubmitState();
+}
+
+function siadilRenderUploadList() {
+  const host = document.getElementById('siadilPersyaratanUpload');
+  if (!host) return;
+  if (!siadilPersyaratan.length) {
+    host.innerHTML = '<div class="text-center text-slate-500 small py-3">Persyaratan belum tersedia untuk layanan ini.</div>';
+    return;
+  }
+  host.innerHTML = siadilPersyaratan.map((p, i) => {
+    const nama = typeof p === 'string' ? p : (p.nama || p.persyaratan || p.namaPersyaratan || `Dokumen ${i+1}`);
+    const id = `siadilFile_${i}`;
+    return `
+      <div class="siadil-upload-item mb-2" data-siadil-required="${i}">
+        <div class="d-flex justify-content-between gap-2 align-items-start mb-2">
+          <div class="small fw-bold text-slate-800">${i+1}. ${siadilEsc(nama)}</div>
+          <span id="${id}_status" class="siadil-upload-status no">WAJIB UPLOAD</span>
+        </div>
+        <input id="${id}" type="file" accept="image/*,.pdf" class="form-control form-control-sm"
+          onchange="siadilPilihDokumen(${i}, this)">
+        <div id="${id}_name" class="text-[10px] text-slate-500 mt-1"></div>
+      </div>`;
+  }).join('');
+}
+
+function siadilEsc(v) {
+  return String(v ?? '').replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[s]));
+}
+
+function siadilPilihDokumen(index, input) {
+  const file = input && input.files && input.files[0];
+  const item = input.closest('.siadil-upload-item');
+  const status = document.getElementById(`siadilFile_${index}_status`);
+  const name = document.getElementById(`siadilFile_${index}_name`);
+  if (!file) {
+    delete siadilUploadedDocs[index];
+    if (item) item.classList.remove('siap');
+    if (status) { status.className='siadil-upload-status no'; status.textContent='WAJIB UPLOAD'; }
+    if (name) name.textContent='';
+  } else {
+    siadilUploadedDocs[index] = file;
+    if (item) item.classList.add('siap');
+    if (status) { status.className='siadil-upload-status ok'; status.textContent='✓ SIAP'; }
+    if (name) name.textContent = `${file.name} — ${(file.size/1024/1024).toFixed(2)} MB`;
+  }
+  siadilSimpanDraft();
+  siadilUpdateSubmitState();
+}
+
+function siadilSemuaDokumenLengkap() {
+  return siadilPersyaratan.length > 0 &&
+         siadilPersyaratan.every((_, i) => !!siadilUploadedDocs[i]);
+}
+
+function siadilUpdateSubmitState() {
+  const btns = document.querySelectorAll(
+    '#btnAjukanOnline, #btnSubmitPengajuan, button[type="submit"][data-siadil-submit]'
+  );
+  const lengkap = siadilSemuaDokumenLengkap();
+  btns.forEach(btn => {
+    btn.disabled = !lengkap;
+    btn.classList.toggle('siadil-submit-disabled', !lengkap);
+    if (!lengkap) btn.title = 'Upload semua persyaratan terlebih dahulu';
+    else btn.title = 'Semua persyaratan lengkap';
+  });
+  const info = document.getElementById('siadilKelengkapanInfo');
+  if (info) {
+    info.innerHTML = lengkap
+      ? '✅ <b>Semua persyaratan sudah lengkap.</b> Pengajuan dapat dikirim.'
+      : `⚠️ Upload semua ${siadilPersyaratan.length} persyaratan terlebih dahulu.`;
+  }
+}
+
+/* Dipanggil sebelum proses final pengajuan.
+   Mengembalikan false jika masih ada dokumen yang belum diupload. */
+function siadilValidasiSebelumAjukan() {
+  if (!siadilSemuaDokumenLengkap()) {
+    const kurang = siadilPersyaratan
+      .map((p,i)=>({p,i}))
+      .filter(x=>!siadilUploadedDocs[x.i])
+      .map(x=> typeof x.p==='string' ? x.p : (x.p.nama || x.p.persyaratan || `Dokumen ${x.i+1}`));
+    alert('⚠️ Pengajuan belum dapat dikirim.\n\nPersyaratan belum diupload:\n• ' + kurang.join('\n• '));
+    siadilUpdateSubmitState();
+    return false;
+  }
+  return true;
+}
+
+/* Jika kode lama membuat pengajuan dulu baru upload, kita cegah:
+   tombol submit lama tidak boleh menjalankan proses final sebelum
+   validasi upload. */
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('#btnAjukanOnline, #btnSubmitPengajuan, button[data-siadil-submit]');
+  if (!btn) return;
+  if (!siadilValidasiSebelumAjukan()) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+  }
+}, true);
+
+document.addEventListener('input', function(e) {
+  if (e.target.closest('#formPengajuanOnline, form[data-siadil-pengajuan], #pengajuanForm')) {
+    clearTimeout(window.__siadilDraftTimer);
+    window.__siadilDraftTimer = setTimeout(siadilSimpanDraft, 250);
+  }
+});
+
+document.addEventListener('change', function(e) {
+  if (e.target.closest('#formPengajuanOnline, form[data-siadil-pengajuan], #pengajuanForm')) {
+    siadilSimpanDraft();
+  }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(() => {
+    siadilMuatDraft();
+    siadilUpdateSubmitState();
+  }, 300);
+});
+
+</script>
 </body>
 </html>

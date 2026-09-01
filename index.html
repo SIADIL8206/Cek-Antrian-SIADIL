@@ -25,11 +25,9 @@
     body { font-family: 'Plus Jakarta Sans', sans-serif; background: linear-gradient(135deg, #fdf4f4 0%, #f8fafc 50%, #f1f5f9 100%); overflow-x: hidden; }
     .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(254, 226, 226, 0.6); }
     
-    /* Animasi Running Text */
     @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
     .animate-marquee { display: inline-block; animation: marquee 30s linear infinite; }
     
-    /* Animasi Titik Live Update */
     @keyframes pulse-green {
       0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
       70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
@@ -37,42 +35,22 @@
     }
     .live-dot { width: 8px; height: 8px; background-color: #22c55e; border-radius: 50%; display: inline-block; animation: pulse-green 2s infinite; }
 
-    /* Pita Sudut Merah Putih Khusus Layar Lebar (Desktop Only) */
     .ribbon-wrapper {
-      width: 120px;
-      height: 120px;
-      overflow: hidden;
-      position: absolute;
-      top: 0;
-      right: 0;
-      pointer-events: none;
-      z-index: 20;
+      width: 120px; height: 120px; overflow: hidden; position: absolute;
+      top: 0; right: 0; pointer-events: none; z-index: 20;
     }
     .ribbon-merdeka {
-      font-size: 8.5px;
-      font-weight: 900;
-      color: #991b1b;
-      text-transform: uppercase;
-      text-align: center;
-      line-height: 20px;
-      transform: rotate(45deg);
-      position: relative;
-      padding: 2px 0;
-      left: -5px;
-      top: 22px;
-      width: 160px;
+      font-size: 8.5px; font-weight: 900; color: #991b1b; text-transform: uppercase;
+      text-align: center; line-height: 20px; transform: rotate(45deg); position: relative;
+      padding: 2px 0; left: -5px; top: 22px; width: 160px;
       background: linear-gradient(to bottom, #ffffff 50%, #fee2e2 50%);
-      box-shadow: 0 3px 8px rgba(0,0,0,0.25);
-      border-top: 1px solid rgba(255,255,255,0.9);
-      border-bottom: 1px solid #b91c1c;
-      letter-spacing: 0.8px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.9);
+      border-bottom: 1px solid #b91c1c; letter-spacing: 0.8px;
     }
 
-    /* Menghilangkan Banner Apps Script */
     iframe { display: none !important; }
     body { top: 0 !important; margin-top: 0 !important; }
   
-    /* ===== SI-ADIL ONLINE STYLES ===== */
     .online-step { background: #fff; color: #64748b; border: 1px solid #e2e8f0; transition: all 0.2s ease; }
     .online-step.active { background: #991b1b; color: #fff; border-color: #991b1b; box-shadow: 0 4px 12px rgba(153, 27, 27, 0.25); }
     .online-step.done { background: #dcfce7; color: #166534; border-color: #86efac; }
@@ -83,7 +61,6 @@
     .online-service:hover { transform: translateY(-2px); border-color: #fca5a5; }
     .online-service.selected { border-color: #dc2626 !important; background: #fff7f7; box-shadow: 0 0 0 3px rgba(220,38,38,.12); }
   
-    /* ALUR UPLOAD & DRAFT BOX */
     .siadil-upload-item { border: 1.5px dashed #cbd5e1; border-radius: 16px; padding: 14px; background: #fff; transition: all 0.2s; }
     .siadil-upload-item.siap { border-style: solid; border-color: #22c55e; background: #f0fdf4; }
     .siadil-upload-status { font-size: 9px; font-weight: 900; padding: 3px 8px; border-radius: 6px; letter-spacing: 0.5px; }
@@ -96,17 +73,15 @@
 </head>
 <body class="min-h-screen text-slate-800">
 
+  <!-- HEADER BRANDING EDISI KEMERDEKAAN -->
   <header class="relative bg-gradient-to-r from-red-900 via-red-700 to-red-800 text-white shadow-xl p-3 md:p-4 mb-4 overflow-hidden border-b-2 border-amber-400">
-    
     <div class="ribbon-wrapper hidden md:block">
       <div class="ribbon-merdeka">DIRGAHAYU RI</div>
     </div>
-
     <div class="absolute -top-12 -left-12 w-48 h-48 rounded-full bg-white opacity-5 pointer-events-none"></div>
     <div class="absolute -bottom-16 right-20 w-64 h-64 rounded-full bg-amber-400 opacity-10 pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4 relative z-10">
-      
       <div class="flex items-center justify-between w-full md:w-auto gap-2.5 md:gap-4">
         <div class="flex items-center gap-2.5">
           <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Lambang_Kabupaten_Halmahera_Timur.png" alt="Logo Pemkab" class="h-9 md:h-12 w-auto drop-shadow-md">
@@ -115,7 +90,6 @@
             <p class="text-amber-200 text-[10px] md:text-[13px] font-bold">Kabupaten Halmahera Timur</p>
           </div>
         </div>
-
         <div class="bg-white p-1 md:p-1.5 rounded-xl shadow-md border border-amber-400 flex items-center justify-center h-9 md:h-12 flex-shrink-0">
           <img src="logo-2-1024.webp" alt="HUT RI 81" class="h-full w-auto object-contain">
         </div>
@@ -131,10 +105,10 @@
           <p class="text-amber-200 text-[8.5px] md:text-[9px] uppercase tracking-widest font-extrabold" id="tanggal">MEMUAT...</p>
         </div>
       </div>
-
     </div>
   </header>
 
+  <!-- NAVIGASI GABUNGAN -->
   <div class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-red-100 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-center gap-2 md:gap-3">
       <button type="button" onclick="scrollToQueue()" class="px-3 md:px-5 py-2 rounded-xl bg-red-700 text-white text-[10px] md:text-xs font-black shadow-sm">
@@ -161,6 +135,7 @@
       <span class="text-[9px] bg-red-600 text-white font-black px-2 py-0.5 rounded-md uppercase tracking-wider">HUT RI 81</span>
     </div>
 
+    <!-- SECTION 1: PELAYANAN SAAT INI -->
     <section class="mb-5">
       <div class="flex items-center gap-2 mb-2">
         <div class="h-4 w-1.5 bg-red-600 rounded-full"></div>
@@ -196,15 +171,16 @@
       </div>
     </section>
 
+    <!-- SECTION 2: DAFTAR TUNGGU -->
     <section class="mb-5">
       <div class="flex items-center gap-2 mb-3">
         <div class="h-4 w-1.5 bg-amber-500 rounded-full"></div>
         <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500">Urutan Tunggu</h2>
       </div>
-      <div id="waiting-list" class="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8 gap-2">
-      </div>
+      <div id="waiting-list" class="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8 gap-2"></div>
     </section>
 
+    <!-- SECTION 3: RIWAYAT SELESAI -->
     <section class="mb-10">
       <div class="flex items-center gap-2 mb-4">
         <div class="h-5 w-2 bg-red-600 rounded-full"></div>
@@ -220,13 +196,15 @@
                 <th class="px-4 py-2.5 text-center">Status</th>
               </tr>
             </thead>
-            <tbody id="done-list" class="divide-y divide-red-50/60 text-xs">
-            </tbody>
+            <tbody id="done-list" class="divide-y divide-red-50/60 text-xs"></tbody>
           </table>
         </div>
       </div>
     </section>
 
+    <!-- =========================================================
+         SI-ADIL ONLINE — MODUL PENGAJUAN MASYARAKAT
+         ========================================================= -->
     <section id="pengajuan-online" class="pt-4 pb-20">
       <div class="glass-card rounded-2xl p-4 md:p-6 mb-4 border-l-8 border-red-600 shadow-lg">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
@@ -244,6 +222,7 @@
         </div>
       </div>
 
+      <!-- STEP INDICATOR -->
       <div class="grid grid-cols-3 gap-2 mb-4">
         <div id="onlineStep1" class="online-step active rounded-xl p-3 text-center">
           <div class="text-base md:text-lg font-black leading-tight">1</div>
@@ -261,6 +240,7 @@
 
       <div id="siadilDraftNoticeContainer"></div>
 
+      <!-- STEP 1: PILIH LAYANAN -->
       <div id="onlineServices" class="glass-card rounded-2xl p-4 md:p-6 shadow-sm">
         <div class="flex items-center justify-between mb-4">
           <div>
@@ -279,6 +259,7 @@
         </div>
       </div>
 
+      <!-- STEP 2: DATA PEMOHON -->
       <div id="onlineData" class="glass-card rounded-2xl p-4 md:p-6 hidden shadow-sm">
         <div class="flex items-center justify-between mb-3">
           <div>
@@ -332,6 +313,7 @@
         </form>
       </div>
 
+      <!-- STEP 3: UPLOAD PERSYARATAN -->
       <div id="onlineDocuments" class="glass-card rounded-2xl p-4 md:p-6 hidden shadow-sm">
         <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-3">
           <div>
@@ -358,16 +340,17 @@
         </div>
       </div>
 
+      <!-- HASIL PENGAJUAN SUKSES (DILENGKAPI SIMPAN KE WA) -->
       <div id="onlineResultSuccess" class="glass-card rounded-2xl p-5 md:p-8 hidden shadow-xl text-center border-t-8 border-emerald-600">
         <div class="w-16 h-16 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center text-3xl mx-auto mb-3 shadow-inner">
           ✓
         </div>
         <h3 class="text-2xl font-black text-slate-900">Pengajuan Berhasil Dikirim!</h3>
         <p class="text-xs text-slate-500 max-w-md mx-auto mt-1 mb-5">
-          Permohonan Anda telah resmi tercatat di sistem Disdukcapil Kabupaten Halmahera Timur. Simpan ID dan PIN di bawah ini untuk memantau status berkas Anda.
+          Permohonan Anda telah resmi tercatat di sistem Disdukcapil Kabupaten Halmahera Timur.
         </p>
 
-        <div class="max-w-md mx-auto bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-6 shadow-sm">
+        <div class="max-w-md mx-auto bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-4 shadow-sm text-left">
           <div class="flex justify-between items-center border-b border-slate-200 pb-2 mb-2">
             <span class="text-xs text-slate-500 font-bold uppercase">ID PENGAJUAN</span>
             <span id="onlineSuccessId" class="text-base font-black text-slate-900 font-mono">-</span>
@@ -378,7 +361,19 @@
           </div>
         </div>
 
-        <div class="flex flex-col sm:flex-row justify-center gap-3">
+        <!-- TOMBOL SIMPAN KE WA (OPSI 1) -->
+        <div class="max-w-md mx-auto mb-6 space-y-2">
+          <a id="btnSimpanWA" href="#" target="_blank"
+            class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-emerald-600 text-white text-xs font-black shadow-md hover:bg-emerald-700 transition-all">
+            <span>📲</span> SIMPAN BUKTI KE WHATSAPP SAYA
+          </a>
+          <button type="button" onclick="salinInfoPengajuan()"
+            class="w-full py-2.5 px-4 rounded-xl border border-slate-300 text-slate-700 bg-white text-xs font-black hover:bg-slate-50">
+            📋 Salin ID & PIN ke Clipboard
+          </button>
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-3 border-t border-slate-100 pt-4">
           <button type="button" onclick="openTrackingFromSuccess()"
             class="px-6 py-3 rounded-xl bg-red-700 text-white text-xs font-black shadow-md hover:bg-red-800 transition-all">
             🔎 Lacak Status Sekarang
@@ -393,6 +388,7 @@
     </section>
   </main>
 
+  <!-- TRACKING MODAL (DUAL MODE: ID+PIN ATAU NIK+4 DIGIT HP) -->
   <div id="onlineTrackingModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-sm hidden z-[80] p-4 overflow-y-auto">
     <div class="min-h-full flex items-center justify-center">
       <div class="bg-white rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden border border-slate-100">
@@ -403,8 +399,21 @@
           </div>
           <button type="button" onclick="closeTrackingOnline()" class="text-2xl font-black text-white hover:text-amber-200">×</button>
         </div>
+        
         <div class="p-4 md:p-6">
-          <div class="grid sm:grid-cols-2 gap-3">
+          
+          <!-- TAB PILIHAN METODE CEK STATUS -->
+          <div class="flex gap-2 p-1 bg-slate-100 rounded-xl mb-4">
+            <button type="button" id="btnModePin" onclick="pindahModeTrack('PIN')" class="flex-1 py-2 rounded-lg text-xs font-black bg-white text-red-700 shadow-sm transition-all">
+              🔑 Gunakan ID & PIN
+            </button>
+            <button type="button" id="btnModeNik" onclick="pindahModeTrack('NIK')" class="flex-1 py-2 rounded-lg text-xs font-black text-slate-500 hover:text-slate-800 transition-all">
+              🪪 Gunakan NIK & No. HP
+            </button>
+          </div>
+
+          <!-- FORM MODE 1: ID + PIN -->
+          <div id="formTrackModePin" class="grid sm:grid-cols-2 gap-3">
             <div>
               <label class="online-label">ID Pengajuan</label>
               <input id="onlineTrackId" class="online-input uppercase font-mono" placeholder="Contoh: ADL-20260831-0001">
@@ -414,16 +423,31 @@
               <input id="onlineTrackPin" maxlength="6" inputmode="numeric" class="online-input font-mono tracking-widest" placeholder="6 digit PIN">
             </div>
           </div>
+
+          <!-- FORM MODE 2: NIK + 4 DIGIT TERAKHIR HP (OPSI 2) -->
+          <div id="formTrackModeNik" class="grid sm:grid-cols-2 gap-3 hidden">
+            <div>
+              <label class="online-label">Nomor Induk Kependudukan (NIK)</label>
+              <input id="onlineTrackNik" maxlength="16" inputmode="numeric" class="online-input font-mono" placeholder="16 digit NIK Pemohon">
+            </div>
+            <div>
+              <label class="online-label">4 Digit Terakhir No. HP / WhatsApp</label>
+              <input id="onlineTrackHp4" maxlength="4" inputmode="numeric" class="online-input font-mono text-center tracking-widest" placeholder="Contoh: 8910">
+            </div>
+          </div>
+
           <button type="button" id="onlineBtnTrack" onclick="trackOnlineApplication()"
-            class="w-full mt-3 py-3 rounded-xl bg-red-700 text-white text-xs font-black hover:bg-red-800 shadow-md transition-all">
+            class="w-full mt-4 py-3 rounded-xl bg-red-700 text-white text-xs font-black hover:bg-red-800 shadow-md transition-all">
             Cek Status Pengajuan
           </button>
+          
           <div id="onlineTrackingResult" class="mt-4"></div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- FOOTER RUNNING TEXT KEMERDEKAAN -->
   <footer class="fixed bottom-0 w-full bg-gradient-to-r from-red-950 via-slate-900 to-red-950 text-white p-2 overflow-hidden border-t border-red-800 z-50">
     <div class="whitespace-nowrap animate-marquee">
       <span class="mx-4 text-[12px] uppercase font-bold text-amber-300">🇮🇩 DIRGAHAYU REPUBLIK INDONESIA KE-81!</span>
@@ -547,6 +571,8 @@
     let onlineUploadedDocs = {};
     let lastGeneratedId = "";
     let lastGeneratedPin = "";
+    let lastPemohonData = {};
+    let activeTrackMode = "PIN"; // 'PIN' atau 'NIK'
 
     function onlineApiReady() {
       if(!SIADIL_ONLINE_API || SIADIL_ONLINE_API.includes("GANTI_DENGAN")) {
@@ -889,14 +915,26 @@
       onlineButtonLoading(btn, true, "Mengirim Pengajuan & Dokumen ke Server...");
 
       const berkasArray = Object.values(onlineUploadedDocs);
+      const nama = document.getElementById("onlineNama").value.trim();
+      const nik = document.getElementById("onlineNik").value.trim();
+      const noKK = document.getElementById("onlineNoKK").value.trim();
+      const noHP = document.getElementById("onlineNoHP").value.trim();
+
+      lastPemohonData = {
+        nama: nama,
+        nik: nik,
+        noKK: noKK,
+        noHP: noHP,
+        layanan: onlineSelectedService.nama
+      };
 
       const payload = {
         action: "submitPengajuanLengkap",
         kodeLayanan: onlineSelectedService.kode,
-        nama: document.getElementById("onlineNama").value.trim(),
-        nik: document.getElementById("onlineNik").value.trim(),
-        noKK: document.getElementById("onlineNoKK").value.trim(),
-        noHP: document.getElementById("onlineNoHP").value.trim(),
+        nama: nama,
+        nik: nik,
+        noKK: noKK,
+        noHP: noHP,
         email: document.getElementById("onlineEmail").value.trim(),
         alamat: document.getElementById("onlineAlamat").value.trim(),
         desa: document.getElementById("onlineDesa").value.trim(),
@@ -914,6 +952,21 @@
 
         localStorage.removeItem(SIADIL_DRAFT_KEY);
 
+        // Siapkan Link WhatsApp
+        const cleanHP = noHP.replace(/\D/g, "").replace(/^0/, "62");
+        const trackUrl = `${window.location.origin}${window.location.pathname}?id=${encodeURIComponent(lastGeneratedId)}&pin=${encodeURIComponent(lastGeneratedPin)}`;
+        const pesanWA = `*BUKTI PENGAJUAN ONLINE SI-ADIL DISDUKCAPIL*\n` +
+          `----------------------------------------\n` +
+          `Nama Pemohon: ${nama}\n` +
+          `Jenis Layanan: ${onlineSelectedService.nama}\n` +
+          `ID Pengajuan: *${lastGeneratedId}*\n` +
+          `PIN / Akses: *${lastGeneratedPin}*\n` +
+          `----------------------------------------\n` +
+          `Klik tautan di bawah untuk mengecek status permohonan Anda:\n` +
+          `${trackUrl}`;
+        
+        document.getElementById("btnSimpanWA").href = `https://wa.me/${cleanHP}?text=${encodeURIComponent(pesanWA)}`;
+
         document.getElementById("onlineDocuments").classList.add("hidden");
         document.getElementById("onlineResultSuccess").classList.remove("hidden");
         document.getElementById("onlineSuccessId").textContent = lastGeneratedId;
@@ -925,6 +978,13 @@
       } finally {
         onlineButtonLoading(btn, false, "🚀 AJUKAN PERMOHONAN RESMI");
       }
+    }
+
+    function salinInfoPengajuan() {
+      const teks = `ID Pengajuan: ${lastGeneratedId} | PIN: ${lastGeneratedPin}`;
+      navigator.clipboard.writeText(teks).then(() => {
+        alert("✅ ID Pengajuan dan PIN berhasil disalin ke clipboard!");
+      });
     }
 
     /* --- DRAFT ENGINE --- */
@@ -998,10 +1058,34 @@
       location.reload();
     }
 
-    /* --- TRACKING MODAL LOGIC (FIXED MULTI-FILE DOKUMEN HASIL) --- */
+    /* --- TRACKING MODAL LOGIC (DUAL MODE & MULTI-FILE SUPPORT) --- */
+    function pindahModeTrack(mode) {
+      activeTrackMode = mode;
+      const btnPin = document.getElementById("btnModePin");
+      const btnNik = document.getElementById("btnModeNik");
+      const formPin = document.getElementById("formTrackModePin");
+      const formNik = document.getElementById("formTrackModeNik");
+
+      if (mode === "PIN") {
+        btnPin.className = "flex-1 py-2 rounded-lg text-xs font-black bg-white text-red-700 shadow-sm transition-all";
+        btnNik.className = "flex-1 py-2 rounded-lg text-xs font-black text-slate-500 hover:text-slate-800 transition-all";
+        formPin.classList.remove("hidden");
+        formNik.classList.add("hidden");
+      } else {
+        btnNik.className = "flex-1 py-2 rounded-lg text-xs font-black bg-white text-red-700 shadow-sm transition-all";
+        btnPin.className = "flex-1 py-2 rounded-lg text-xs font-black text-slate-500 hover:text-slate-800 transition-all";
+        formNik.classList.remove("hidden");
+        formPin.classList.add("hidden");
+      }
+      document.getElementById("onlineTrackingResult").innerHTML = "";
+    }
+
     function openTrackingOnline(id="", pin="") {
       document.getElementById("onlineTrackingModal").classList.remove("hidden");
-      if(id) document.getElementById("onlineTrackId").value = id;
+      if(id) {
+        document.getElementById("onlineTrackId").value = id;
+        pindahModeTrack("PIN");
+      }
       if(pin) document.getElementById("onlineTrackPin").value = pin;
       document.getElementById("onlineTrackingResult").innerHTML = "";
     }
@@ -1016,16 +1100,29 @@
     }
 
     async function trackOnlineApplication() {
-      const id = document.getElementById("onlineTrackId").value.trim();
-      const pin = document.getElementById("onlineTrackPin").value.trim();
-      if(!id || !pin) return alert("ID Pengajuan dan PIN wajib diisi.");
+      let payloadParams = { action: "cekPengajuan" };
+
+      if (activeTrackMode === "PIN") {
+        const id = document.getElementById("onlineTrackId").value.trim();
+        const pin = document.getElementById("onlineTrackPin").value.trim();
+        if(!id || !pin) return alert("ID Pengajuan dan PIN wajib diisi.");
+        payloadParams.idPengajuan = id;
+        payloadParams.pin = pin;
+      } else {
+        const nik = document.getElementById("onlineTrackNik").value.trim();
+        const hp4 = document.getElementById("onlineTrackHp4").value.trim();
+        if(!nik || nik.length !== 16) return alert("NIK wajib 16 digit angka.");
+        if(!hp4 || hp4.length !== 4) return alert("Masukkan 4 digit terakhir nomor HP.");
+        payloadParams.nik = nik;
+        payloadParams.hp4 = hp4;
+      }
 
       const box = document.getElementById("onlineTrackingResult");
       const btn = document.getElementById("onlineBtnTrack");
       onlineButtonLoading(btn, true, "Memeriksa Status...");
 
       try {
-        const result = await onlineGet({ action: "cekPengajuan", idPengajuan: id, pin: pin });
+        const result = await onlineGet(payloadParams);
         if(!result.success) throw new Error(result.message || "Pengajuan tidak ditemukan.");
         const p = result.pengajuan || {};
         const status = String(p.status || "-").toUpperCase();
@@ -1036,7 +1133,6 @@
         else if(status === "DOKUMEN KURANG") cls = "bg-amber-100 text-amber-800 border-amber-300";
         else if(status === "DIPROSES" || status === "DIVERIFIKASI") cls = "bg-blue-100 text-blue-800 border-blue-300";
 
-        // Render Dokumen Hasil (Mendukung 1 file maupun Banyak File)
         let htmlHasilUnduh = '';
         if (p.fileHasil) {
           let listHasil = [];
@@ -1077,7 +1173,7 @@
                 <div>
                   <p class="text-sm font-black text-slate-900">${onlineEscape(p.nama || "-")}</p>
                   <p class="text-xs font-semibold text-slate-500">${onlineEscape(p.layanan || "-")}</p>
-                  <p class="text-[10px] text-slate-400 mt-1">Diajukan pada: ${onlineEscape(p.tanggal || "-")}</p>
+                  <p class="text-[10px] text-slate-400 mt-1">ID: <b class="font-mono text-slate-700">${onlineEscape(p.idPengajuan)}</b> • Tgl: ${onlineEscape(p.tanggal || "-")}</p>
                 </div>
                 <span class="px-3 py-1 rounded-full text-[9px] font-black border ${cls}">${onlineEscape(p.status || "-")}</span>
               </div>
@@ -1146,8 +1242,18 @@
       document.getElementById("pengajuan-online").scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
+    /* --- CEK URL PARAMETER DARI LINK WHATSAPP (AUTO TRACK) --- */
     window.addEventListener("load", () => {
       loadOnlineServices();
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlId = urlParams.get("id");
+      const urlPin = urlParams.get("pin");
+
+      if (urlId && urlPin) {
+        openTrackingOnline(urlId, urlPin);
+        trackOnlineApplication();
+      }
     });
   </script>
 </body>

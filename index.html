@@ -1246,12 +1246,20 @@
     window.addEventListener("load", () => {
       loadOnlineServices();
 
-      const urlParams = new URLSearchParams(window.location.search);
       const urlId = urlParams.get("id");
       const urlPin = urlParams.get("pin");
-
+      const urlNik = urlParams.get("nik");
+      const urlHp = urlParams.get("hp");
+      
       if (urlId && urlPin) {
         openTrackingOnline(urlId, urlPin);
+        pindahModeTrack("PIN");
+        trackOnlineApplication();
+      } else if (urlNik && urlHp) {
+        openTrackingOnline();
+        document.getElementById("onlineTrackNik").value = urlNik;
+        document.getElementById("onlineTrackHp4").value = urlHp.slice(-4);
+        pindahModeTrack("NIK");
         trackOnlineApplication();
       }
     });

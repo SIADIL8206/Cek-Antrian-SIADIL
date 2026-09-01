@@ -585,6 +585,10 @@
        2. SI-ADIL ONLINE — BACKEND PENGAJUAN & PERSYARATAN
        ========================================================= */
     const SIADIL_ONLINE_API = "https://script.google.com/macros/s/AKfycbzDQE_iC4kgr6-SSD25qsP1pUy4dO57TcX4KVXlOSVCBBLGj9UZWfpDrZWH7eFyz1Ub/exec";
+    /* =========================================================
+       STATUS FITUR ONLINE (UBAH KE true JIKA SUDAH SIAP DIBUKA)
+       ========================================================= */
+    const FITUR_ONLINE_AKTIF = false; // Set false untuk mengunci sementara
     const SIADIL_DRAFT_KEY = "siadil_online_draft_v2";
 
     let onlineServices = [];
@@ -664,12 +668,37 @@
       });
     }
 
-    /* --- LOAD & SELECT SERVICE --- */
+    /* --- LOAD & SELECT SERVICE (DILENGKAPI FITUR KUNCI SEMENTARA) --- */
     async function loadOnlineServices() {
       const loading = document.getElementById("onlineServiceLoading");
       const list = document.getElementById("onlineServiceList");
       loading.classList.remove("hidden");
       list.innerHTML = "";
+
+      // JIKA FITUR ONLINE SEDANG DIKUNCI / DALAM TAHAP PERSIAPAN
+      if (!FITUR_ONLINE_AKTIF) {
+        loading.classList.add("hidden");
+        list.innerHTML = `
+          <div class="sm:col-span-2 lg:col-span-3 text-center py-10 px-4">
+            <div class="w-16 h-16 bg-amber-100 text-amber-700 rounded-3xl flex items-center justify-center text-3xl mx-auto mb-3 shadow-inner">
+              🚧
+            </div>
+            <h4 class="text-base md:text-lg font-black text-slate-900 mb-1">Layanan Pengajuan Online Segera Hadir</h4>
+            <p class="text-xs text-slate-500 max-w-md mx-auto leading-relaxed">
+              Fitur pengajuan dan verifikasi dokumen mandiri saat ini sedang dalam tahap integrasi sistem & uji coba internal Disdukcapil Halmahera Timur.
+            </p>
+            <div class="inline-flex items-center gap-2 mt-4 px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-extrabold uppercase tracking-wider">
+              <span>📌</span> Untuk saat ini silakan menuju loket pelayanan langsung
+            </div>
+          </div>
+        `;
+        // Sembunyikan tombol lanjut jika ada
+        const btnLanjut = document.getElementById("onlineBtnToData");
+        if (btnLanjut) btnLanjut.style.display = "none";
+        return;
+      }
+
+      // JIKA FITUR AKTIF (NORMAL)
       try {
         const result = await onlineGet({ action: "getLayanan" });
         if(!result.success) throw new Error(result.message || "Gagal memuat layanan.");
@@ -1158,6 +1187,10 @@
     }
 
     function openTrackingOnline(id="", pin="") {
+      if (!FITUR_ONLINE_AKTIF) {
+        alert("ℹ️ Layanan Pengajuan Online & Pelacakan Berkas Mandiri saat ini sedang dalam tahap uji coba internal dan akan segera diluncurkan secara resmi.");
+        return;
+      }
       document.getElementById("onlineTrackingModal").classList.remove("hidden");
       if(id) {
         document.getElementById("onlineTrackId").value = id;

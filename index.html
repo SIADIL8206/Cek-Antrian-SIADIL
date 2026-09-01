@@ -385,41 +385,39 @@
   </main>
 
   <!-- TRACKING MODAL (SEDERHANA: CUKUP NIK + NO HP) -->
-  <!-- TRACKING MODAL (NIK + 4 DIGIT TERAKHIR NO HP) -->
-<div id="onlineTrackingModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-sm hidden z-[80] p-4 overflow-y-auto">
-  <div class="min-h-full flex items-center justify-center">
-    <div class="bg-white rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden border border-slate-100">
-      <div class="bg-gradient-to-r from-red-900 to-red-800 text-white p-4 flex justify-between items-center">
-        <div>
-          <p class="text-[8px] uppercase tracking-widest text-amber-200 font-black">PELACAKAN BERKAS ONLINE</p>
-          <h3 class="font-black text-base md:text-lg">Cek Status Pengajuan</h3>
-        </div>
-        <button type="button" onclick="closeTrackingOnline()" class="text-2xl font-black text-white hover:text-amber-200">×</button>
-      </div>
-      
-      <div class="p-4 md:p-6">
-        <div class="space-y-3">
+  <div id="onlineTrackingModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-sm hidden z-[80] p-4 overflow-y-auto">
+    <div class="min-h-full flex items-center justify-center">
+      <div class="bg-white rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden border border-slate-100">
+        <div class="bg-gradient-to-r from-red-900 to-red-800 text-white p-4 flex justify-between items-center">
           <div>
-            <label class="online-label">Nomor Induk Kependudukan (NIK)</label>
-            <input id="onlineTrackNik" maxlength="16" inputmode="numeric" class="online-input font-mono" placeholder="16 digit NIK pemohon">
+            <p class="text-[8px] uppercase tracking-widest text-amber-200 font-black">PELACAKAN BERKAS ONLINE</p>
+            <h3 class="font-black text-base md:text-lg">Cek Status Pengajuan Dokumen</h3>
           </div>
-          <div>
-            <label class="online-label">4 Digit Terakhir No. WhatsApp / HP</label>
-            <input id="onlineTrackHp" maxlength="4" inputmode="numeric" class="online-input font-mono text-center tracking-widest font-black text-base" placeholder="Contoh: 1800">
-            <p class="text-[10px] text-slate-400 mt-1">Masukkan 4 angka paling belakang dari nomor HP yang didaftarkan.</p>
-          </div>
+          <button type="button" onclick="closeTrackingOnline()" class="text-2xl font-black text-white hover:text-amber-200">×</button>
         </div>
-
-        <button type="button" id="onlineBtnTrack" onclick="trackOnlineApplication()"
-          class="w-full mt-4 py-3 rounded-xl bg-red-700 text-white text-xs font-black hover:bg-red-800 shadow-md transition-all">
-          Cek Status Pengajuan
-        </button>
         
-        <div id="onlineTrackingResult" class="mt-4"></div>
+        <div class="p-4 md:p-6">
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div>
+              <label class="online-label">Nomor Induk Kependudukan (NIK)</label>
+              <input id="onlineTrackNik" maxlength="16" inputmode="numeric" class="online-input font-mono" placeholder="16 digit NIK pemohon">
+            </div>
+            <div>
+              <label class="online-label">Nomor HP / WhatsApp Aktif</label>
+              <input id="onlineTrackHp" inputmode="tel" class="online-input font-mono" placeholder="Nomor HP saat mendaftar">
+            </div>
+          </div>
+
+          <button type="button" id="onlineBtnTrack" onclick="trackOnlineApplication()"
+            class="w-full mt-4 py-3 rounded-xl bg-red-700 text-white text-xs font-black hover:bg-red-800 shadow-md transition-all">
+            Cek Status Pengajuan
+          </button>
+          
+          <div id="onlineTrackingResult" class="mt-4"></div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
   <!-- FOOTER RUNNING TEXT KEMERDEKAAN -->
   <footer class="fixed bottom-0 w-full bg-gradient-to-r from-red-950 via-slate-900 to-red-950 text-white p-2 overflow-hidden border-t border-red-800 z-50">
@@ -1033,17 +1031,11 @@
     }
 
     async function trackOnlineApplication() {
-      const nik = document.getElementById("onlineTrackNik").value.trim().replace(/\D/g, "");
-      const hp4 = document.getElementById("onlineTrackHp").value.trim().replace(/\D/g, "");
+      const nik = document.getElementById("onlineTrackNik").value.trim();
+      const hp = document.getElementById("onlineTrackHp").value.trim();
 
-      if(!nik || nik.length !== 16) {
-        alert("⚠️ NIK wajib diisi 16 digit angka.");
-        return;
-      }
-      if(!hp4 || hp4.length !== 4) {
-        alert("⚠️ Masukkan tepat 4 digit angka terakhir nomor HP Anda.");
-        return;
-      }
+      if(!nik || nik.length !== 16) return alert("NIK wajib 16 digit angka.");
+      if(!hp) return alert("Nomor HP wajib diisi.");
 
       const box = document.getElementById("onlineTrackingResult");
       const btn = document.getElementById("onlineBtnTrack");
@@ -1053,7 +1045,7 @@
         const result = await onlineGet({
           action: "cekPengajuan",
           nik: nik,
-          hp4: hp4
+          noHP: hp
         });
 
         if(!result.success) throw new Error(result.message || "Pengajuan tidak ditemukan.");

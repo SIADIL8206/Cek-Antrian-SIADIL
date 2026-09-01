@@ -202,7 +202,7 @@
         <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500">Urutan Tunggu</h2>
       </div>
       <div id="waiting-list" class="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8 gap-2">
-        </div>
+      </div>
     </section>
 
     <section class="mb-10">
@@ -221,7 +221,7 @@
               </tr>
             </thead>
             <tbody id="done-list" class="divide-y divide-red-50/60 text-xs">
-              </tbody>
+            </tbody>
           </table>
         </div>
       </div>
@@ -353,7 +353,7 @@
           </button>
           <button type="button" id="btnAjukanOnline" disabled onclick="submitPengajuanResmiFinal()"
             class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-red-700 text-white text-xs font-black shadow-lg hover:bg-red-800 disabled:opacity-40 transition-all">
-            🚀 AJUKAN PERMOHONAN
+            🚀 AJUKAN PERMOHONAN RESMI
           </button>
         </div>
       </div>
@@ -544,7 +544,7 @@
     let onlineServices = [];
     let onlineSelectedService = null;
     let onlineRequirements = [];
-    let onlineUploadedDocs = {}; // { [idPersyaratan]: { base64, namaFile, mimeType, size } }
+    let onlineUploadedDocs = {};
     let lastGeneratedId = "";
     let lastGeneratedPin = "";
 
@@ -998,7 +998,7 @@
       location.reload();
     }
 
-    /* --- TRACKING MODAL LOGIC --- */
+    /* --- TRACKING MODAL LOGIC (FIXED MULTI-FILE DOKUMEN HASIL) --- */
     function openTrackingOnline(id="", pin="") {
       document.getElementById("onlineTrackingModal").classList.remove("hidden");
       if(id) document.getElementById("onlineTrackId").value = id;
@@ -1036,6 +1036,40 @@
         else if(status === "DOKUMEN KURANG") cls = "bg-amber-100 text-amber-800 border-amber-300";
         else if(status === "DIPROSES" || status === "DIVERIFIKASI") cls = "bg-blue-100 text-blue-800 border-blue-300";
 
+        // Render Dokumen Hasil (Mendukung 1 file maupun Banyak File)
+        let htmlHasilUnduh = '';
+        if (p.fileHasil) {
+          let listHasil = [];
+          try {
+            listHasil = JSON.parse(p.fileHasil);
+            if (!Array.isArray(listHasil)) listHasil = [{ label: "Dokumen Hasil", url: p.fileHasil }];
+          } catch(e) {
+            listHasil = [{ label: "Dokumen Hasil (PDF)", url: p.fileHasil }];
+          }
+
+          htmlHasilUnduh = `
+            <div class="p-4 bg-emerald-50 border-t border-emerald-100">
+              <div class="mb-2">
+                <p class="text-xs font-black text-emerald-900">🎉 Dokumen Kependudukan Anda Selesai Diproses!</p>
+                <p class="text-[10px] text-emerald-700">Silakan unduh berkas resmi Anda di bawah ini:</p>
+              </div>
+              <div class="space-y-2 mt-3">
+                ${listHasil.map((item, idx) => `
+                  <div class="flex items-center justify-between p-2.5 bg-white rounded-xl border border-emerald-200 shadow-sm">
+                    <div class="flex items-center gap-2">
+                      <span class="text-base">📄</span>
+                      <span class="text-xs font-bold text-slate-800">${onlineEscape(item.label || ('Dokumen ' + (idx+1)))}</span>
+                    </div>
+                    <a href="${onlineSafeUrl(item.url)}" target="_blank" rel="noopener"
+                      class="px-3.5 py-1.5 rounded-lg bg-emerald-700 text-white text-[11px] font-black shadow-sm hover:bg-emerald-800">
+                      ⬇ Unduh Berkas
+                    </a>
+                  </div>
+                `).join('')}
+              </div>
+            </div>`;
+        }
+
         box.innerHTML = `
           <div class="border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
             <div class="p-4 bg-slate-50 border-b border-slate-100">
@@ -1062,17 +1096,7 @@
               </div>
             </div>
 
-            ${p.fileHasil ? `
-              <div class="p-4 bg-emerald-50 border-t border-emerald-100 flex flex-col sm:flex-row justify-between items-center gap-3">
-                <div class="text-left">
-                  <p class="text-xs font-black text-emerald-800">Dokumen Telah Selesai Diproses!</p>
-                  <p class="text-[10px] text-emerald-600">Dokumen adminduk resmi Anda sudah siap diunduh.</p>
-                </div>
-                <a href="${onlineSafeUrl(p.fileHasil)}" target="_blank" rel="noopener"
-                  class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-emerald-700 text-white text-xs font-black shadow-sm hover:bg-emerald-800 text-center">
-                  ⬇ Unduh Dokumen PDF
-                </a>
-              </div>` : ''}
+            ${htmlHasilUnduh}
           </div>`;
       } catch(err) {
         box.innerHTML = `<div class="rounded-xl bg-red-50 border border-red-200 p-3 text-xs text-red-800"><b>Pengajuan tidak ditemukan:</b><br>${onlineEscape(err.message)}</div>`;

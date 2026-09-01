@@ -379,7 +379,7 @@
           </button>
           <button type="button" id="btnAjukanOnline" disabled onclick="submitPengajuanResmiFinal()"
             class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-red-700 text-white text-xs font-black shadow-lg hover:bg-red-800 disabled:opacity-40 transition-all">
-            🚀 AJUKAN PERMOHONAN RESMI
+            🚀 AJUKAN PERMOHONAN
           </button>
         </div>
       </div>
@@ -629,6 +629,21 @@
       });
     }
 
+    function getIconLayanan(kode, nama) {
+      const k = (kode || "").toUpperCase();
+      const n = (nama || "").toUpperCase();
+    
+      if (k.includes("KK") || n.includes("KARTU KELUARGA")) return "📑";
+      if (k.includes("SKPWNI") || n.includes("PINDAH")) return "✈️";
+      if (k.includes("LAHIR") || n.includes("KELAHIRAN")) return "👶";
+      if (k.includes("KAWIN") || k.includes("NIKAH") || n.includes("PERKAWINAN")) return "💍";
+      if (k.includes("CERAI") || n.includes("PERCERAIAN")) return "💔";
+      if (k.includes("MATI") || n.includes("KEMATIAN")) return "🪦";
+      if (k.includes("KTP") || k.includes("KIA")) return "🪪";
+      if (k.includes("NIK") || n.includes("SINKRONISASI") || n.includes("VALIDASI")) return "🔄";
+      
+      return "📄"; // Icon default jika tidak ada yang cocok
+    }
     /* --- LOAD & SELECT SERVICE --- */
     async function loadOnlineServices() {
       const loading = document.getElementById("onlineServiceLoading");
@@ -647,7 +662,7 @@
           <button type="button" class="online-service text-left border border-slate-200 rounded-2xl p-4 bg-white shadow-sm"
             onclick="selectOnlineService(${i}, this)">
             <div class="flex justify-between items-center gap-2">
-              <div class="w-9 h-9 rounded-xl bg-red-50 text-red-700 flex items-center justify-center font-black">📑</div>
+              <div class="w-9 h-9 rounded-xl bg-red-50 text-red-700 flex items-center justify-center text-lg shadow-sm">${getIconLayanan(item.kode, item.nama)}</div>
               <span class="text-[8.5px] bg-slate-100 text-slate-600 px-2 py-1 rounded-lg font-black font-mono">${onlineEscape(item.kode)}</span>
             </div>
             <p class="mt-3 text-sm font-black text-slate-900">${onlineEscape(item.nama)}</p>

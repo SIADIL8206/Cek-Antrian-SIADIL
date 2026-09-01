@@ -9,77 +9,61 @@
   <link rel="shortcut icon" type="image/png" href="/icon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/icon.png">
   
-  <title>SI-ADIL: CEK ANTREAN & PENGAJUAN ONLINE | Edisi HUT RI ke-81</title>
+  <title>SI-ADIL: Cek Antrean & Pengajuan Dokumen Online</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   
   <link rel="manifest" href="/manifest.json">
   
-  <meta name="theme-color" content="#991b1b">
+  <meta name="theme-color" content="#0f766e">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="SI-ADIL Info">
   
   <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background: linear-gradient(135deg, #fdf4f4 0%, #f8fafc 50%, #f1f5f9 100%); overflow-x: hidden; }
-    .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(254, 226, 226, 0.6); }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: linear-gradient(135deg, #f0fdfa 0%, #f8fafc 50%, #f1f5f9 100%); overflow-x: hidden; }
+    .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(204, 251, 241, 0.7); }
     
     @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
     .animate-marquee { display: inline-block; animation: marquee 30s linear infinite; }
     
-    @keyframes pulse-green {
-      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
-      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
-      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+    @keyframes pulse-teal {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(20, 184, 166, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(20, 184, 166, 0); }
     }
-    .live-dot { width: 8px; height: 8px; background-color: #22c55e; border-radius: 50%; display: inline-block; animation: pulse-green 2s infinite; }
-
-    .ribbon-wrapper {
-      width: 120px; height: 120px; overflow: hidden; position: absolute;
-      top: 0; right: 0; pointer-events: none; z-index: 20;
-    }
-    .ribbon-merdeka {
-      font-size: 8.5px; font-weight: 900; color: #991b1b; text-transform: uppercase;
-      text-align: center; line-height: 20px; transform: rotate(45deg); position: relative;
-      padding: 2px 0; left: -5px; top: 22px; width: 160px;
-      background: linear-gradient(to bottom, #ffffff 50%, #fee2e2 50%);
-      box-shadow: 0 3px 8px rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.9);
-      border-bottom: 1px solid #b91c1c; letter-spacing: 0.8px;
-    }
+    .live-dot { width: 8px; height: 8px; background-color: #14b8a6; border-radius: 50%; display: inline-block; animation: pulse-teal 2s infinite; }
 
     iframe { display: none !important; }
     body { top: 0 !important; margin-top: 0 !important; }
   
     .online-step { background: #fff; color: #64748b; border: 1px solid #e2e8f0; transition: all 0.2s ease; }
-    .online-step.active { background: #991b1b; color: #fff; border-color: #991b1b; box-shadow: 0 4px 12px rgba(153, 27, 27, 0.25); }
-    .online-step.done { background: #dcfce7; color: #166534; border-color: #86efac; }
+    .online-step.active { background: #0f766e; color: #fff; border-color: #0f766e; box-shadow: 0 4px 12px rgba(15, 118, 110, 0.25); }
+    .online-step.done { background: #ccfbf1; color: #0f766e; border-color: #5eead4; }
     .online-input { width: 100%; border: 1px solid #cbd5e1; border-radius: 12px; padding: 11px 13px; font-size: 13px; outline: none; background: #fff; transition: all 0.2s; }
-    .online-input:focus { border-color: #dc2626; box-shadow: 0 0 0 3px rgba(220,38,38,.08); }
+    .online-input:focus { border-color: #0d9488; box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.12); }
     .online-label { display: block; font-size: 10px; font-weight: 800; color: #475569; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
     .online-service { transition: all 0.2s ease; cursor: pointer; }
-    .online-service:hover { transform: translateY(-2px); border-color: #fca5a5; }
-    .online-service.selected { border-color: #dc2626 !important; background: #fff7f7; box-shadow: 0 0 0 3px rgba(220,38,38,.12); }
+    .online-service:hover { transform: translateY(-2px); border-color: #99f6e4; }
+    .online-service.selected { border-color: #0d9488 !important; background: #f0fdfa; box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15); }
   
     .siadil-upload-item { border: 1.5px dashed #cbd5e1; border-radius: 16px; padding: 14px; background: #fff; transition: all 0.2s; }
-    .siadil-upload-item.siap { border-style: solid; border-color: #22c55e; background: #f0fdf4; }
+    .siadil-upload-item.siap { border-style: solid; border-color: #10b981; background: #f0fdf4; }
     .siadil-upload-status { font-size: 9px; font-weight: 900; padding: 3px 8px; border-radius: 6px; letter-spacing: 0.5px; }
     .siadil-upload-status.ok { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
     .siadil-upload-status.no { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
     .siadil-upload-status.opt { background: #f1f5f9; color: #64748b; border: 1px solid #cbd5e1; }
-    .siadil-draft-box { background: #fffbeb; border: 1px solid #fde68a; border-radius: 14px; padding: 12px; }
+    .siadil-draft-box { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 14px; padding: 12px; }
     .siadil-submit-disabled { opacity: .5; cursor: not-allowed !important; }
   </style>
 </head>
 <body class="min-h-screen text-slate-800">
 
-  <!-- HEADER BRANDING EDISI KEMERDEKAAN -->
-  <header class="relative bg-gradient-to-r from-red-900 via-red-700 to-red-800 text-white shadow-xl p-3 md:p-4 mb-4 overflow-hidden border-b-2 border-amber-400">
-    <div class="ribbon-wrapper hidden md:block">
-      <div class="ribbon-merdeka">DIRGAHAYU RI</div>
-    </div>
+  <!-- HEADER BRANDING: THEME SLATE TEAL & CYAN -->
+  <header class="relative bg-gradient-to-r from-slate-900 via-teal-800 to-cyan-800 text-white shadow-xl p-3 md:p-4 mb-4 overflow-hidden border-b-2 border-teal-400">
     <div class="absolute -top-12 -left-12 w-48 h-48 rounded-full bg-white opacity-5 pointer-events-none"></div>
-    <div class="absolute -bottom-16 right-20 w-64 h-64 rounded-full bg-amber-400 opacity-10 pointer-events-none"></div>
+    <div class="absolute -bottom-16 right-20 w-64 h-64 rounded-full bg-teal-400 opacity-10 pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4 relative z-10">
       <div class="flex items-center justify-between w-full md:w-auto gap-2.5 md:gap-4">
@@ -87,37 +71,37 @@
           <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Lambang_Kabupaten_Halmahera_Timur.png" alt="Logo Pemkab" class="h-9 md:h-12 w-auto drop-shadow-md">
           <div>
             <h1 class="text-[11px] md:text-lg font-extrabold tracking-tight leading-tight uppercase">DINAS KEPENDUDUKAN DAN PENCATATAN SIPIL</h1>
-            <p class="text-amber-200 text-[10px] md:text-[13px] font-bold">Kabupaten Halmahera Timur</p>
+            <p class="text-teal-200 text-[10px] md:text-[13px] font-bold">Kabupaten Halmahera Timur</p>
           </div>
         </div>
-        <div class="bg-white p-1 md:p-1.5 rounded-xl shadow-md border border-amber-400 flex items-center justify-center h-9 md:h-12 flex-shrink-0">
-          <img src="logo-2-1024.webp" alt="HUT RI 81" class="h-full w-auto object-contain">
+        <div class="bg-teal-900/60 backdrop-blur px-3 py-1.5 rounded-xl shadow-md border border-teal-400/40 flex items-center justify-center h-9 md:h-12 flex-shrink-0">
+          <span class="text-[9px] md:text-xs font-black text-teal-200 uppercase tracking-widest">PORTAL RESMI</span>
         </div>
       </div>
 
-      <div class="flex flex-row md:flex-col items-center md:items-end justify-between w-full md:w-auto border-t border-red-800/70 md:border-0 pt-2 md:pt-0">
+      <div class="flex flex-row md:flex-col items-center md:items-end justify-between w-full md:w-auto border-t border-teal-700/50 md:border-0 pt-2 md:pt-0">
         <div class="flex items-center gap-2 mb-0.5">
           <span class="live-dot"></span>
-          <span class="text-[9px] font-black tracking-widest text-emerald-400 uppercase">Live Update</span>
+          <span class="text-[9px] font-black tracking-widest text-teal-300 uppercase">Live Database</span>
         </div>
         <div class="text-right">
           <div id="jam" class="text-base md:text-xl font-black tracking-tighter leading-none text-white drop-shadow-sm">00:00:00</div>
-          <p class="text-amber-200 text-[8.5px] md:text-[9px] uppercase tracking-widest font-extrabold" id="tanggal">MEMUAT...</p>
+          <p class="text-teal-200 text-[8.5px] md:text-[9px] uppercase tracking-widest font-extrabold" id="tanggal">MEMUAT...</p>
         </div>
       </div>
     </div>
   </header>
 
   <!-- NAVIGASI GABUNGAN -->
-  <div class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-red-100 shadow-sm">
+  <div class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-teal-100 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-center gap-2 md:gap-3">
-      <button type="button" onclick="scrollToQueue()" class="px-3 md:px-5 py-2 rounded-xl bg-red-700 text-white text-[10px] md:text-xs font-black shadow-sm">
+      <button type="button" onclick="scrollToQueue()" class="px-3 md:px-5 py-2 rounded-xl bg-teal-700 text-white text-[10px] md:text-xs font-black shadow-sm hover:bg-teal-800 transition-all">
         📺 CEK ANTREAN
       </button>
-      <button type="button" onclick="scrollToOnline()" class="px-3 md:px-5 py-2 rounded-xl border border-red-200 text-red-700 text-[10px] md:text-xs font-black hover:bg-red-50">
+      <button type="button" onclick="scrollToOnline()" class="px-3 md:px-5 py-2 rounded-xl border border-teal-200 text-teal-800 text-[10px] md:text-xs font-black hover:bg-teal-50 transition-all">
         📝 PENGAJUAN ONLINE
       </button>
-      <button type="button" onclick="openTrackingOnline()" class="px-3 md:px-5 py-2 rounded-xl border border-slate-200 text-slate-700 text-[10px] md:text-xs font-black hover:bg-slate-50">
+      <button type="button" onclick="openTrackingOnline()" class="px-3 md:px-5 py-2 rounded-xl border border-slate-200 text-slate-700 text-[10px] md:text-xs font-black hover:bg-slate-50 transition-all">
         🔎 CEK STATUS
       </button>
     </div>
@@ -125,46 +109,46 @@
 
   <main class="max-w-7xl mx-auto px-4 pb-12">
     
-    <div class="mb-4 bg-gradient-to-r from-red-50 to-amber-50 border-l-4 border-red-600 p-2.5 rounded-xl shadow-sm flex items-center justify-between">
+    <div class="mb-4 bg-gradient-to-r from-teal-50 via-cyan-50 to-slate-50 border-l-4 border-teal-600 p-2.5 rounded-xl shadow-sm flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <span class="text-base">🇮🇩</span>
-        <p class="text-[11px] font-bold text-red-900">
-          Dirgahayu Republik Indonesia ke-81 <span class="text-slate-500 font-medium hidden md:inline">— Nusantara Baru, Pelayanan Kependudukan Merdeka & Cepat</span>
+        <span class="text-base">🏛️</span>
+        <p class="text-[11px] font-bold text-teal-950">
+          Sistem Informasi Administrasi & Antrean Digital (SI-ADIL) <span class="text-slate-500 font-medium hidden md:inline">— Pelayanan Kependudukan Tertib, Mudah, dan Bebas Pungli</span>
         </p>
       </div>
-      <span class="text-[9px] bg-red-600 text-white font-black px-2 py-0.5 rounded-md uppercase tracking-wider">HUT RI 81</span>
+      <span class="text-[9px] bg-teal-700 text-white font-black px-2 py-0.5 rounded-md uppercase tracking-wider">DISDUKCAPIL</span>
     </div>
 
     <!-- SECTION 1: PELAYANAN SAAT INI -->
     <section class="mb-5">
       <div class="flex items-center gap-2 mb-2">
-        <div class="h-4 w-1.5 bg-red-600 rounded-full"></div>
+        <div class="h-4 w-1.5 bg-teal-600 rounded-full"></div>
         <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500">Pelayanan Saat Ini</h2>
       </div>
       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <div class="glass-card rounded-2xl p-4 border-l-8 border-red-600 shadow-xl flex flex-col items-center justify-center text-center relative overflow-hidden bg-white min-h-[160px]">
-          <div class="absolute -top-8 -right-8 bg-red-100 h-28 w-28 rounded-full opacity-40"></div>
-          <p class="text-[9px] font-bold text-red-600 uppercase mb-1 tracking-widest">Sekarang Menuju Loket</p>
+        <div class="glass-card rounded-2xl p-4 border-l-8 border-teal-600 shadow-xl flex flex-col items-center justify-center text-center relative overflow-hidden bg-white min-h-[160px]">
+          <div class="absolute -top-8 -right-8 bg-teal-100 h-28 w-28 rounded-full opacity-40"></div>
+          <p class="text-[9px] font-bold text-teal-700 uppercase mb-1 tracking-widest">Sekarang Menuju Loket</p>
           <h3 id="current-number" class="text-7xl font-black text-slate-900 leading-none">--</h3>
           <p id="current-name" class="text-lg font-bold text-slate-600 uppercase italic mt-1 break-words max-w-full px-2">Memuat data...</p>
         </div>
 
-        <div class="glass-card rounded-2xl p-4 flex flex-col justify-center shadow-lg bg-red-50/60 border-red-100">
-           <h4 class="text-red-900 text-[11px] font-bold mb-1.5 flex items-center gap-2">
-             <span>📢</span> INFO LAYANAN
+        <div class="glass-card rounded-2xl p-4 flex flex-col justify-center shadow-lg bg-teal-50/50 border-teal-100">
+           <h4 class="text-teal-950 text-[11px] font-bold mb-1.5 flex items-center gap-2">
+             <span>📢</span> INFORMASI LOKET
            </h4>
            <p class="text-slate-600 leading-snug mb-3 text-justify text-[11px]">
-             Silakan menunggu dengan nyaman; petugas kami akan melayani sesuai urutan nomor antrian secara adil dan transparan.
+             Silakan menunggu dengan tertib. Petugas loket kami siap melayani sesuai nomor urut kedatangan secara adil dan transparan.
            </p>
            <div class="flex gap-3">
              <div class="bg-amber-100/80 border border-amber-200 p-2.5 rounded-xl shadow-sm flex-1 text-center">
-               <p class="text-[8px] font-bold text-amber-700 uppercase">Sisa Antrean</p>
+               <p class="text-[8px] font-bold text-amber-800 uppercase">Sisa Antrean</p>
                <p id="count-waiting" class="text-xl font-black text-amber-900">0</p>
              </div>
-             <div class="bg-white border border-red-100 p-2.5 rounded-xl shadow-sm flex-1 text-center">
+             <div class="bg-white border border-teal-100 p-2.5 rounded-xl shadow-sm flex-1 text-center">
                <p class="text-[8px] font-bold text-slate-400 uppercase">Selesai</p>
-               <p id="count-done" class="text-xl font-black text-emerald-600">0</p>
+               <p id="count-done" class="text-xl font-black text-teal-600">0</p>
              </div>
            </div>
         </div>
@@ -174,7 +158,7 @@
     <!-- SECTION 2: DAFTAR TUNGGU -->
     <section class="mb-5">
       <div class="flex items-center gap-2 mb-3">
-        <div class="h-4 w-1.5 bg-amber-500 rounded-full"></div>
+        <div class="h-4 w-1.5 bg-cyan-600 rounded-full"></div>
         <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500">Urutan Tunggu</h2>
       </div>
       <div id="waiting-list" class="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8 gap-2"></div>
@@ -183,20 +167,20 @@
     <!-- SECTION 3: RIWAYAT SELESAI -->
     <section class="mb-10">
       <div class="flex items-center gap-2 mb-4">
-        <div class="h-5 w-2 bg-red-600 rounded-full"></div>
-        <h2 class="text-sm font-bold uppercase tracking-wider text-slate-700 font-extrabold">Riwayat Hari Ini</h2>
+        <div class="h-5 w-2 bg-teal-600 rounded-full"></div>
+        <h2 class="text-sm font-bold uppercase tracking-wider text-slate-700 font-extrabold">Riwayat Pelayanan Hari Ini</h2>
       </div>
-      <div class="glass-card rounded-2xl shadow-lg border border-red-100 overflow-hidden">
+      <div class="glass-card rounded-2xl shadow-lg border border-teal-100 overflow-hidden">
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse">
-            <thead class="bg-red-50 border-b border-red-100 text-red-900 text-[9px] uppercase tracking-widest font-black">
+            <thead class="bg-teal-50 border-b border-teal-100 text-teal-900 text-[9px] uppercase tracking-widest font-black">
               <tr>
                 <th class="px-4 py-2.5">No</th>
                 <th class="px-4 py-2.5">Nama Pemohon</th>
                 <th class="px-4 py-2.5 text-center">Status</th>
               </tr>
             </thead>
-            <tbody id="done-list" class="divide-y divide-red-50/60 text-xs"></tbody>
+            <tbody id="done-list" class="divide-y divide-teal-50/60 text-xs"></tbody>
           </table>
         </div>
       </div>
@@ -206,13 +190,13 @@
          SI-ADIL ONLINE — MODUL PENGAJUAN MASYARAKAT
          ========================================================= -->
     <section id="pengajuan-online" class="pt-4 pb-20">
-      <div class="glass-card rounded-2xl p-4 md:p-6 mb-4 border-l-8 border-red-600 shadow-lg">
+      <div class="glass-card rounded-2xl p-4 md:p-6 mb-4 border-l-8 border-teal-600 shadow-lg">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
           <div>
-            <p class="text-[10px] font-black uppercase tracking-[.18em] text-red-700">SI-ADIL ONLINE</p>
+            <p class="text-[10px] font-black uppercase tracking-[.18em] text-teal-700">SI-ADIL ONLINE</p>
             <h2 class="text-xl md:text-2xl font-black text-slate-900">Pengajuan Dokumen Kependudukan</h2>
             <p class="text-xs md:text-sm text-slate-500 mt-1">
-              Pilih layanan, isi identitas, dan unggah berkas syarat secara lengkap sebelum mengirim permohonan.
+              Pilih layanan, cermati berkas persyaratan, dan isi data identitas Anda secara akurat.
             </p>
           </div>
           <button type="button" onclick="openTrackingOnline()"
@@ -230,11 +214,11 @@
         </div>
         <div id="onlineStep2" class="online-step rounded-xl p-3 text-center">
           <div class="text-base md:text-lg font-black leading-tight">2</div>
-          <div class="text-[8.5px] md:text-[9.5px] font-black uppercase">Input Data Pemohon</div>
+          <div class="text-[8.5px] md:text-[9.5px] font-black uppercase">Data Pemohon</div>
         </div>
         <div id="onlineStep3" class="online-step rounded-xl p-3 text-center">
           <div class="text-base md:text-lg font-black leading-tight">3</div>
-          <div class="text-[8.5px] md:text-[9.5px] font-black uppercase">Upload Persyaratan</div>
+          <div class="text-[8.5px] md:text-[9.5px] font-black uppercase">Upload Syarat</div>
         </div>
       </div>
 
@@ -245,36 +229,34 @@
         <div class="flex items-center justify-between mb-4">
           <div>
             <h3 class="font-black text-lg text-slate-900">Pilih Jenis Layanan</h3>
-            <p class="text-[11px] text-slate-500">Pilih layanan untuk melihat dokumen persyaratan yang perlu disiapkan.</p>
+            <p class="text-[11px] text-slate-500">Pilih salah satu jenis dokumen kependudukan yang ingin Anda ajukan.</p>
           </div>
-          <button type="button" onclick="loadOnlineServices()" class="text-xs font-black text-red-700 hover:underline">↻ Refresh</button>
+          <button type="button" onclick="loadOnlineServices()" class="text-xs font-black text-teal-700 hover:underline">↻ Refresh</button>
         </div>
 
         <div id="onlineServiceLoading" class="py-8 text-center text-slate-400 text-sm">Memuat layanan...</div>
         <div id="onlineServiceList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
 
-        <!-- PANEL INFO PERSYARATAN YANG MUNCUL KETIKA LAYANAN DIPILIH -->
-        <div id="panelPratinjauSyarat" class="hidden mt-5 p-4 rounded-2xl bg-amber-50 border border-amber-200">
+        <!-- PANEL INFO PERSYARATAN (MUNCUL OTOMATIS) -->
+        <div id="panelPratinjauSyarat" class="hidden mt-5 p-4 rounded-2xl bg-teal-50/70 border border-teal-200">
           <div class="flex items-start gap-2 mb-2">
             <span class="text-lg">📋</span>
             <div>
-              <h4 class="text-xs font-black text-amber-950 uppercase tracking-wide">
-                Persyaratan Dokumen: <span id="labelSyaratDipilih" class="text-red-700">-</span>
+              <h4 class="text-xs font-black text-teal-950 uppercase tracking-wide">
+                Persyaratan Dokumen: <span id="labelSyaratDipilih" class="text-teal-700">-</span>
               </h4>
-              <p class="text-[11px] text-amber-800">Pastikan Anda telah menyiapkan foto/dokumen asli di bawah ini sebelum melanjutkan:</p>
+              <p class="text-[11px] text-teal-800">Pastikan Anda telah menyiapkan foto/dokumen asli di bawah ini sebelum melanjutkan:</p>
             </div>
           </div>
           
-          <div id="daftarPratinjauSyaratList" class="space-y-1.5 my-3 pl-6">
-            <!-- Diisi otomatis oleh JavaScript -->
-          </div>
+          <div id="daftarPratinjauSyaratList" class="space-y-1.5 my-3 pl-1 md:pl-2"></div>
 
-          <div class="flex flex-col sm:flex-row justify-between items-center gap-3 pt-3 border-t border-amber-200/60 mt-3">
-            <span class="text-[10.5px] text-amber-900 font-medium italic">
+          <div class="flex flex-col sm:flex-row justify-between items-center gap-3 pt-3 border-t border-teal-200/60 mt-3">
+            <span class="text-[10.5px] text-teal-900 font-medium italic">
               💡 Dokumen dapat berupa foto kamera yang jelas atau file PDF (Maks. 5 MB).
             </span>
             <button id="onlineBtnToData" onclick="onlineGoToData()"
-              class="w-full sm:w-auto px-6 py-3 rounded-xl bg-red-700 text-white text-xs font-black shadow-md hover:bg-red-800 transition-all">
+              class="w-full sm:w-auto px-6 py-3 rounded-xl bg-teal-700 text-white text-xs font-black shadow-md hover:bg-teal-800 transition-all">
               Saya Sudah Menyiapkan Berkas, Lanjut Isi Data →
             </button>
           </div>
@@ -286,9 +268,9 @@
         <div class="flex items-center justify-between mb-3">
           <div>
             <h3 class="font-black text-lg text-slate-900">Data Pemohon</h3>
-            <p class="text-[11px] text-slate-500">Layanan Dipilih: <span id="onlineSelectedServiceLabel" class="font-bold text-red-700">-</span></p>
+            <p class="text-[11px] text-slate-500">Layanan Dipilih: <span id="onlineSelectedServiceLabel" class="font-bold text-teal-700">-</span></p>
           </div>
-          <span class="text-[9px] bg-red-50 text-red-700 font-bold px-2 py-1 rounded-lg border border-red-200">LANGKAH 2 DARI 3</span>
+          <span class="text-[9px] bg-teal-50 text-teal-700 font-bold px-2 py-1 rounded-lg border border-teal-200">LANGKAH 2 DARI 3</span>
         </div>
 
         <form id="onlineApplicationForm" class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
@@ -330,7 +312,7 @@
           </div>
           <div class="md:col-span-2 flex justify-between gap-2 pt-3 border-t border-slate-100 mt-2">
             <button type="button" onclick="onlineBackToServices()" class="px-5 py-3 rounded-xl border border-slate-300 text-slate-700 text-xs font-black hover:bg-slate-50">← Ganti Layanan</button>
-            <button type="button" onclick="onlineGoToUploadStep()" class="px-6 py-3 rounded-xl bg-red-700 text-white text-xs font-black hover:bg-red-800 shadow-sm">Lanjut ke Upload Persyaratan →</button>
+            <button type="button" onclick="onlineGoToUploadStep()" class="px-6 py-3 rounded-xl bg-teal-700 text-white text-xs font-black hover:bg-teal-800 shadow-sm transition-all">Lanjut ke Upload Persyaratan →</button>
           </div>
         </form>
       </div>
@@ -340,9 +322,9 @@
         <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-3">
           <div>
             <h3 class="font-black text-lg text-slate-900">Upload Dokumen Persyaratan</h3>
-            <p class="text-[11px] text-slate-500">Layanan: <b id="onlineUploadServiceTitle" class="text-red-700">-</b></p>
+            <p class="text-[11px] text-slate-500">Layanan: <b id="onlineUploadServiceTitle" class="text-teal-700">-</b></p>
           </div>
-          <span class="text-[9px] bg-red-50 text-red-700 font-bold px-2 py-1 rounded-lg border border-red-200">LANGKAH 3 DARI 3</span>
+          <span class="text-[9px] bg-teal-50 text-teal-700 font-bold px-2 py-1 rounded-lg border border-teal-200">LANGKAH 3 DARI 3</span>
         </div>
 
         <div id="siadilKelengkapanInfo" class="rounded-xl bg-amber-50 border border-amber-200 p-3 mb-4 text-xs text-amber-900">
@@ -356,34 +338,41 @@
             ← Periksa Kembali Data
           </button>
           <button type="button" id="btnAjukanOnline" disabled onclick="submitPengajuanResmiFinal()"
-            class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-red-700 text-white text-xs font-black shadow-lg hover:bg-red-800 disabled:opacity-40 transition-all">
-            🚀 AJUKAN PERMOHONAN
+            class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-teal-700 text-white text-xs font-black shadow-lg hover:bg-teal-800 disabled:opacity-40 transition-all">
+            🚀 AJUKAN PERMOHONAN RESMI
           </button>
         </div>
       </div>
 
-      <!-- HASIL PENGAJUAN SUKSES (DILENGKAPI SIMPAN KE WA) -->
+      <!-- HASIL PENGAJUAN SUKSES -->
       <div id="onlineResultSuccess" class="glass-card rounded-2xl p-5 md:p-8 hidden shadow-xl text-center border-t-8 border-emerald-600">
         <div class="w-16 h-16 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center text-3xl mx-auto mb-3 shadow-inner">
           ✓
         </div>
-        <h3 class="text-2xl font-black text-slate-900">Pengajuan Berhasil Dikirim!</h3>
+        <h3 class="text-2xl font-black text-slate-900">Pengajuan Berhasil Terkirim!</h3>
         <p class="text-xs text-slate-500 max-w-md mx-auto mt-1 mb-5">
-          Permohonan Anda telah resmi tercatat di sistem Disdukcapil Kabupaten Halmahera Timur.
+          Permohonan dokumen kependudukan Anda telah berhasil diterima oleh sistem Disdukcapil Kabupaten Halmahera Timur.
         </p>
 
-        <div class="max-w-md mx-auto bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-4 shadow-sm text-left">
+        <div class="max-w-md mx-auto bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-3 shadow-sm text-left">
           <div class="flex justify-between items-center border-b border-slate-200 pb-2 mb-2">
             <span class="text-xs text-slate-500 font-bold uppercase">ID PENGAJUAN</span>
             <span id="onlineSuccessId" class="text-base font-black text-slate-900 font-mono">-</span>
           </div>
           <div class="flex justify-between items-center">
             <span class="text-xs text-slate-500 font-bold uppercase">PIN / KODE AKSES</span>
-            <span id="onlineSuccessPin" class="text-xl font-black text-amber-900 tracking-widest font-mono">------</span>
+            <span id="onlineSuccessPin" class="text-xl font-black text-teal-800 tracking-widest font-mono">------</span>
           </div>
         </div>
 
-        <!-- TOMBOL SIMPAN KE WA (OPSI 1) -->
+        <div class="max-w-md mx-auto bg-teal-50 border border-teal-200 rounded-xl p-3 mb-4 text-left flex items-start gap-2.5">
+          <span class="text-lg leading-none">💡</span>
+          <div class="text-[11px] text-teal-950 leading-snug">
+            <p class="font-extrabold mb-0.5">Petunjuk Cek Status Berkas:</p>
+            Anda dapat mengecek status proses berkas sewaktu-waktu melalui tombol <b>Cek Status</b> menggunakan <b>ID & PIN</b> di atas atau menggunakan <b>16 Digit NIK</b> Anda.
+          </div>
+        </div>
+
         <div class="max-w-md mx-auto mb-6 space-y-2">
           <a id="btnSimpanWA" href="#" target="_blank"
             class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-emerald-600 text-white text-xs font-black shadow-md hover:bg-emerald-700 transition-all">
@@ -397,7 +386,7 @@
 
         <div class="flex flex-col sm:flex-row justify-center gap-3 border-t border-slate-100 pt-4">
           <button type="button" onclick="openTrackingFromSuccess()"
-            class="px-6 py-3 rounded-xl bg-red-700 text-white text-xs font-black shadow-md hover:bg-red-800 transition-all">
+            class="px-6 py-3 rounded-xl bg-teal-700 text-white text-xs font-black shadow-md hover:bg-teal-800 transition-all">
             🔎 Lacak Status Sekarang
           </button>
           <button type="button" onclick="resetOnlineApplication()"
@@ -414,31 +403,29 @@
   <div id="onlineTrackingModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-sm hidden z-[80] p-4 overflow-y-auto">
     <div class="min-h-full flex items-center justify-center">
       <div class="bg-white rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden border border-slate-100">
-        <div class="bg-gradient-to-r from-red-900 to-red-800 text-white p-4 flex justify-between items-center">
+        <div class="bg-gradient-to-r from-slate-900 to-teal-800 text-white p-4 flex justify-between items-center">
           <div>
-            <p class="text-[8px] uppercase tracking-widest text-amber-200 font-black">PELACAKAN BERKAS ONLINE</p>
+            <p class="text-[8px] uppercase tracking-widest text-teal-300 font-black">PELACAKAN BERKAS ONLINE</p>
             <h3 class="font-black text-base md:text-lg">Cek Status Pengajuan Dokumen</h3>
           </div>
-          <button type="button" onclick="closeTrackingOnline()" class="text-2xl font-black text-white hover:text-amber-200">×</button>
+          <button type="button" onclick="closeTrackingOnline()" class="text-2xl font-black text-white hover:text-teal-200">×</button>
         </div>
         
         <div class="p-4 md:p-6">
           
-          <!-- TAB PILIHAN METODE CEK STATUS -->
           <div class="flex gap-2 p-1 bg-slate-100 rounded-xl mb-4">
-            <button type="button" id="btnModePin" onclick="pindahModeTrack('PIN')" class="flex-1 py-2 rounded-lg text-xs font-black bg-white text-red-700 shadow-sm transition-all">
+            <button type="button" id="btnModePin" onclick="pindahModeTrack('PIN')" class="flex-1 py-2 rounded-lg text-xs font-black bg-white text-teal-800 shadow-sm transition-all">
               🔑 Gunakan ID & PIN
             </button>
             <button type="button" id="btnModeNik" onclick="pindahModeTrack('NIK')" class="flex-1 py-2 rounded-lg text-xs font-black text-slate-500 hover:text-slate-800 transition-all">
-              🪪 Gunakan NIK & 4 digit terakhir No. HP
+              🪪 Gunakan NIK & No. HP
             </button>
           </div>
 
-          <!-- FORM MODE 1: ID + PIN -->
           <div id="formTrackModePin" class="grid sm:grid-cols-2 gap-3">
             <div>
               <label class="online-label">ID Pengajuan</label>
-              <input id="onlineTrackId" class="online-input uppercase font-mono" placeholder="Contoh: ADL-20260831-0001">
+              <input id="onlineTrackId" class="online-input uppercase font-mono" placeholder="Contoh: ADL-20260901-0001">
             </div>
             <div>
               <label class="online-label">PIN / Kode Akses</label>
@@ -446,7 +433,6 @@
             </div>
           </div>
 
-          <!-- FORM MODE 2: NIK + 4 DIGIT TERAKHIR HP (OPSI 2) -->
           <div id="formTrackModeNik" class="grid sm:grid-cols-2 gap-3 hidden">
             <div>
               <label class="online-label">Nomor Induk Kependudukan (NIK)</label>
@@ -454,12 +440,12 @@
             </div>
             <div>
               <label class="online-label">4 Digit Terakhir No. HP / WhatsApp</label>
-              <input id="onlineTrackHp4" maxlength="4" inputmode="numeric" class="online-input font-mono text-center tracking-widest" placeholder="Contoh: 8910">
+              <input id="onlineTrackHp4" maxlength="4" inputmode="numeric" class="online-input font-mono text-center tracking-widest font-black" placeholder="Contoh: 1800">
             </div>
           </div>
 
           <button type="button" id="onlineBtnTrack" onclick="trackOnlineApplication()"
-            class="w-full mt-4 py-3 rounded-xl bg-red-700 text-white text-xs font-black hover:bg-red-800 shadow-md transition-all">
+            class="w-full mt-4 py-3 rounded-xl bg-teal-700 text-white text-xs font-black hover:bg-teal-800 shadow-md transition-all">
             Cek Status Pengajuan
           </button>
           
@@ -469,13 +455,13 @@
     </div>
   </div>
 
-  <!-- FOOTER RUNNING TEXT KEMERDEKAAN -->
-  <footer class="fixed bottom-0 w-full bg-gradient-to-r from-red-950 via-slate-900 to-red-950 text-white p-2 overflow-hidden border-t border-red-800 z-50">
+  <!-- FOOTER RUNNING TEXT ELEGAN -->
+  <footer class="fixed bottom-0 w-full bg-slate-950 text-white p-2 overflow-hidden border-t border-teal-800 z-50">
     <div class="whitespace-nowrap animate-marquee">
-      <span class="mx-4 text-[12px] uppercase font-bold text-amber-300">🇮🇩 DIRGAHAYU REPUBLIK INDONESIA KE-81!</span>
-      <span class="mx-4 text-[12px] uppercase font-bold">Layanan Disdukcapil Halmahera Timur 100% Gratis Tanpa Pungli!</span>
-      <span class="mx-4 text-[12px] uppercase text-slate-300">Siapkan dokumen asli Anda demi kelancaran administrasi</span>
-      <span class="mx-4 text-[12px] uppercase font-bold text-emerald-400">Selamat Melayani dengan Hati — SI-ADIL Digital Database</span>
+      <span class="mx-4 text-[12px] uppercase font-bold text-teal-300">🏛️ DISDUKCAPIL KABUPATEN HALMAHERA TIMUR</span>
+      <span class="mx-4 text-[12px] uppercase font-bold">Layanan Adminduk 100% Gratis Tanpa Pungutan Liar!</span>
+      <span class="mx-4 text-[12px] uppercase text-slate-300">Siapkan dokumen asli Anda demi kelancaran penerbitan berkas</span>
+      <span class="mx-4 text-[12px] uppercase font-bold text-emerald-400">Selamat Datang — SI-ADIL Sistem Antrian & Database Terpadu</span>
     </div>
   </footer>
 
@@ -525,15 +511,15 @@
           if (item.no !== nextQueue.no) {
             waitCount++;
             waitHtml += `
-              <div class="bg-red-50/70 p-3 rounded-xl border border-red-200 flex flex-col items-center shadow-sm">
-                <p class="text-xl font-black text-red-900">${item.no}</p>
-                <p class="text-[7px] font-extrabold text-red-500 mt-0.5 uppercase truncate w-full text-center">${item.nama}</p>
+              <div class="bg-teal-50/70 p-3 rounded-xl border border-teal-200 flex flex-col items-center shadow-sm">
+                <p class="text-xl font-black text-teal-950">${item.no}</p>
+                <p class="text-[7px] font-extrabold text-teal-700 mt-0.5 uppercase truncate w-full text-center">${item.nama}</p>
               </div>`;
           }
         } else if (item.status === "SELESAI DILAYANI") {
           doneCount++;
           doneHtml += `
-            <tr class="hover:bg-red-50/40 transition-colors">
+            <tr class="hover:bg-teal-50/40 transition-colors">
               <td class="px-4 py-2 font-extrabold text-slate-800">${item.no}</td>
               <td class="px-4 py-2 text-xs font-medium text-slate-700">${item.nama}</td>
               <td class="px-4 py-2 text-center">
@@ -585,11 +571,10 @@
        2. SI-ADIL ONLINE — BACKEND PENGAJUAN & PERSYARATAN
        ========================================================= */
     const SIADIL_ONLINE_API = "https://script.google.com/macros/s/AKfycbzDQE_iC4kgr6-SSD25qsP1pUy4dO57TcX4KVXlOSVCBBLGj9UZWfpDrZWH7eFyz1Ub/exec";
-    /* =========================================================
-       STATUS FITUR ONLINE (UBAH KE true JIKA SUDAH SIAP DIBUKA)
-       ========================================================= */
-    const FITUR_ONLINE_AKTIF = true; // Set false untuk mengunci sementara
     const SIADIL_DRAFT_KEY = "siadil_online_draft_v2";
+
+    // KUNCI SEMENTARA: Set false agar belum bisa digunakan warga di ruang tunggu
+    const FITUR_ONLINE_AKTIF = true; 
 
     let onlineServices = [];
     let onlineSelectedService = null;
@@ -597,8 +582,7 @@
     let onlineUploadedDocs = {};
     let lastGeneratedId = "";
     let lastGeneratedPin = "";
-    let lastPemohonData = {};
-    let activeTrackMode = "PIN"; // 'PIN' atau 'NIK'
+    let activeTrackMode = "PIN";
 
     function onlineApiReady() {
       if(!SIADIL_ONLINE_API || SIADIL_ONLINE_API.includes("GANTI_DENGAN")) {
@@ -668,37 +652,34 @@
       });
     }
 
-    /* --- LOAD & SELECT SERVICE (DILENGKAPI FITUR KUNCI SEMENTARA) --- */
+    /* --- LOAD & SELECT SERVICE (DILENGKAPI KUNCI SEMENTARA) --- */
     async function loadOnlineServices() {
       const loading = document.getElementById("onlineServiceLoading");
       const list = document.getElementById("onlineServiceList");
       loading.classList.remove("hidden");
       list.innerHTML = "";
 
-      // JIKA FITUR ONLINE SEDANG DIKUNCI / DALAM TAHAP PERSIAPAN
       if (!FITUR_ONLINE_AKTIF) {
         loading.classList.add("hidden");
         list.innerHTML = `
           <div class="sm:col-span-2 lg:col-span-3 text-center py-10 px-4">
-            <div class="w-16 h-16 bg-amber-100 text-amber-700 rounded-3xl flex items-center justify-center text-3xl mx-auto mb-3 shadow-inner">
-              🚧
+            <div class="w-16 h-16 bg-teal-100 text-teal-800 rounded-3xl flex items-center justify-center text-3xl mx-auto mb-3 shadow-inner">
+              ⚙️
             </div>
             <h4 class="text-base md:text-lg font-black text-slate-900 mb-1">Layanan Pengajuan Online Segera Hadir</h4>
             <p class="text-xs text-slate-500 max-w-md mx-auto leading-relaxed">
-              Fitur pengajuan dan verifikasi dokumen mandiri saat ini sedang dalam tahap integrasi sistem & uji coba internal Disdukcapil Halmahera Timur.
+              Fitur pengajuan berkas mandiri saat ini sedang dalam tahap persiapan & uji coba sistem internal Disdukcapil Halmahera Timur.
             </p>
             <div class="inline-flex items-center gap-2 mt-4 px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-extrabold uppercase tracking-wider">
-              <span>📌</span> Untuk saat ini silakan menuju loket pelayanan langsung
+              <span>📌</span> Untuk saat ini silakan menuju loket antrean langsung
             </div>
           </div>
         `;
-        // Sembunyikan tombol lanjut jika ada
-        const btnLanjut = document.getElementById("onlineBtnToData");
-        if (btnLanjut) btnLanjut.style.display = "none";
+        const panelSyarat = document.getElementById("panelPratinjauSyarat");
+        if (panelSyarat) panelSyarat.classList.add("hidden");
         return;
       }
 
-      // JIKA FITUR AKTIF (NORMAL)
       try {
         const result = await onlineGet({ action: "getLayanan" });
         if(!result.success) throw new Error(result.message || "Gagal memuat layanan.");
@@ -711,7 +692,7 @@
           <button type="button" class="online-service text-left border border-slate-200 rounded-2xl p-4 bg-white shadow-sm"
             onclick="selectOnlineService(${i}, this)">
             <div class="flex justify-between items-center gap-2">
-              <div class="w-9 h-9 rounded-xl bg-red-50 text-red-700 flex items-center justify-center text-lg shadow-sm">
+              <div class="w-9 h-9 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center text-lg shadow-sm">
                 ${getIconLayanan(item.kode, item.nama)}
               </div>
               <span class="text-[8.5px] bg-slate-100 text-slate-600 px-2 py-1 rounded-lg font-black font-mono">${onlineEscape(item.kode)}</span>
@@ -741,9 +722,7 @@
       const listSyarat = document.getElementById("daftarPratinjauSyaratList");
       
       panel.classList.remove("hidden");
-      listSyarat.innerHTML = '<p class="text-xs text-amber-800 italic">Memeriksa persyaratan layanan...</p>';
-
-      // Gulir halus agar panel syarat terlihat di layar HP
+      listSyarat.innerHTML = '<p class="text-xs text-teal-800 italic">Memeriksa persyaratan layanan...</p>';
       panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
 
       try {
@@ -757,9 +736,9 @@
         }
 
         listSyarat.innerHTML = syarat.map((s, idx) => `
-          <div class="text-xs text-slate-800 flex items-start justify-between gap-3 p-2 rounded-xl bg-white/80 border border-amber-200/50 mb-1.5 shadow-sm">
+          <div class="text-xs text-slate-800 flex items-start justify-between gap-3 p-2 rounded-xl bg-white/80 border border-teal-200/50 mb-1.5 shadow-sm">
             <div class="flex items-start gap-2">
-              <span class="font-black text-amber-950">${idx+1}.</span>
+              <span class="font-black text-teal-950">${idx+1}.</span>
               <div>
                 <div class="flex items-center gap-1.5 flex-wrap">
                   <span class="font-bold text-slate-900">${onlineEscape(s.namaPersyaratan)}</span>
@@ -771,7 +750,7 @@
             
             ${s.linkTemplate ? `
               <a href="${onlineSafeUrl(s.linkTemplate)}" target="_blank" rel="noopener"
-                class="shrink-0 inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-red-50 text-red-700 border border-red-200 text-[10px] font-black hover:bg-red-100 transition-all shadow-sm">
+                class="shrink-0 inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-teal-50 text-teal-700 border border-teal-200 text-[10px] font-black hover:bg-teal-100 transition-all shadow-sm">
                 <span>📥</span> Unduh Formulir
               </a>
             ` : ''}
@@ -828,7 +807,7 @@
       updateOnlineSteps(2);
     }
 
-    /* --- PERSYARATAN & UPLOAD (SINGLE BUTTON + HAPUS & GANTI) --- */
+    /* --- PERSYARATAN & UPLOAD BERKAS --- */
     async function loadOnlineRequirements(kodeLayanan) {
       const box = document.getElementById("onlineRequirementsList");
       box.innerHTML = '<div class="text-center py-6 text-slate-400 text-sm">Memuat daftar persyaratan...</div>';
@@ -837,7 +816,7 @@
         if(!result.success) throw new Error(result.message || "Gagal membaca persyaratan.");
         onlineRequirements = Array.isArray(result.data) ? result.data : [];
         if(!onlineRequirements.length) {
-          box.innerHTML = '<div class="rounded-xl bg-amber-50 border border-amber-200 p-3 text-xs text-amber-800">Tidak ada persyaratan khusus untuk layanan ini. Anda dapat langsung mengirim permohonan.</div>';
+          box.innerHTML = '<div class="rounded-xl bg-teal-50 border border-teal-200 p-3 text-xs text-teal-800">Tidak ada persyaratan khusus untuk layanan ini. Anda dapat langsung mengirim permohonan.</div>';
           siadilUpdateSubmitState();
           return;
         }
@@ -854,8 +833,8 @@
                     <p class="text-sm font-black text-slate-900">${i+1}. ${onlineEscape(item.namaPersyaratan)}</p>
                     ${item.linkTemplate ? `
                       <a href="${onlineSafeUrl(item.linkTemplate)}" target="_blank" rel="noopener"
-                        class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-100 text-amber-900 border border-amber-300 text-[9.5px] font-extrabold hover:bg-amber-200 transition-all">
-                        📥 Download Format Blangko
+                        class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-teal-100 text-teal-900 border border-teal-300 text-[9.5px] font-extrabold hover:bg-teal-200 transition-all">
+                        📥 Unduh Blangko
                       </a>
                     ` : ''}
                   </div>
@@ -1001,7 +980,7 @@
       if(info) {
         const belum = onlineRequirements.filter(s => s.wajib && !onlineUploadedDocs[s.idPersyaratan]);
         if(lengkap) {
-          info.className = "rounded-xl bg-emerald-50 border border-emerald-200 p-3 mb-4 text-xs text-emerald-900";
+          info.className = "rounded-xl bg-teal-50 border border-teal-200 p-3 mb-4 text-xs text-teal-900";
           info.innerHTML = "✅ <b>Semua berkas persyaratan wajib sudah lengkap!</b> Anda dapat mengklik tombol ajukan di bawah.";
         } else {
           info.className = "rounded-xl bg-amber-50 border border-amber-200 p-3 mb-4 text-xs text-amber-900";
@@ -1025,14 +1004,6 @@
       const nik = document.getElementById("onlineNik").value.trim();
       const noKK = document.getElementById("onlineNoKK").value.trim();
       const noHP = document.getElementById("onlineNoHP").value.trim();
-
-      lastPemohonData = {
-        nama: nama,
-        nik: nik,
-        noKK: noKK,
-        noHP: noHP,
-        layanan: onlineSelectedService.nama
-      };
 
       const payload = {
         action: "submitPengajuanLengkap",
@@ -1058,7 +1029,6 @@
 
         localStorage.removeItem(SIADIL_DRAFT_KEY);
 
-        // Siapkan Link WhatsApp
         const cleanHP = noHP.replace(/\D/g, "").replace(/^0/, "62");
         const trackUrl = `${window.location.origin}${window.location.pathname}?id=${encodeURIComponent(lastGeneratedId)}&pin=${encodeURIComponent(lastGeneratedPin)}`;
         const pesanWA = `*BUKTI PENGAJUAN ONLINE SI-ADIL DISDUKCAPIL*\n` +
@@ -1134,7 +1104,6 @@
             document.querySelectorAll(".online-service").forEach((el, i) => {
               if(i === idx) el.classList.add("selected");
             });
-            document.getElementById("onlineBtnToData").disabled = false;
             document.getElementById("onlineSelectedServiceLabel").textContent = onlineSelectedService.nama;
             document.getElementById("onlineUploadServiceTitle").textContent = onlineSelectedService.nama;
           }
@@ -1150,10 +1119,10 @@
       container.innerHTML = `
         <div class="siadil-draft-box mb-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
           <div>
-            <p class="text-xs font-black text-amber-900">💾 Draf Isian Formulir Ditemukan</p>
+            <p class="text-xs font-black text-teal-950">💾 Draf Isian Formulir Ditemukan</p>
             <p class="text-[11px] text-slate-600">Data isian Anda sebelumnya telah dipulihkan secara otomatis.</p>
           </div>
-          <button type="button" onclick="siadilHapusDraft()" class="px-3 py-1.5 rounded-lg border border-red-300 text-red-700 bg-white text-[10px] font-black hover:bg-red-50">
+          <button type="button" onclick="siadilHapusDraft()" class="px-3 py-1.5 rounded-lg border border-teal-300 text-teal-800 bg-white text-[10px] font-black hover:bg-teal-50">
             Hapus Draf & Mulai Ulang
           </button>
         </div>`;
@@ -1164,7 +1133,7 @@
       location.reload();
     }
 
-    /* --- TRACKING MODAL LOGIC (DUAL MODE & MULTI-FILE SUPPORT) --- */
+    /* --- TRACKING MODAL LOGIC (DUAL MODE) --- */
     function pindahModeTrack(mode) {
       activeTrackMode = mode;
       const btnPin = document.getElementById("btnModePin");
@@ -1173,12 +1142,12 @@
       const formNik = document.getElementById("formTrackModeNik");
 
       if (mode === "PIN") {
-        btnPin.className = "flex-1 py-2 rounded-lg text-xs font-black bg-white text-red-700 shadow-sm transition-all";
+        btnPin.className = "flex-1 py-2 rounded-lg text-xs font-black bg-white text-teal-800 shadow-sm transition-all";
         btnNik.className = "flex-1 py-2 rounded-lg text-xs font-black text-slate-500 hover:text-slate-800 transition-all";
         formPin.classList.remove("hidden");
         formNik.classList.add("hidden");
       } else {
-        btnNik.className = "flex-1 py-2 rounded-lg text-xs font-black bg-white text-red-700 shadow-sm transition-all";
+        btnNik.className = "flex-1 py-2 rounded-lg text-xs font-black bg-white text-teal-800 shadow-sm transition-all";
         btnPin.className = "flex-1 py-2 rounded-lg text-xs font-black text-slate-500 hover:text-slate-800 transition-all";
         formNik.classList.remove("hidden");
         formPin.classList.add("hidden");
@@ -1219,8 +1188,8 @@
         payloadParams.idPengajuan = id;
         payloadParams.pin = pin;
       } else {
-        const nik = document.getElementById("onlineTrackNik").value.trim();
-        const hp4 = document.getElementById("onlineTrackHp4").value.trim();
+        const nik = document.getElementById("onlineTrackNik").value.trim().replace(/\D/g, "");
+        const hp4 = document.getElementById("onlineTrackHp4").value.trim().replace(/\D/g, "");
         if(!nik || nik.length !== 16) return alert("NIK wajib 16 digit angka.");
         if(!hp4 || hp4.length !== 4) return alert("Masukkan 4 digit terakhir nomor HP.");
         payloadParams.nik = nik;
@@ -1241,7 +1210,7 @@
         if(status === "SELESAI") cls = "bg-emerald-100 text-emerald-800 border-emerald-300";
         else if(status === "DITOLAK") cls = "bg-red-100 text-red-800 border-red-300";
         else if(status === "DOKUMEN KURANG") cls = "bg-amber-100 text-amber-800 border-amber-300";
-        else if(status === "DIPROSES" || status === "DIVERIFIKASI") cls = "bg-blue-100 text-blue-800 border-blue-300";
+        else if(status === "DIPROSES" || status === "DIVERIFIKASI") cls = "bg-teal-100 text-teal-800 border-teal-300";
 
         let htmlHasilUnduh = '';
         if (p.fileHasil) {
@@ -1267,7 +1236,7 @@
                       <span class="text-xs font-bold text-slate-800">${onlineEscape(item.label || ('Dokumen ' + (idx+1)))}</span>
                     </div>
                     <a href="${onlineSafeUrl(item.url)}" target="_blank" rel="noopener"
-                      class="px-3.5 py-1.5 rounded-lg bg-emerald-700 text-white text-[11px] font-black shadow-sm hover:bg-emerald-800">
+                      class="px-3.5 py-1.5 rounded-lg bg-teal-700 text-white text-[11px] font-black shadow-sm hover:bg-teal-800">
                       ⬇ Unduh Berkas
                     </a>
                   </div>
@@ -1294,7 +1263,7 @@
               <p class="text-xs font-black text-slate-700 mb-3 uppercase tracking-wider">Riwayat Proses</p>
               <div class="space-y-3">
                 ${(result.riwayat || []).length ? (result.riwayat || []).map(r => `
-                  <div class="border-l-4 border-red-600 pl-3 py-0.5">
+                  <div class="border-l-4 border-teal-600 pl-3 py-0.5">
                     <p class="text-xs font-black text-slate-800">${onlineEscape(r.status)}</p>
                     <p class="text-[9px] text-slate-400">${onlineEscape(r.waktu || "")}</p>
                     ${r.catatan ? `<p class="text-[10px] text-slate-600 mt-0.5">${onlineEscape(r.catatan)}</p>` : ''}
@@ -1330,7 +1299,7 @@
       document.getElementById("onlineDocuments").classList.add("hidden");
       document.getElementById("onlineData").classList.add("hidden");
       document.getElementById("onlineServices").classList.remove("hidden");
-      document.getElementById("onlineBtnToData").disabled = true;
+      document.getElementById("panelPratinjauSyarat").classList.add("hidden");
       document.querySelectorAll(".online-service").forEach(x => x.classList.remove("selected"));
       updateOnlineSteps(1);
       document.getElementById("pengajuan-online").scrollIntoView({ behavior: "smooth" });
@@ -1356,11 +1325,12 @@
     window.addEventListener("load", () => {
       loadOnlineServices();
 
+      const urlParams = new URLSearchParams(window.location.search);
       const urlId = urlParams.get("id");
       const urlPin = urlParams.get("pin");
       const urlNik = urlParams.get("nik");
       const urlHp = urlParams.get("hp");
-      
+
       if (urlId && urlPin) {
         openTrackingOnline(urlId, urlPin);
         pindahModeTrack("PIN");

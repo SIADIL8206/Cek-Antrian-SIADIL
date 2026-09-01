@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- Favicon & Touch Icon Murni Lokal (Bebas Layar Merah & CORS) -->
   <link rel="icon" type="image/png" sizes="192x192" href="/icon.png">
   <link rel="icon" type="image/png" sizes="512x512" href="/icon.png">
   <link rel="shortcut icon" type="image/png" href="/icon.png">
@@ -14,7 +13,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   
-  <!-- Pemanggilan Manifes PWA -->
   <link rel="manifest" href="/manifest.json">
   
   <meta name="theme-color" content="#991b1b">
@@ -84,12 +82,11 @@
     .online-service { transition: all 0.2s ease; cursor: pointer; }
     .online-service:hover { transform: translateY(-2px); border-color: #fca5a5; }
     .online-service.selected { border-color: #dc2626 !important; background: #fff7f7; box-shadow: 0 0 0 3px rgba(220,38,38,.12); }
-    .online-file input[type=file] { display: none; }
   
     /* ALUR UPLOAD & DRAFT BOX */
-    .siadil-upload-item { border: 1.5px dashed #cbd5e1; border-radius: 14px; padding: 14px; background: #fff; transition: all 0.2s; }
+    .siadil-upload-item { border: 1.5px dashed #cbd5e1; border-radius: 16px; padding: 14px; background: #fff; transition: all 0.2s; }
     .siadil-upload-item.siap { border-style: solid; border-color: #22c55e; background: #f0fdf4; }
-    .siadil-upload-status { font-size: 9px; font-weight: 900; padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; }
+    .siadil-upload-status { font-size: 9px; font-weight: 900; padding: 3px 8px; border-radius: 6px; letter-spacing: 0.5px; }
     .siadil-upload-status.ok { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
     .siadil-upload-status.no { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
     .siadil-upload-status.opt { background: #f1f5f9; color: #64748b; border: 1px solid #cbd5e1; }
@@ -99,21 +96,17 @@
 </head>
 <body class="min-h-screen text-slate-800">
 
-  <!-- HEADER BRANDING EDISI KEMERDEKAAN -->
   <header class="relative bg-gradient-to-r from-red-900 via-red-700 to-red-800 text-white shadow-xl p-3 md:p-4 mb-4 overflow-hidden border-b-2 border-amber-400">
     
-    <!-- Pita Sudut Hanya Tampil di Layar Sedang/Besar (Desktop) agar tidak menutupi logo di HP -->
     <div class="ribbon-wrapper hidden md:block">
       <div class="ribbon-merdeka">DIRGAHAYU RI</div>
     </div>
 
-    <!-- Ornamen Lingkaran Halus -->
     <div class="absolute -top-12 -left-12 w-48 h-48 rounded-full bg-white opacity-5 pointer-events-none"></div>
     <div class="absolute -bottom-16 right-20 w-64 h-64 rounded-full bg-amber-400 opacity-10 pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4 relative z-10">
       
-      <!-- Sisi Kiri: Logo Daerah, Logo HUT RI 81 & Teks Dinas -->
       <div class="flex items-center justify-between w-full md:w-auto gap-2.5 md:gap-4">
         <div class="flex items-center gap-2.5">
           <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Lambang_Kabupaten_Halmahera_Timur.png" alt="Logo Pemkab" class="h-9 md:h-12 w-auto drop-shadow-md">
@@ -123,13 +116,11 @@
           </div>
         </div>
 
-        <!-- Logo Resmi HUT RI 81 (Aman tanpa tertutup pita) -->
         <div class="bg-white p-1 md:p-1.5 rounded-xl shadow-md border border-amber-400 flex items-center justify-center h-9 md:h-12 flex-shrink-0">
           <img src="logo-2-1024.webp" alt="HUT RI 81" class="h-full w-auto object-contain">
         </div>
       </div>
 
-      <!-- Sisi Kanan: Jam & Live Status -->
       <div class="flex flex-row md:flex-col items-center md:items-end justify-between w-full md:w-auto border-t border-red-800/70 md:border-0 pt-2 md:pt-0">
         <div class="flex items-center gap-2 mb-0.5">
           <span class="live-dot"></span>
@@ -144,7 +135,6 @@
     </div>
   </header>
 
-  <!-- NAVIGASI GABUNGAN -->
   <div class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-red-100 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-center gap-2 md:gap-3">
       <button type="button" onclick="scrollToQueue()" class="px-3 md:px-5 py-2 rounded-xl bg-red-700 text-white text-[10px] md:text-xs font-black shadow-sm">
@@ -161,7 +151,6 @@
 
   <main class="max-w-7xl mx-auto px-4 pb-12">
     
-    <!-- BANNER KHUSUS KEMERDEKAAN -->
     <div class="mb-4 bg-gradient-to-r from-red-50 to-amber-50 border-l-4 border-red-600 p-2.5 rounded-xl shadow-sm flex items-center justify-between">
       <div class="flex items-center gap-2">
         <span class="text-base">🇮🇩</span>
@@ -172,7 +161,6 @@
       <span class="text-[9px] bg-red-600 text-white font-black px-2 py-0.5 rounded-md uppercase tracking-wider">HUT RI 81</span>
     </div>
 
-    <!-- SECTION 1: PELAYANAN SAAT INI -->
     <section class="mb-5">
       <div class="flex items-center gap-2 mb-2">
         <div class="h-4 w-1.5 bg-red-600 rounded-full"></div>
@@ -180,7 +168,6 @@
       </div>
       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <!-- Kartu Utama -->
         <div class="glass-card rounded-2xl p-4 border-l-8 border-red-600 shadow-xl flex flex-col items-center justify-center text-center relative overflow-hidden bg-white min-h-[160px]">
           <div class="absolute -top-8 -right-8 bg-red-100 h-28 w-28 rounded-full opacity-40"></div>
           <p class="text-[9px] font-bold text-red-600 uppercase mb-1 tracking-widest">Sekarang Menuju Loket</p>
@@ -188,7 +175,6 @@
           <p id="current-name" class="text-lg font-bold text-slate-600 uppercase italic mt-1 break-words max-w-full px-2">Memuat data...</p>
         </div>
 
-        <!-- Info Layanan -->
         <div class="glass-card rounded-2xl p-4 flex flex-col justify-center shadow-lg bg-red-50/60 border-red-100">
            <h4 class="text-red-900 text-[11px] font-bold mb-1.5 flex items-center gap-2">
              <span>📢</span> INFO LAYANAN
@@ -210,18 +196,15 @@
       </div>
     </section>
 
-    <!-- SECTION 2: DAFTAR TUNGGU -->
     <section class="mb-5">
       <div class="flex items-center gap-2 mb-3">
         <div class="h-4 w-1.5 bg-amber-500 rounded-full"></div>
         <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500">Urutan Tunggu</h2>
       </div>
       <div id="waiting-list" class="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8 gap-2">
-        <!-- Data diisi via JS -->
-      </div>
+        </div>
     </section>
 
-    <!-- SECTION 3: RIWAYAT SELESAI -->
     <section class="mb-10">
       <div class="flex items-center gap-2 mb-4">
         <div class="h-5 w-2 bg-red-600 rounded-full"></div>
@@ -238,16 +221,12 @@
               </tr>
             </thead>
             <tbody id="done-list" class="divide-y divide-red-50/60 text-xs">
-              <!-- Data diisi via JS -->
-            </tbody>
+              </tbody>
           </table>
         </div>
       </div>
     </section>
 
-    <!-- =========================================================
-         SI-ADIL ONLINE — MODUL PENGAJUAN MASYARAKAT (WORKFLOW BARU)
-         ========================================================= -->
     <section id="pengajuan-online" class="pt-4 pb-20">
       <div class="glass-card rounded-2xl p-4 md:p-6 mb-4 border-l-8 border-red-600 shadow-lg">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
@@ -265,7 +244,6 @@
         </div>
       </div>
 
-      <!-- STEP INDICATOR -->
       <div class="grid grid-cols-3 gap-2 mb-4">
         <div id="onlineStep1" class="online-step active rounded-xl p-3 text-center">
           <div class="text-base md:text-lg font-black leading-tight">1</div>
@@ -281,10 +259,8 @@
         </div>
       </div>
 
-      <!-- NOTIFIKASI DRAF DITEMUKAN -->
       <div id="siadilDraftNoticeContainer"></div>
 
-      <!-- STEP 1: PILIH LAYANAN -->
       <div id="onlineServices" class="glass-card rounded-2xl p-4 md:p-6 shadow-sm">
         <div class="flex items-center justify-between mb-4">
           <div>
@@ -303,7 +279,6 @@
         </div>
       </div>
 
-      <!-- STEP 2: DATA PEMOHON -->
       <div id="onlineData" class="glass-card rounded-2xl p-4 md:p-6 hidden shadow-sm">
         <div class="flex items-center justify-between mb-3">
           <div>
@@ -357,7 +332,6 @@
         </form>
       </div>
 
-      <!-- STEP 3: UPLOAD SELURUH PERSYARATAN & AJUKAN -->
       <div id="onlineDocuments" class="glass-card rounded-2xl p-4 md:p-6 hidden shadow-sm">
         <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-3">
           <div>
@@ -384,7 +358,6 @@
         </div>
       </div>
 
-      <!-- HASIL PENGAJUAN SUKSES -->
       <div id="onlineResultSuccess" class="glass-card rounded-2xl p-5 md:p-8 hidden shadow-xl text-center border-t-8 border-emerald-600">
         <div class="w-16 h-16 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center text-3xl mx-auto mb-3 shadow-inner">
           ✓
@@ -420,7 +393,6 @@
     </section>
   </main>
 
-  <!-- TRACKING MODAL -->
   <div id="onlineTrackingModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-sm hidden z-[80] p-4 overflow-y-auto">
     <div class="min-h-full flex items-center justify-center">
       <div class="bg-white rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden border border-slate-100">
@@ -452,7 +424,6 @@
     </div>
   </div>
 
-  <!-- FOOTER RUNNING TEXT KEMERDEKAAN -->
   <footer class="fixed bottom-0 w-full bg-gradient-to-r from-red-950 via-slate-900 to-red-950 text-white p-2 overflow-hidden border-t border-red-800 z-50">
     <div class="whitespace-nowrap animate-marquee">
       <span class="mx-4 text-[12px] uppercase font-bold text-amber-300">🇮🇩 DIRGAHAYU REPUBLIK INDONESIA KE-81!</span>
@@ -464,7 +435,7 @@
 
   <script>
     /* =========================================================
-       1. LIVE MONITOR ANTREAN LOKET (TETAP AMAN)
+       1. LIVE MONITOR ANTREAN LOKET
        ========================================================= */
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxqpJyuQlbHlSd2WmUTSo3Fw59bLmk58KgxTZndqXOqIet4Bu4QdD9GGoUPcNlQ76KT/exec"; 
 
@@ -608,6 +579,22 @@
       return String(v ?? "").replace(/[&<>"']/g, m => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;" }[m]));
     }
 
+    function getIconLayanan(kode, nama) {
+      const k = (kode || "").toUpperCase();
+      const n = (nama || "").toUpperCase();
+
+      if (k.includes("KK") || n.includes("KARTU KELUARGA")) return "📑";
+      if (k.includes("SKPWNI") || n.includes("PINDAH")) return "✈️";
+      if (k.includes("LAHIR") || n.includes("KELAHIRAN")) return "👶";
+      if (k.includes("KAWIN") || k.includes("NIKAH") || n.includes("PERKAWINAN")) return "💍";
+      if (k.includes("CERAI") || n.includes("PERCERAIAN")) return "💔";
+      if (k.includes("MATI") || n.includes("KEMATIAN")) return "🪦";
+      if (k.includes("KTP") || k.includes("KIA")) return "🪪";
+      if (k.includes("NIK") || n.includes("SINKRONISASI") || n.includes("VALIDASI")) return "🔄";
+      
+      return "📄";
+    }
+
     function onlineButtonLoading(btn, on, text) {
       if(on) {
         btn.disabled = true;
@@ -629,21 +616,6 @@
       });
     }
 
-    function getIconLayanan(kode, nama) {
-      const k = (kode || "").toUpperCase();
-      const n = (nama || "").toUpperCase();
-    
-      if (k.includes("KK") || n.includes("KARTU KELUARGA")) return "📑";
-      if (k.includes("SKPWNI") || n.includes("PINDAH")) return "✈️";
-      if (k.includes("LAHIR") || n.includes("KELAHIRAN")) return "👶";
-      if (k.includes("KAWIN") || k.includes("NIKAH") || n.includes("PERKAWINAN")) return "💍";
-      if (k.includes("CERAI") || n.includes("PERCERAIAN")) return "💔";
-      if (k.includes("MATI") || n.includes("KEMATIAN")) return "🪦";
-      if (k.includes("KTP") || k.includes("KIA")) return "🪪";
-      if (k.includes("NIK") || n.includes("SINKRONISASI") || n.includes("VALIDASI")) return "🔄";
-      
-      return "📄"; // Icon default jika tidak ada yang cocok
-    }
     /* --- LOAD & SELECT SERVICE --- */
     async function loadOnlineServices() {
       const loading = document.getElementById("onlineServiceLoading");
@@ -662,14 +634,15 @@
           <button type="button" class="online-service text-left border border-slate-200 rounded-2xl p-4 bg-white shadow-sm"
             onclick="selectOnlineService(${i}, this)">
             <div class="flex justify-between items-center gap-2">
-              <div class="w-9 h-9 rounded-xl bg-red-50 text-red-700 flex items-center justify-center text-lg shadow-sm">${getIconLayanan(item.kode, item.nama)}</div>
+              <div class="w-9 h-9 rounded-xl bg-red-50 text-red-700 flex items-center justify-center text-lg shadow-sm">
+                ${getIconLayanan(item.kode, item.nama)}
+              </div>
               <span class="text-[8.5px] bg-slate-100 text-slate-600 px-2 py-1 rounded-lg font-black font-mono">${onlineEscape(item.kode)}</span>
             </div>
             <p class="mt-3 text-sm font-black text-slate-900">${onlineEscape(item.nama)}</p>
             <p class="text-[9px] text-slate-400 font-bold uppercase mt-1">${onlineEscape(item.kategori || "Pelayanan Kependudukan")}</p>
           </button>`).join("");
 
-        // Pulihkan draf pilihan jika ada
         siadilMuatDraft();
       } catch(e) {
         list.innerHTML = `<div class="sm:col-span-2 lg:col-span-3 rounded-xl bg-red-50 border border-red-200 p-4 text-xs text-red-800"><b>Gagal memuat layanan.</b><br>${onlineEscape(e.message)}</div>`;
@@ -731,7 +704,7 @@
       updateOnlineSteps(2);
     }
 
-    /* --- PERSYARATAN & UPLOAD MURNI LOKAL SEBELUM SUBMIT --- */
+    /* --- PERSYARATAN & UPLOAD (SINGLE BUTTON + HAPUS & GANTI) --- */
     async function loadOnlineRequirements(kodeLayanan) {
       const box = document.getElementById("onlineRequirementsList");
       box.innerHTML = '<div class="text-center py-6 text-slate-400 text-sm">Memuat daftar persyaratan...</div>';
@@ -764,17 +737,23 @@
                   <span id="statusSyarat_${item.idPersyaratan}" class="siadil-upload-status ${isUploaded ? 'ok' : (item.wajib ? 'no' : 'opt')}">
                     ${isUploaded ? '✓ SIAP' : (item.wajib ? 'BELUM DIUPLOAD' : 'OPSIONAL')}
                   </span>
-                  <label class="cursor-pointer shrink-0">
-                    <input id="inputSyarat_${item.idPersyaratan}" type="file" accept="image/*,.pdf"
-                      onchange="siadilPilihDokumen('${item.idPersyaratan}', this, ${max})">
-                    <span class="inline-flex px-3.5 py-2 rounded-xl bg-slate-900 text-white text-xs font-black hover:bg-slate-800">
-                      📎 Pilih File
-                    </span>
+                  
+                  <input id="inputSyarat_${item.idPersyaratan}" type="file" accept="image/*,.pdf" class="hidden"
+                    onchange="siadilPilihDokumen('${item.idPersyaratan}', this, ${max})">
+
+                  <label id="btnPilihSyarat_${item.idPersyaratan}" for="inputSyarat_${item.idPersyaratan}" 
+                    class="cursor-pointer inline-flex items-center px-3.5 py-2 rounded-xl bg-slate-900 text-white text-xs font-black hover:bg-slate-800 shadow-sm ${isUploaded ? 'hidden' : ''}">
+                    📎 Pilih File
                   </label>
+
+                  <button type="button" id="btnHapusSyarat_${item.idPersyaratan}" onclick="siadilHapusDokumen('${item.idPersyaratan}')"
+                    class="inline-flex items-center px-3 py-1.5 rounded-xl border border-red-300 text-red-700 bg-white text-xs font-black hover:bg-red-50 shadow-sm ${isUploaded ? '' : 'hidden'}">
+                    🗑️ Hapus & Ganti
+                  </button>
                 </div>
               </div>
-              <div id="nameSyarat_${item.idPersyaratan}" class="text-[10px] text-slate-600 font-medium ${isUploaded ? '' : 'hidden'}">
-                ${isUploaded ? `${onlineEscape(infoDoc.namaFile)} (${(infoDoc.size/1024/1024).toFixed(2)} MB)` : ''}
+              <div id="nameSyarat_${item.idPersyaratan}" class="text-[10.5px] text-emerald-800 font-bold ${isUploaded ? '' : 'hidden'}">
+                ${isUploaded ? `📄 ${onlineEscape(infoDoc.namaFile)} (${(infoDoc.size/1024/1024).toFixed(2)} MB)` : ''}
               </div>
             </div>`;
         }).join("");
@@ -790,6 +769,8 @@
       const itemBox = document.getElementById("itemSyarat_" + idPersyaratan);
       const statusEl = document.getElementById("statusSyarat_" + idPersyaratan);
       const nameEl = document.getElementById("nameSyarat_" + idPersyaratan);
+      const btnPilih = document.getElementById("btnPilihSyarat_" + idPersyaratan);
+      const btnHapus = document.getElementById("btnHapusSyarat_" + idPersyaratan);
       const syaratInfo = onlineRequirements.find(s => s.idPersyaratan === idPersyaratan) || {};
 
       if(!file) return;
@@ -817,15 +798,45 @@
         statusEl.className = "siadil-upload-status ok";
         statusEl.textContent = "✓ SIAP";
         nameEl.classList.remove("hidden");
-        nameEl.textContent = `${file.name} — ${(file.size/1024/1024).toFixed(2)} MB`;
+        nameEl.textContent = `📄 ${file.name} (${(file.size/1024/1024).toFixed(2)} MB)`;
+        
+        btnPilih.classList.add("hidden");
+        btnHapus.classList.remove("hidden");
       } catch(err) {
         alert("Gagal membaca file: " + err.message);
-        delete onlineUploadedDocs[idPersyaratan];
-        itemBox.classList.remove("siap");
+        siadilHapusDokumen(idPersyaratan);
+      }
+
+      siadilUpdateSubmitState();
+    }
+
+    function siadilHapusDokumen(idPersyaratan) {
+      delete onlineUploadedDocs[idPersyaratan];
+
+      const input = document.getElementById("inputSyarat_" + idPersyaratan);
+      if(input) input.value = "";
+
+      const itemBox = document.getElementById("itemSyarat_" + idPersyaratan);
+      if(itemBox) itemBox.classList.remove("siap");
+
+      const syaratInfo = onlineRequirements.find(s => s.idPersyaratan === idPersyaratan) || {};
+      const statusEl = document.getElementById("statusSyarat_" + idPersyaratan);
+      if(statusEl) {
         statusEl.className = syaratInfo.wajib ? "siadil-upload-status no" : "siadil-upload-status opt";
         statusEl.textContent = syaratInfo.wajib ? "BELUM DIUPLOAD" : "OPSIONAL";
-        nameEl.classList.add("hidden");
       }
+
+      const nameEl = document.getElementById("nameSyarat_" + idPersyaratan);
+      if(nameEl) {
+        nameEl.classList.add("hidden");
+        nameEl.textContent = "";
+      }
+
+      const btnPilih = document.getElementById("btnPilihSyarat_" + idPersyaratan);
+      if(btnPilih) btnPilih.classList.remove("hidden");
+
+      const btnHapus = document.getElementById("btnHapusSyarat_" + idPersyaratan);
+      if(btnHapus) btnHapus.classList.add("hidden");
 
       siadilUpdateSubmitState();
     }
@@ -901,7 +912,6 @@
         lastGeneratedId = result.idPengajuan;
         lastGeneratedPin = result.pin;
 
-        // Bersihkan draf lokal karena sudah resmi masuk
         localStorage.removeItem(SIADIL_DRAFT_KEY);
 
         document.getElementById("onlineDocuments").classList.add("hidden");
@@ -946,13 +956,11 @@
         const draft = JSON.parse(raw);
         if(!draft || !draft.fields) return;
 
-        // Isi form fields
         Object.keys(draft.fields).forEach(id => {
           const el = document.getElementById(id);
           if(el && draft.fields[id]) el.value = draft.fields[id];
         });
 
-        // Pilih layanan jika ada
         if(draft.serviceKode && onlineServices.length) {
           const idx = onlineServices.findIndex(s => s.kode === draft.serviceKode);
           if(idx !== -1) {

@@ -240,22 +240,44 @@
 
       <div id="siadilDraftNoticeContainer"></div>
 
-      <!-- STEP 1: PILIH LAYANAN -->
+      <!-- STEP 1: PILIH LAYANAN & PRATINJAU PERSYARATAN -->
       <div id="onlineServices" class="glass-card rounded-2xl p-4 md:p-6 shadow-sm">
         <div class="flex items-center justify-between mb-4">
           <div>
             <h3 class="font-black text-lg text-slate-900">Pilih Jenis Layanan</h3>
-            <p class="text-[11px] text-slate-500">Daftar layanan yang dapat diajukan secara online.</p>
+            <p class="text-[11px] text-slate-500">Pilih layanan untuk melihat dokumen persyaratan yang perlu disiapkan.</p>
           </div>
           <button type="button" onclick="loadOnlineServices()" class="text-xs font-black text-red-700 hover:underline">↻ Refresh</button>
         </div>
+
         <div id="onlineServiceLoading" class="py-8 text-center text-slate-400 text-sm">Memuat layanan...</div>
         <div id="onlineServiceList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
-        <div class="flex justify-end mt-5">
-          <button id="onlineBtnToData" disabled onclick="onlineGoToData()"
-            class="px-6 py-3 rounded-xl bg-red-700 text-white text-xs font-black disabled:opacity-40 shadow-sm hover:bg-red-800 transition-all">
-            Lanjut ke Data Pemohon →
-          </button>
+
+        <!-- PANEL INFO PERSYARATAN YANG MUNCUL KETIKA LAYANAN DIPILIH -->
+        <div id="panelPratinjauSyarat" class="hidden mt-5 p-4 rounded-2xl bg-amber-50 border border-amber-200">
+          <div class="flex items-start gap-2 mb-2">
+            <span class="text-lg">📋</span>
+            <div>
+              <h4 class="text-xs font-black text-amber-950 uppercase tracking-wide">
+                Persyaratan Dokumen: <span id="labelSyaratDipilih" class="text-red-700">-</span>
+              </h4>
+              <p class="text-[11px] text-amber-800">Pastikan Anda telah menyiapkan foto/dokumen asli di bawah ini sebelum melanjutkan:</p>
+            </div>
+          </div>
+          
+          <div id="daftarPratinjauSyaratList" class="space-y-1.5 my-3 pl-6">
+            <!-- Diisi otomatis oleh JavaScript -->
+          </div>
+
+          <div class="flex flex-col sm:flex-row justify-between items-center gap-3 pt-3 border-t border-amber-200/60 mt-3">
+            <span class="text-[10.5px] text-amber-900 font-medium italic">
+              💡 Dokumen dapat berupa foto kamera yang jelas atau file PDF (Maks. 5 MB).
+            </span>
+            <button id="onlineBtnToData" onclick="onlineGoToData()"
+              class="w-full sm:w-auto px-6 py-3 rounded-xl bg-red-700 text-white text-xs font-black shadow-md hover:bg-red-800 transition-all">
+              Saya Sudah Menyiapkan Berkas, Lanjut Isi Data →
+            </button>
+          </div>
         </div>
       </div>
 
@@ -677,13 +699,49 @@
       }
     }
 
-    function selectOnlineService(i, button) {
+    async function selectOnlineService(i, button) {
       onlineSelectedService = onlineServices[i];
       document.querySelectorAll(".online-service").forEach(x => x.classList.remove("selected"));
       if(button) button.classList.add("selected");
-      document.getElementById("onlineBtnToData").disabled = false;
+
       document.getElementById("onlineSelectedServiceLabel").textContent = onlineSelectedService.nama;
       document.getElementById("onlineUploadServiceTitle").textContent = onlineSelectedService.nama;
+      document.getElementById("labelSyaratDipilih").textContent = onlineSelectedService.nama;
+
+      const panel = document.getElementById("panelPratinjauSyarat");
+      const listSyarat = document.getElementById("daftarPratinjauSyaratList");
+      
+      panel.classList.remove("hidden");
+      listSyarat.innerHTML = '<p class="text-xs text-amber-800 italic">Memeriksa persyaratan layanan...</p>';
+
+      // Gulir halus agar panel syarat terlihat di layar HP
+      panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+      try {
+        const result = await onlineGet({ action: "getPersyaratan", kodeLayanan: onlineSelectedService.kode });
+        if(!result.success) throw new Error(result.message || "Gagal memuat syarat.");
+        
+        const syarat = Array.isArray(result.data) ? result.data : [];
+        if(!syarat.length) {
+          listSyarat.innerHTML = '<p class="text-xs text-emerald-800 font-bold">✓ Tidak ada persyaratan berkas khusus untuk layanan ini. Anda bisa langsung mengisi data.</p>';
+          return;
+        }
+
+        listSyarat.innerHTML = syarat.map((s, idx) => `
+          <div class="text-xs text-slate-800 flex items-start gap-2">
+            <span class="font-bold text-amber-950">${idx+1}.</span>
+            <div>
+              <span class="font-bold">${onlineEscape(s.namaPersyaratan)}</span>
+              ${s.wajib ? '<span class="text-[9px] font-black bg-red-600 text-white px-1.5 py-0.5 rounded ml-1 uppercase">Wajib</span>' : '<span class="text-[9px] font-bold bg-slate-200 text-slate-700 px-1.5 py-0.5 rounded ml-1 uppercase">Opsional</span>'}
+              ${s.keterangan ? `<p class="text-[10.5px] text-slate-500 mt-0.5">${onlineEscape(s.keterangan)}</p>` : ''}
+            </div>
+          </div>
+        `).join('');
+
+      } catch(err) {
+        listSyarat.innerHTML = `<p class="text-xs text-red-600">Gagal memuat daftar persyaratan: ${err.message}</p>`;
+      }
+
       siadilSimpanDraft();
     }
 

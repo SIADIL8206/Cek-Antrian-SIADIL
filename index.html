@@ -1033,11 +1033,17 @@
     }
 
     async function trackOnlineApplication() {
-      const nik = document.getElementById("onlineTrackNik").value.trim();
-      const hp = document.getElementById("onlineTrackHp").value.trim();
+      const nik = document.getElementById("onlineTrackNik").value.trim().replace(/\D/g, "");
+      const hp4 = document.getElementById("onlineTrackHp").value.trim().replace(/\D/g, "");
 
-      if(!nik || nik.length !== 16) return alert("NIK wajib 16 digit angka.");
-      if(!hp) return alert("Nomor HP wajib diisi.");
+      if(!nik || nik.length !== 16) {
+        alert("⚠️ NIK wajib diisi 16 digit angka.");
+        return;
+      }
+      if(!hp4 || hp4.length !== 4) {
+        alert("⚠️ Masukkan tepat 4 digit angka terakhir nomor HP Anda.");
+        return;
+      }
 
       const box = document.getElementById("onlineTrackingResult");
       const btn = document.getElementById("onlineBtnTrack");
@@ -1047,7 +1053,7 @@
         const result = await onlineGet({
           action: "cekPengajuan",
           nik: nik,
-          noHP: hp
+          hp4: hp4
         });
 
         if(!result.success) throw new Error(result.message || "Pengajuan tidak ditemukan.");

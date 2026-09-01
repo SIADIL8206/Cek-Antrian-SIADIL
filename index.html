@@ -340,43 +340,39 @@
         </div>
       </div>
 
-      <!-- HASIL PENGAJUAN SUKSES (DILENGKAPI SIMPAN KE WA) -->
+      <!-- HASIL PENGAJUAN SUKSES (BERSIH & FOKUS NIK/HP) -->
       <div id="onlineResultSuccess" class="glass-card rounded-2xl p-5 md:p-8 hidden shadow-xl text-center border-t-8 border-emerald-600">
         <div class="w-16 h-16 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center text-3xl mx-auto mb-3 shadow-inner">
           ✓
         </div>
-        <h3 class="text-2xl font-black text-slate-900">Pengajuan Berhasil Dikirim!</h3>
+        <h3 class="text-2xl font-black text-slate-900">Pengajuan Berhasil Terkirim!</h3>
         <p class="text-xs text-slate-500 max-w-md mx-auto mt-1 mb-5">
-          Permohonan Anda telah resmi tercatat di sistem Disdukcapil Kabupaten Halmahera Timur.
+          Permohonan dokumen kependudukan Anda telah berhasil diterima oleh sistem Disdukcapil Kabupaten Halmahera Timur.
         </p>
 
-        <div class="max-w-md mx-auto bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-4 shadow-sm text-left">
+        <div class="max-w-md mx-auto bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-5 shadow-sm text-left">
           <div class="flex justify-between items-center border-b border-slate-200 pb-2 mb-2">
-            <span class="text-xs text-slate-500 font-bold uppercase">ID PENGAJUAN</span>
-            <span id="onlineSuccessId" class="text-base font-black text-slate-900 font-mono">-</span>
+            <span class="text-xs text-slate-500 font-bold uppercase">NIK PEMOHON</span>
+            <span id="onlineSuccessNik" class="text-sm font-black text-slate-900 font-mono">-</span>
           </div>
           <div class="flex justify-between items-center">
-            <span class="text-xs text-slate-500 font-bold uppercase">PIN / KODE AKSES</span>
-            <span id="onlineSuccessPin" class="text-xl font-black text-amber-900 tracking-widest font-mono">------</span>
+            <span class="text-xs text-slate-500 font-bold uppercase">NO. WHATSAPP</span>
+            <span id="onlineSuccessHp" class="text-sm font-black text-emerald-700 font-mono">-</span>
           </div>
         </div>
 
-        <!-- TOMBOL SIMPAN KE WA (OPSI 1) -->
-        <div class="max-w-md mx-auto mb-6 space-y-2">
+        <!-- TOMBOL SIMPAN LINK KE WA -->
+        <div class="max-w-md mx-auto mb-6">
           <a id="btnSimpanWA" href="#" target="_blank"
             class="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-emerald-600 text-white text-xs font-black shadow-md hover:bg-emerald-700 transition-all">
-            <span>📲</span> SIMPAN BUKTI KE WHATSAPP SAYA
+            <span>📲</span> SIMPAN LINK PELACAKAN KE WHATSAPP
           </a>
-          <button type="button" onclick="salinInfoPengajuan()"
-            class="w-full py-2.5 px-4 rounded-xl border border-slate-300 text-slate-700 bg-white text-xs font-black hover:bg-slate-50">
-            📋 Salin ID & PIN ke Clipboard
-          </button>
         </div>
 
         <div class="flex flex-col sm:flex-row justify-center gap-3 border-t border-slate-100 pt-4">
           <button type="button" onclick="openTrackingFromSuccess()"
             class="px-6 py-3 rounded-xl bg-red-700 text-white text-xs font-black shadow-md hover:bg-red-800 transition-all">
-            🔎 Lacak Status Sekarang
+            🔎 Cek Status Pengajuan
           </button>
           <button type="button" onclick="resetOnlineApplication()"
             class="px-6 py-3 rounded-xl bg-slate-900 text-white text-xs font-black shadow-md hover:bg-slate-800 transition-all">
@@ -388,7 +384,7 @@
     </section>
   </main>
 
-  <!-- TRACKING MODAL (DUAL MODE: ID+PIN ATAU NIK+4 DIGIT HP) -->
+  <!-- TRACKING MODAL (SEDERHANA: CUKUP NIK + NO HP) -->
   <div id="onlineTrackingModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-sm hidden z-[80] p-4 overflow-y-auto">
     <div class="min-h-full flex items-center justify-center">
       <div class="bg-white rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden border border-slate-100">
@@ -401,38 +397,14 @@
         </div>
         
         <div class="p-4 md:p-6">
-          
-          <!-- TAB PILIHAN METODE CEK STATUS -->
-          <div class="flex gap-2 p-1 bg-slate-100 rounded-xl mb-4">
-            <button type="button" id="btnModePin" onclick="pindahModeTrack('PIN')" class="flex-1 py-2 rounded-lg text-xs font-black bg-white text-red-700 shadow-sm transition-all">
-              🔑 Gunakan ID & PIN
-            </button>
-            <button type="button" id="btnModeNik" onclick="pindahModeTrack('NIK')" class="flex-1 py-2 rounded-lg text-xs font-black text-slate-500 hover:text-slate-800 transition-all">
-              🪪 Gunakan NIK & No. HP
-            </button>
-          </div>
-
-          <!-- FORM MODE 1: ID + PIN -->
-          <div id="formTrackModePin" class="grid sm:grid-cols-2 gap-3">
-            <div>
-              <label class="online-label">ID Pengajuan</label>
-              <input id="onlineTrackId" class="online-input uppercase font-mono" placeholder="Contoh: ADL-20260831-0001">
-            </div>
-            <div>
-              <label class="online-label">PIN / Kode Akses</label>
-              <input id="onlineTrackPin" maxlength="6" inputmode="numeric" class="online-input font-mono tracking-widest" placeholder="6 digit PIN">
-            </div>
-          </div>
-
-          <!-- FORM MODE 2: NIK + 4 DIGIT TERAKHIR HP (OPSI 2) -->
-          <div id="formTrackModeNik" class="grid sm:grid-cols-2 gap-3 hidden">
+          <div class="grid sm:grid-cols-2 gap-3">
             <div>
               <label class="online-label">Nomor Induk Kependudukan (NIK)</label>
-              <input id="onlineTrackNik" maxlength="16" inputmode="numeric" class="online-input font-mono" placeholder="16 digit NIK Pemohon">
+              <input id="onlineTrackNik" maxlength="16" inputmode="numeric" class="online-input font-mono" placeholder="16 digit NIK pemohon">
             </div>
             <div>
-              <label class="online-label">4 Digit Terakhir No. HP / WhatsApp</label>
-              <input id="onlineTrackHp4" maxlength="4" inputmode="numeric" class="online-input font-mono text-center tracking-widest" placeholder="Contoh: 8910">
+              <label class="online-label">Nomor HP / WhatsApp Aktif</label>
+              <input id="onlineTrackHp" inputmode="tel" class="online-input font-mono" placeholder="Nomor HP saat mendaftar">
             </div>
           </div>
 
@@ -569,10 +541,8 @@
     let onlineSelectedService = null;
     let onlineRequirements = [];
     let onlineUploadedDocs = {};
-    let lastGeneratedId = "";
-    let lastGeneratedPin = "";
-    let lastPemohonData = {};
-    let activeTrackMode = "PIN"; // 'PIN' atau 'NIK'
+    let lastRegisteredNik = "";
+    let lastRegisteredHp = "";
 
     function onlineApiReady() {
       if(!SIADIL_ONLINE_API || SIADIL_ONLINE_API.includes("GANTI_DENGAN")) {
@@ -920,13 +890,8 @@
       const noKK = document.getElementById("onlineNoKK").value.trim();
       const noHP = document.getElementById("onlineNoHP").value.trim();
 
-      lastPemohonData = {
-        nama: nama,
-        nik: nik,
-        noKK: noKK,
-        noHP: noHP,
-        layanan: onlineSelectedService.nama
-      };
+      lastRegisteredNik = nik;
+      lastRegisteredHp = noHP;
 
       const payload = {
         action: "submitPengajuanLengkap",
@@ -947,20 +912,17 @@
         const result = await onlinePost(payload);
         if(!result.success) throw new Error(result.message || "Gagal memproses pengajuan.");
 
-        lastGeneratedId = result.idPengajuan;
-        lastGeneratedPin = result.pin;
-
         localStorage.removeItem(SIADIL_DRAFT_KEY);
 
-        // Siapkan Link WhatsApp
+        // Siapkan Link WhatsApp otomatis
         const cleanHP = noHP.replace(/\D/g, "").replace(/^0/, "62");
-        const trackUrl = `${window.location.origin}${window.location.pathname}?id=${encodeURIComponent(lastGeneratedId)}&pin=${encodeURIComponent(lastGeneratedPin)}`;
+        const trackUrl = `${window.location.origin}${window.location.pathname}?nik=${encodeURIComponent(nik)}&hp=${encodeURIComponent(noHP)}`;
         const pesanWA = `*BUKTI PENGAJUAN ONLINE SI-ADIL DISDUKCAPIL*\n` +
           `----------------------------------------\n` +
           `Nama Pemohon: ${nama}\n` +
           `Jenis Layanan: ${onlineSelectedService.nama}\n` +
-          `ID Pengajuan: *${lastGeneratedId}*\n` +
-          `PIN / Akses: *${lastGeneratedPin}*\n` +
+          `NIK: *${nik}*\n` +
+          `No. HP: *${noHP}*\n` +
           `----------------------------------------\n` +
           `Klik tautan di bawah untuk mengecek status permohonan Anda:\n` +
           `${trackUrl}`;
@@ -969,8 +931,8 @@
 
         document.getElementById("onlineDocuments").classList.add("hidden");
         document.getElementById("onlineResultSuccess").classList.remove("hidden");
-        document.getElementById("onlineSuccessId").textContent = lastGeneratedId;
-        document.getElementById("onlineSuccessPin").textContent = lastGeneratedPin;
+        document.getElementById("onlineSuccessNik").textContent = nik;
+        document.getElementById("onlineSuccessHp").textContent = noHP;
 
         document.getElementById("pengajuan-online").scrollIntoView({ behavior: "smooth" });
       } catch(err) {
@@ -978,13 +940,6 @@
       } finally {
         onlineButtonLoading(btn, false, "🚀 AJUKAN PERMOHONAN RESMI");
       }
-    }
-
-    function salinInfoPengajuan() {
-      const teks = `ID Pengajuan: ${lastGeneratedId} | PIN: ${lastGeneratedPin}`;
-      navigator.clipboard.writeText(teks).then(() => {
-        alert("✅ ID Pengajuan dan PIN berhasil disalin ke clipboard!");
-      });
     }
 
     /* --- DRAFT ENGINE --- */
@@ -1058,35 +1013,11 @@
       location.reload();
     }
 
-    /* --- TRACKING MODAL LOGIC (DUAL MODE & MULTI-FILE SUPPORT) --- */
-    function pindahModeTrack(mode) {
-      activeTrackMode = mode;
-      const btnPin = document.getElementById("btnModePin");
-      const btnNik = document.getElementById("btnModeNik");
-      const formPin = document.getElementById("formTrackModePin");
-      const formNik = document.getElementById("formTrackModeNik");
-
-      if (mode === "PIN") {
-        btnPin.className = "flex-1 py-2 rounded-lg text-xs font-black bg-white text-red-700 shadow-sm transition-all";
-        btnNik.className = "flex-1 py-2 rounded-lg text-xs font-black text-slate-500 hover:text-slate-800 transition-all";
-        formPin.classList.remove("hidden");
-        formNik.classList.add("hidden");
-      } else {
-        btnNik.className = "flex-1 py-2 rounded-lg text-xs font-black bg-white text-red-700 shadow-sm transition-all";
-        btnPin.className = "flex-1 py-2 rounded-lg text-xs font-black text-slate-500 hover:text-slate-800 transition-all";
-        formNik.classList.remove("hidden");
-        formPin.classList.add("hidden");
-      }
-      document.getElementById("onlineTrackingResult").innerHTML = "";
-    }
-
-    function openTrackingOnline(id="", pin="") {
+    /* --- TRACKING MODAL (FOKUS NIK & NO HP) --- */
+    function openTrackingOnline(nik="", hp="") {
       document.getElementById("onlineTrackingModal").classList.remove("hidden");
-      if(id) {
-        document.getElementById("onlineTrackId").value = id;
-        pindahModeTrack("PIN");
-      }
-      if(pin) document.getElementById("onlineTrackPin").value = pin;
+      if(nik) document.getElementById("onlineTrackNik").value = nik;
+      if(hp) document.getElementById("onlineTrackHp").value = hp;
       document.getElementById("onlineTrackingResult").innerHTML = "";
     }
 
@@ -1095,34 +1026,28 @@
     }
 
     function openTrackingFromSuccess() {
-      openTrackingOnline(lastGeneratedId, lastGeneratedPin);
+      openTrackingOnline(lastRegisteredNik, lastRegisteredHp);
       trackOnlineApplication();
     }
 
     async function trackOnlineApplication() {
-      let payloadParams = { action: "cekPengajuan" };
+      const nik = document.getElementById("onlineTrackNik").value.trim();
+      const hp = document.getElementById("onlineTrackHp").value.trim();
 
-      if (activeTrackMode === "PIN") {
-        const id = document.getElementById("onlineTrackId").value.trim();
-        const pin = document.getElementById("onlineTrackPin").value.trim();
-        if(!id || !pin) return alert("ID Pengajuan dan PIN wajib diisi.");
-        payloadParams.idPengajuan = id;
-        payloadParams.pin = pin;
-      } else {
-        const nik = document.getElementById("onlineTrackNik").value.trim();
-        const hp4 = document.getElementById("onlineTrackHp4").value.trim();
-        if(!nik || nik.length !== 16) return alert("NIK wajib 16 digit angka.");
-        if(!hp4 || hp4.length !== 4) return alert("Masukkan 4 digit terakhir nomor HP.");
-        payloadParams.nik = nik;
-        payloadParams.hp4 = hp4;
-      }
+      if(!nik || nik.length !== 16) return alert("NIK wajib 16 digit angka.");
+      if(!hp) return alert("Nomor HP wajib diisi.");
 
       const box = document.getElementById("onlineTrackingResult");
       const btn = document.getElementById("onlineBtnTrack");
       onlineButtonLoading(btn, true, "Memeriksa Status...");
 
       try {
-        const result = await onlineGet(payloadParams);
+        const result = await onlineGet({
+          action: "cekPengajuan",
+          nik: nik,
+          noHP: hp
+        });
+
         if(!result.success) throw new Error(result.message || "Pengajuan tidak ditemukan.");
         const p = result.pengajuan || {};
         const status = String(p.status || "-").toUpperCase();
@@ -1173,7 +1098,7 @@
                 <div>
                   <p class="text-sm font-black text-slate-900">${onlineEscape(p.nama || "-")}</p>
                   <p class="text-xs font-semibold text-slate-500">${onlineEscape(p.layanan || "-")}</p>
-                  <p class="text-[10px] text-slate-400 mt-1">ID: <b class="font-mono text-slate-700">${onlineEscape(p.idPengajuan)}</b> • Tgl: ${onlineEscape(p.tanggal || "-")}</p>
+                  <p class="text-[10px] text-slate-400 mt-1">ID Pengajuan: <b class="font-mono text-slate-700">${onlineEscape(p.idPengajuan)}</b> • Tgl: ${onlineEscape(p.tanggal || "-")}</p>
                 </div>
                 <span class="px-3 py-1 rounded-full text-[9px] font-black border ${cls}">${onlineEscape(p.status || "-")}</span>
               </div>
@@ -1211,8 +1136,8 @@
       onlineSelectedService = null;
       onlineUploadedDocs = {};
       onlineRequirements = [];
-      lastGeneratedId = "";
-      lastGeneratedPin = "";
+      lastRegisteredNik = "";
+      lastRegisteredHp = "";
       localStorage.removeItem(SIADIL_DRAFT_KEY);
 
       document.getElementById("onlineApplicationForm").reset();
@@ -1242,16 +1167,16 @@
       document.getElementById("pengajuan-online").scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
-    /* --- CEK URL PARAMETER DARI LINK WHATSAPP (AUTO TRACK) --- */
+    /* --- AUTO TRACK JIKA DIBUKA DARI LINK WHATSAPP --- */
     window.addEventListener("load", () => {
       loadOnlineServices();
 
       const urlParams = new URLSearchParams(window.location.search);
-      const urlId = urlParams.get("id");
-      const urlPin = urlParams.get("pin");
+      const urlNik = urlParams.get("nik");
+      const urlHp = urlParams.get("hp");
 
-      if (urlId && urlPin) {
-        openTrackingOnline(urlId, urlPin);
+      if (urlNik && urlHp) {
+        openTrackingOnline(urlNik, urlHp);
         trackOnlineApplication();
       }
     });

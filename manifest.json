@@ -1,5 +1,5 @@
 {
-  "name": "SI-ADIL: Informasi Antrian Publik",
+  "name": "SI-ADIL: Cek Antrian & Pengajuan Online",
   "short_name": "SI-ADIL Info",
   "start_url": "/index.html",
   "display": "standalone",
